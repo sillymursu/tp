@@ -11,13 +11,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Joon Xiang
 
 <img src="images/jxgohh.png" width="200px">
 
 [[github](https://github.com/jxgohh)]
+[[portfolio](team/johndoe.md)]
 
 * Role: Developer
+* Responsibilities: Developing
 
 ### Ryan Long
 
