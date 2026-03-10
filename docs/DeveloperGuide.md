@@ -347,9 +347,12 @@ Preconditions:
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the 
+4. The system shall allow an experienced user to add a student profile and record a lesson observation using no more than 8 seconds of command entry time (excluding typing speed variability), and provide command history navigation to reuse previous commands without retyping.
+5. For a dataset of up to 120 student contacts (≈ 2–3 class sizes) with notes and tags, the system shall return search/filter results within 1 second and update the UI (including progress bars) within 1 second on a typical lab laptop.
+6. The system shall ensure no loss of saved data (contacts, roles, tags, notes, progress, buddy links, submission/score records) after normal application restarts, and shall reject invalid updates (e.g., progress not in 0–100%) with a clear error message.
+7. The system shall enforce role-based access control such that users only view and execute features permitted by their selected role (Teacher/TA/Professor/Student), and role assignments to contacts shall not be modifiable without appropriate permissions (e.g., only the account owner can change their own role and assign roles to contacts).
 
-*{More to be added}*
 
 ### Glossary
 
