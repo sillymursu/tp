@@ -298,10 +298,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 *{More to be added}*
 
-### Use cases
+## Use cases
 
-
-**Use case 1: Add Student Profile**
+### Use case 1: Add Student Profile
 
 Name: Add Student Profile
 
@@ -309,37 +308,160 @@ Actor: Tutor
 
 System: Legoat
 
-Preconditions: 
-
 **MSS**
 
-1.  Tutor opens the Student Directory.
-2.  Tutor chooses “Add student”.
-3.  Tutor enters a valid name and at least one valid contact (phone or email).
-4.  System validates appropriate fields.
-5.  System checks for duplicates.
-6.  UI shows confirmation (“Student added.”).
+1. Tutor inputs command to add student.
+2. Tutor enters a valid name and at least one valid contact (phone or email).
+3. System validates appropriate fields.
+4. System checks for duplicates.
+5. UI shows confirmation “Student added.”.
+   
     Use case ends.
 
 **Extensions**
 
-* 4a. Invalid field formats
+* 3a. Invalid field formats
+  
+     * 3a1. System shows an error message
+  
+        Use case resumes at step 3.
+
+* 4a. Duplicate detected
+  
+    * 4a1. System shows an error message
+
+      Use case resumes at step 3.
+      
+---
+
+### Use case 2: Search and View Student Profile
+
+Name: Search and View Student Profile
+
+Actor: Tutor
+
+System: Legoat
+
+Preconditions: At least one student exists in the Tutor's directory 
+
+**MSS**
+
+1. Tutor searches for student.
+2. System performs a case-insensitive, partial match on student names.
+3. System displays list of matching students.
+4. Tutor selects a student from the list.
+5. System shows student profile.
+   
+   Use case ends.
+
+**Extensions**
+
+* 3a. No match found.
+  
+     * 3a1. System shows an empty list and message saying "No students found"
+  
+        Use case ends.
+
+* 4a. Tutor decides not to view the student profile.
+
+  Use case ends.
+  
+---
+
+### Use case 3: Edit Student Profile
+
+Name: Edit Student Profile
+
+Actor: Tutor
+
+System: Legoat
+
+Preconditions: Target student already exists in the directory.
+
+**MSS**
+
+1. Tutor <ins>searches for student (U2) </ins>.
+2. Tutor edits student profile.
+3. Tutor updates one or more fields.
+4. System validates updated fields.
+5. System checks for duplicates.
+6. System updates the student list.
+7. UI shows confirmation "Student updated.".
+   
+   Use case ends.
+
+**Extensions**
+
+* 4a. Invalid fields formats
   
      * 4a1. System shows an error message
   
         Use case resumes at step 3.
 
 * 5a. Duplicate detected
-  
+
     * 5a1. System shows an error message
 
       Use case resumes at step 3.
+      
+---
 
-* *a. At any time, user chooses to cancel adding a student
+### Use case 4: Delete Student Profile
 
-  Use case ends.
+Name: Delete Student Profile
 
-    
+Actor: Tutor
+
+System: Legoat
+
+Preconditions: Target student already exists in the directory.
+
+**MSS**
+
+1. Tutor <ins>searches for student (U2) </ins>.
+2. Tutor deletes student profile.
+3. System asks for confirmation.
+4. Tutor confirms deletion.
+5. Systems deletes the student and all related fields from this account.
+6. UI shows confirmation message "Student deleted.".
+   Use case ends.
+
+**Extensions**
+
+* 4a. Tutor cancels deletion
+  
+     * 4a1. System aborts deletion
+     * 4a2. System displays message saying "Deletion aborted"
+  
+        Use case ends.
+       
+---
+
+### Use case 5: Star a Student
+
+Name: Star/Unstar Student
+
+Actor: Tutor
+
+System: Legoat
+
+Preconditions: Target student already exists in the directory.
+
+**MSS**
+
+1. Tutor <ins>searches for student (U2) </ins>.
+2. Tutor types in command to star the student.
+3. System updates the student's starred status
+4. UI shows starred student at the top and displays success message "Student Starred."
+   Use case ends.
+
+**Extensions**
+
+* 2a. Student index out of bounds. 
+  
+     * 4a1. System displays message saying "Invalid student"
+       
+        Use case resumes from step 2.
 
 *{More to be added}*
 
