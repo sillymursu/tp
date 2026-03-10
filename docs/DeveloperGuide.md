@@ -309,9 +309,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 Name: Add Student Profile
 
-Actor: Tutor
+Actor: Tutor, TA
 
-System: Legoat
+System: LeTutor
 
 **MSS**
 
@@ -343,9 +343,9 @@ System: Legoat
 
 Name: Search and View Student Profile
 
-Actor: Tutor
+Actor: Tutor, TA
 
-System: Legoat
+System: LeTutor
 
 Preconditions: At least one student exists in the Tutor's directory 
 
@@ -377,9 +377,9 @@ Preconditions: At least one student exists in the Tutor's directory
 
 Name: Edit Student Profile
 
-Actor: Tutor
+Actor: Tutor, TA
 
-System: Legoat
+System: LeTutor
 
 Preconditions: Target student already exists in the directory.
 
@@ -415,9 +415,9 @@ Preconditions: Target student already exists in the directory.
 
 Name: Delete Student Profile
 
-Actor: Tutor
+Actor: Tutor, TA
 
-System: Legoat
+System: LeTutor
 
 Preconditions: Target student already exists in the directory.
 
@@ -446,9 +446,9 @@ Preconditions: Target student already exists in the directory.
 
 Name: Star/Unstar Student
 
-Actor: Tutor
+Actor: Tutor, TA
 
-System: Legoat
+System: LeTutor
 
 Preconditions: Target student already exists in the directory.
 
