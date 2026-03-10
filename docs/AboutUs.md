@@ -11,25 +11,25 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Joon Xiang
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/jxgohh.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/jxgohh)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+* Role: Developer
+* Responsibilities: Developing
 
-### Jane Doe
+### Ryan Long
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/sehjinryan.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/sehjinryan)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: Integration + Testing
 
 ### Arthur Teng
 
@@ -37,24 +37,24 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](http://github.com/archonward)] [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Data
+* Role: Software Developer
+* Responsibilities: Data, Storage
 
-### Jean Doe
+### Russell Lin
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/sillymursu.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/sillymursu)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Developing
 
-### James Doe
+### Toh Jun Yee
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/desnen.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/desnen)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
