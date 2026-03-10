@@ -274,13 +274,18 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Manages a significant number of students across 2 \- 3 groups
+* Manages student assignments and learning progress
+* Needs to assign student or teaching assistant roles to contacts
+* Needs quick access to summarised student information
+* Needs to keep track of student assignment information
+* Needs to record notes or observations for particular contacts
+* Needs to identify struggling students
+* Prefers using a keyboard CLI over complex graphical interface
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: 
+
+All-in-one student management system tailored for tutors and teaching assistants, relieving the need to use more than 1 application to track student information.
 
 
 ### User stories
