@@ -14,6 +14,10 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.assignment.DueDate;
+import seedu.address.model.assignment.Group;
+import seedu.address.model.assignment.Label;
+import seedu.address.model.assignment.Order;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -121,4 +125,43 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    public static Label parseLabel(String label) throws ParseException {
+        requireNonNull(label);
+        String trimmed = label.trim();
+        if (!Label.isValidLabel(trimmed)) {
+            throw new ParseException(Label.MESSAGE_CONSTRAINTS);
+        }
+        return new Label(trimmed);
+    }
+
+    public static Group parseGroup(String group) throws ParseException {
+        requireNonNull(group);
+        String trimmed = group.trim();
+        if (!Group.isValidGroup(trimmed)) {
+            throw new ParseException(Group.MESSAGE_CONSTRAINTS);
+        }
+        return new Group(trimmed);
+    }
+
+    public static DueDate parseDueDate(String dueDate) throws ParseException {
+        requireNonNull(dueDate);
+        String trimmed = dueDate.trim();
+        if (!DueDate.isValidDate(trimmed)) {
+            throw new ParseException(DueDate.MESSAGE_CONSTRAINTS);
+        }
+        return new DueDate(trimmed);
+    }
+
+    // Need to handle NumberFormatException thrown by Integer.parseInt() in parseOrder() since it is not a checked exception
+    public static Order parseOrder(String order) throws ParseException {
+        requireNonNull(order);
+        String trimmed = order.trim();
+        int orderValue = Integer.parseInt(trimmed);
+        if (!Order.isValidOrder(orderValue)) {
+            throw new ParseException(Order.MESSAGE_CONSTRAINTS);
+        }
+        return new Order(orderValue);
+    }
+
 }

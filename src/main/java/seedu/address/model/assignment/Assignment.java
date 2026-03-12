@@ -64,6 +64,15 @@ public class Assignment {
                 && order.equals(otherAssignment.getOrder());
     }
 
+    public boolean isSameAssignment(Assignment otherAssignment) {
+        if (otherAssignment == this) {
+            return true;
+        }
+        return otherAssignment != null
+                && otherAssignment.getLabel().equals(getLabel())
+                && otherAssignment.getGroup().equals(getGroup());
+    }
+
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own

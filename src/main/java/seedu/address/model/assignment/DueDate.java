@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-
-
 /**
  * Represents the due date for an Assignment
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}

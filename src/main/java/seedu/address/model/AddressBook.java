@@ -6,6 +6,8 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.assignment.Assignment;
+import seedu.address.model.assignment.UniqueAssignmentList;
 import seedu.address.model.milestone.MilestoneStore;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -18,6 +20,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final MilestoneStore milestoneStore;
+    private final UniqueAssignmentList assignments;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -29,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         milestoneStore = new MilestoneStore();
+        assignments = new UniqueAssignmentList();
     }
 
     public AddressBook() {}
@@ -106,6 +110,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    public boolean hasAssignment(Assignment assignment) {
+        requireNonNull(assignment);
+        return assignments.contains(assignment);
+    }
+
+    public void addAssignment(Assignment assignment) {
+        assignments.add(assignment);
+    }
+
     //// util methods
 
     @Override
@@ -145,4 +158,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         return 31 * persons.hashCode() + milestoneStore.hashCode();
     }
+
+
 }

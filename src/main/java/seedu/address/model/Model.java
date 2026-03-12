@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.assignment.Assignment;
 import seedu.address.model.milestone.AssignmentId;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
@@ -123,4 +124,10 @@ public interface Model {
      * Generates the next available StudentId in the form S1, S2, S3... based on existing persons.
      */
     StudentId getNextStudentId();
+
+    /** Returns true if an assignment with the same identity exists in the assignment library. */
+    boolean hasAssignment(Assignment assignment);
+
+    /** Adds the given assignment to the assignment library. */
+    void addAssignment(Assignment assignment);
 }
