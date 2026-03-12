@@ -294,14 +294,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
-*{More to be added}*
+| `* * *`  | Account Owner | select my role (Tutor/Teaching Assistant) | only see features relevant to my responsibilities |
+| `* * *`  | Account Owner | assign roles (Tutor/Teaching Assistant) to each contact | can organise contacts and enable the correct role-specific workflows |
+| `* * *`  | Account Owner | add a profile with contact details | can keep all contacts in one place |
+| `* * *`  | Account Owner | search and open a profile by name | can access the profile's information quickly during teaching |
+| `* * *`  | Account Owner | edit a profile with contact details | can change profile contact information efficiently |
+| `* * *`  | Account Owner | delete a profile with contact details | can remove redundant contacts |
+| `* * *`  | Account Owner | tag Students (e.g., “needs follow-up”) | can filter and manage groups efficiently |
+| `* * *`  | Account Owner | add a lesson observation note to a Student profile | can document learning behaviour and issues on the fly |
+| `* * *`  | Account Owner | edit an existing lesson observation note on a Student profile | can update records at any time |
+| `* * *`  | Account Owner | delete an existing lesson observation note on a Student profile | can remove redundant records at any time |
+| `* * *`  | Tutor | add Student assignments to particular profiles | can keep track of assignments efficiently |
+| `* * *`  | Tutor | edit Student assignments | can change assignments when the need arises |
+| `* * *`  | Tutor | delete Student assignments | remove redundant assignments when the need arises |
+| `* * *`  | Tutor | record Student assignment scores on Students' profiles | can monitor academic performance over time |
+| `* *`  | Tutor | view a list of Student profiles with assignment submission status | can can identify missing submissions at a glance |
+| `*`  | Tutor | view the observation histories of Teaching Assistants | can evaluate the performance of Teaching Assistants |
+| `* * *`  | Teaching Assistant | update a Student's learning progress (0-100%) | can track lesson coverage and growth over time |
+| `* *`  | Teaching Assistant | attach a "star" to a Student's profile | can quickly identify students who need help and attention |
+| `* *`  | Teaching Assistant | assign a buddy to a Student's profile | can facilitate peer support quickly |
 
 ## Use cases
 
@@ -470,6 +481,119 @@ Preconditions: Target student already exists in the directory.
 
 ---
 
+### Use case 6: View Assignment/Milestone Progress
+
+Name: View Assignment/Milestone Progress
+
+Actor: Tutor
+
+System: LeTutor
+
+Preconditions: Tutor is signed in, Student exists, Predefined milestone exists for student.
+
+
+**MSS**
+
+1.  Tutor opens the student profile.
+2.  Tutor navigates to the assignments/milestones progress section.
+3.  System displays all predefined assignments/milestones as status bubbles.
+4.  System shows the current status of each bubble (e.g., completed, pending, overdue).
+5.  Tutor reviews the student’s progress across all milestones.
+    Use case ends.
+
+**Extensions**
+
+* 3a. No predefined milestones exist
+  
+     * 3a1. System shows an empty state message.
+  
+        Use case ends.
+        
+---
+
+### Use case 7: Mark Milestone as Completed
+
+Name: Mark Milestone as Completed
+
+Actor: Tutor
+
+System: LeTutor
+
+Preconditions: Tutor is signed in as Tutor, Target student exists, A predefined assignment/milestone exists for the student.
+
+
+**MSS**
+
+1. Tutor opens the student profile.
+2. Tutor selects a pending or overdue milestone bubble.
+3. Tutor marks the milestone as completed.
+4. System saves the updated milestone status.
+5. UI updates the bubble to show completed status.
+   Use case ends.
+
+**Extensions**
+* 4a. Save error
+  
+     * 4a1. System displays an error and keeps the previous milestone status
+  
+        Use case ends.
+
+---
+
+### Use case 8: Automatically Mark Milestone as Overdue
+
+Name: Automatically Mark Milestone as Overdue
+
+Actor: Tutor
+
+System: Legoat
+
+Preconditions: A predefined milestone exists with a due date, The milestone is not completed, The due date has passed.
+
+**MSS**
+
+1. System checks milestone due dates periodically or when the student profile is accessed.
+2. System identifies milestones whose due dates have passed and are still incomplete.
+3. System changes the milestone status to overdue.
+4. UI updates the milestone bubble to show overdue status.
+   Use case ends.
+
+**Extensions**
+* 3a. Status update error
+  
+     * 3a1. System logs the error and retains the previous milestone status
+  
+        Use case ends.
+
+---
+
+### Use case 9: View Students with Overdue Milestones
+
+Name: View Students with Overdue Milestones
+
+Actor: Tutor
+
+System: Legoat
+
+Preconditions: Tutor is signed in as Tutor, Students and predefined milestones exist, At least one student has milestone records
+
+
+**MSS**
+
+1. Tutor opens the student management or progress overview page.
+2. Tutor views milestone statuses across multiple students.
+3. System highlights students with overdue milestone bubbles.
+4. Tutor identifies which students are falling behind.
+   Use case ends.
+
+**Extensions**
+* 3a. No students have overdue milestones.
+  
+     * 3a1. System shows that no overdue milestones are present.
+  
+        Use case ends.
+---
+
 ### Use case 10: View the details of an Assignment
 
 Name: View Assignment details
@@ -594,7 +718,7 @@ Preconditions: Target Assignment already exists in the directory.
 4. The system shall allow an experienced user to add a student profile and record a lesson observation using no more than 8 seconds of command entry time (excluding typing speed variability), and provide command history navigation to reuse previous commands without retyping.
 5. For a dataset of up to 120 student contacts (≈ 2–3 class sizes) with notes and tags, the system shall return search/filter results within 1 second and update the UI (including progress bars) within 1 second on a typical lab laptop.
 6. The system shall ensure no loss of saved data (contacts, roles, tags, notes, progress, buddy links, submission/score records) after normal application restarts, and shall reject invalid updates (e.g., progress not in 0–100%) with a clear error message.
-7. The system shall enforce role-based access control such that users only view and execute features permitted by their selected role (Teacher/TA/Professor/Student), and role assignments to contacts shall not be modifiable without appropriate permissions (e.g., only the account owner can change their own role and assign roles to contacts).
+7. The system shall enforce role-based access control such that users only view and execute features permitted by their selected role (Tutor/TA/Professor/Student), and role assignments to contacts shall not be modifiable without appropriate permissions (e.g., only the account owner can change their own role and assign roles to contacts).
 
 
 ### Glossary
