@@ -41,7 +41,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         // Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         // Temporary placeholder. Actual StudentId is assigned in AddCommand.execute().
         StudentId tempId = new StudentId("S0");
-        String parts[] = args.split("\\{")[1].split(",");
+        String[] parts = args.split("\\{")[1].split(",");
         if (parts.length != 3) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
