@@ -96,7 +96,7 @@ public final class FlatMilestoneEntry {
      * Returns the string representation of this milestone entry.
      *
      * @return A string containing the student id, assignment id,
-     * and milestone record information.
+     *     and milestone record information.
      */
     @Override
     public String toString() {
