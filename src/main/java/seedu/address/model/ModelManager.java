@@ -11,12 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.milestone.AssignmentId;
-import seedu.address.model.milestone.CompletedAt;
-import seedu.address.model.milestone.MilestoneRecord;
-import seedu.address.model.milestone.MilestoneStatus;
 import seedu.address.model.milestone.StudentId;
-import seedu.address.model.milestone.StudentMilestones;
 import seedu.address.model.person.Person;
 
 /**
@@ -118,10 +113,6 @@ public class ModelManager implements Model {
 
     //=========== Filtered Person List Accessors =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return filteredPersons;
@@ -133,40 +124,38 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    //=========== Feature 2: Milestones ======================================================================
-
     @Override
-    public StudentMilestones getMilestones(StudentId studentId) {
-        requireNonNull(studentId);
-        return addressBook.getMilestoneStore().getStudentMilestones(studentId);
+    public StudentId getNextStudentId() {
+        int max = 0;
+        for (Person p : addressBook.getPersonList()) {
+            String raw = p.getStudentId().getValue(); // e.g. "S12"
+            int parsed = parseStudentIdNumber(raw);
+            if (parsed > max) {
+                max = parsed;
+            }
+        }
+        return new StudentId("S" + (max + 1));
     }
 
-    @Override
-    public void setMilestone(StudentId studentId, AssignmentId assignmentId,
-                             MilestoneStatus status, CompletedAt completedAt) {
-        requireAllNonNull(studentId, assignmentId, status, completedAt);
-        MilestoneRecord milestoneRecord = new MilestoneRecord(status, completedAt);
-        addressBook.getMilestoneStore().setMilestone(studentId, assignmentId, milestoneRecord);
-    }
-
-    @Override
-    public void removeAllMilestonesForStudent(StudentId studentId) {
-        requireNonNull(studentId);
-        addressBook.getMilestoneStore().removeAllForStudent(studentId);
-    }
-
-    @Override
-    public void removeAllMilestonesForAssignment(AssignmentId assignmentId) {
-        requireNonNull(assignmentId);
-        addressBook.getMilestoneStore().removeAllForAssignment(assignmentId);
-    }
-
-    @Override
-    public MilestoneRecord getMilestone(StudentId studentId, AssignmentId assignmentId) {
-        requireAllNonNull(studentId, assignmentId);
-        return addressBook.getMilestoneStore()
-                .getMilestone(studentId, assignmentId)
-                .orElse(null);
+    private int parseStudentIdNumber(String raw) {
+        if (raw == null) {
+            return 0;
+        }
+        String s = raw.trim();
+        if (s.length() < 2 || s.charAt(0) != 'S') {
+            return 0;
+        }
+        String numberPart = s.substring(1);
+        for (int i = 0; i < numberPart.length(); i++) {
+            if (!Character.isDigit(numberPart.charAt(i))) {
+                return 0;
+            }
+        }
+        try {
+            return Integer.parseInt(numberPart);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     @Override
@@ -175,7 +164,6 @@ public class ModelManager implements Model {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof ModelManager)) {
             return false;
         }

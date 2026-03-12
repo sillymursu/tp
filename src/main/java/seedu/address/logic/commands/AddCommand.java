@@ -11,6 +11,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.milestone.StudentId;
 import seedu.address.model.person.Person;
 
 /**
@@ -40,9 +41,6 @@ public class AddCommand extends Command {
 
     private final Person toAdd;
 
-    /**
-     * Creates an AddCommand to add the specified {@code Person}
-     */
     public AddCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
@@ -56,8 +54,18 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        StudentId newId = model.getNextStudentId();
+        Person personWithId = new Person(
+                newId,
+                toAdd.getName(),
+                toAdd.getPhone(),
+                toAdd.getEmail(),
+                toAdd.getAddress(),
+                toAdd.getTags()
+        );
+
+        model.addPerson(personWithId);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personWithId)));
     }
 
     @Override
@@ -66,7 +74,6 @@ public class AddCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof AddCommand)) {
             return false;
         }
