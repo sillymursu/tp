@@ -30,6 +30,9 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
 
+    /**
+     * Creates a {@code PersonBuilder} with the default details.
+     */
     public PersonBuilder() {
         studentId = new StudentId(DEFAULT_STUDENT_ID);
         name = new Name(DEFAULT_NAME);
@@ -39,6 +42,9 @@ public class PersonBuilder {
         tags = new HashSet<>();
     }
 
+    /**
+     * Initializes the {@code PersonBuilder} with the data of {@code personToCopy}.
+     */
     public PersonBuilder(Person personToCopy) {
         studentId = personToCopy.getStudentId();
         name = personToCopy.getName();
@@ -48,36 +54,57 @@ public class PersonBuilder {
         tags = new HashSet<>(personToCopy.getTags());
     }
 
+    /**
+     * Sets the {@code StudentId} of the {@code Person} being built.
+     */
     public PersonBuilder withStudentId(String studentId) {
         this.studentId = new StudentId(studentId);
         return this;
     }
 
+    /**
+     * Sets the {@code Name} of the {@code Person} being built.
+     */
     public PersonBuilder withName(String name) {
         this.name = new Name(name);
         return this;
     }
 
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and sets it to the {@code Person} being built.
+     */
     public PersonBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
 
+    /**
+     * Sets the {@code Address} of the {@code Person} being built.
+     */
     public PersonBuilder withAddress(String address) {
         this.address = new Address(address);
         return this;
     }
 
+    /**
+     * Sets the {@code Phone} of the {@code Person} being built.
+     */
     public PersonBuilder withPhone(String phone) {
         this.phone = new Phone(phone);
         return this;
     }
 
+    /**
+     * Sets the {@code Email} of the {@code Person} being built.
+     */
     public PersonBuilder withEmail(String email) {
         this.email = new Email(email);
         return this;
     }
 
+    /**
+     * Builds and returns the {@code Person} with the configured fields.
+     */
     public Person build() {
         return new Person(studentId, name, phone, email, address, tags);
     }
