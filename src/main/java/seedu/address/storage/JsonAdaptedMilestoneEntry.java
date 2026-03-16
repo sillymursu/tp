@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.milestone.AssignmentId;
+import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.FlatMilestoneEntry;
 import seedu.address.model.milestone.MilestoneRecord;

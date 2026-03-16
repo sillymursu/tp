@@ -6,13 +6,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.assignment.Assignment;
-import seedu.address.model.milestone.AssignmentId;
+import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneStatus;
@@ -201,6 +202,40 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public AssignmentId getNextAssignmentId() {
+        int max = 0;
+        for (Assignment a : getAssignmentList()) {
+            String raw = a.getAssignmentId().getValue(); // e.g., "A12"
+            int parsed = parseAssignmentIdNumber(raw);
+            if (parsed > max) {
+                max = parsed;
+            }
+        }
+        return new AssignmentId("A" + (max + 1));
+    }
+
+    private int parseAssignmentIdNumber(String raw) {
+        if (raw == null) {
+            return 0;
+        }
+        String s = raw.trim();
+        if (s.length() < 2 || s.charAt(0) != 'A') {
+            return 0;
+        }
+        String numberPart = s.substring(1);
+        for (int i = 0; i < numberPart.length(); i++) {
+            if (!Character.isDigit(numberPart.charAt(i))) {
+                return 0;
+            }
+        }
+        try {
+            return Integer.parseInt(numberPart);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -228,5 +263,18 @@ public class ModelManager implements Model {
     public void addAssignment(Assignment assignment) {
         requireNonNull(assignment);
         addressBook.addAssignment(assignment);
+    }
+
+    @Override
+    public ObservableList<Assignment> getAssignmentList() {
+        return addressBook.getAssignmentList();
+    }
+
+    @Override
+    public Optional<Assignment> getAssignmentById(AssignmentId assignmentId) {
+        requireNonNull(assignmentId);
+        return addressBook.getAssignmentList().stream()
+                .filter(a -> a.getAssignmentId().equals(assignmentId))
+                .findFirst();
     }
 }

@@ -9,10 +9,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.assignment.DueDate;
-import seedu.address.model.assignment.Group;
 import seedu.address.model.assignment.Label;
-import seedu.address.model.assignment.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -29,6 +28,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -41,9 +41,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String name} into a {@code Name}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
@@ -56,9 +53,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code phone} is invalid.
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
@@ -71,9 +65,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
@@ -86,9 +77,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code email} is invalid.
      */
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
@@ -101,9 +89,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code tag} is invalid.
      */
     public static Tag parseTag(String tag) throws ParseException {
         requireNonNull(tag);
@@ -128,9 +113,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String label} into a {@code Label}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code label} is invalid.
      */
     public static Label parseLabel(String label) throws ParseException {
         requireNonNull(label);
@@ -142,25 +124,30 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String group} into a {@code Group}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code group} is invalid.
+     * Parses a {@code String assignmentId} into an {@code AssignmentId}.
      */
-    public static Group parseGroup(String group) throws ParseException {
-        requireNonNull(group);
-        String trimmed = group.trim();
-        if (!Group.isValidGroup(trimmed)) {
-            throw new ParseException(Group.MESSAGE_CONSTRAINTS);
+    public static AssignmentId parseAssignmentId(String assignmentId) throws ParseException {
+        requireNonNull(assignmentId);
+        String trimmed = assignmentId.trim();
+        if (!AssignmentId.isValidAssignmentId(trimmed)) {
+            throw new ParseException(AssignmentId.MESSAGE_CONSTRAINTS);
         }
-        return new Group(trimmed);
+        return new AssignmentId(trimmed);
+    }
+
+    /**
+     * Parses group as a plain String (Group.java is obsolete).
+     * Trims leading/trailing spaces.
+     *
+     * For MVP: allow empty string.
+     */
+    public static String parseGroup(String group) {
+        requireNonNull(group);
+        return group.trim();
     }
 
     /**
      * Parses a {@code String dueDate} into a {@code DueDate}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code dueDate} is invalid.
      */
     public static DueDate parseDueDate(String dueDate) throws ParseException {
         requireNonNull(dueDate);
@@ -170,23 +157,4 @@ public class ParserUtil {
         }
         return new DueDate(trimmed);
     }
-
-    /**
-     * Parses a {@code String order} into an {@code Order}.
-     * Leading and trailing whitespaces will be trimmed.
-     * Need to handle NumberFormatException thrown by Integer.parseInt() in parseOrder()
-     *
-     * @throws ParseException if the given {@code order} is invalid.
-     */
-
-    public static Order parseOrder(String order) throws ParseException {
-        requireNonNull(order);
-        String trimmed = order.trim();
-        int orderValue = Integer.parseInt(trimmed);
-        if (!Order.isValidOrder(orderValue)) {
-            throw new ParseException(Order.MESSAGE_CONSTRAINTS);
-        }
-        return new Order(orderValue);
-    }
-
 }

@@ -4,34 +4,41 @@ import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
 
-
-
 /**
- * Represents an Assignment in LeTutor
+ * Represents an Assignment in LeTutor.
  * Guarantees: details are present, field values are validated, immutable.
  */
 public class Assignment {
-    // Assignment fields
+
+    private final AssignmentId assignmentId;
     private final Label label;
-    private final Group group;
+    private final String group;
     private final DueDate dueDate;
-    private final Order order;
 
     /**
-     * Every field must be present
+     * Every field must be present.
+     *
+     * @param assignmentId Unique identifier for the assignment (e.g., A301).
+     * @param label The label shown to users (e.g., A-JUnit).
+     * @param group Group/class tag (stored as plain String). Use "" if not applicable.
+     * @param dueDate Due date of assignment (can be "" depending on DueDate rules).
      */
-    public Assignment(Label label, Group group, DueDate dueDate, Order order) {
+    public Assignment(AssignmentId assignmentId, Label label, String group, DueDate dueDate) {
+        this.assignmentId = assignmentId;
         this.label = label;
-        this.group = group;
+        this.group = group == null ? "" : group.trim();
         this.dueDate = dueDate;
-        this.order = order;
+    }
+
+    public AssignmentId getAssignmentId() {
+        return assignmentId;
     }
 
     public Label getLabel() {
         return label;
     }
 
-    public Group getGroup() {
+    public String getGroup() {
         return group;
     }
 
@@ -39,12 +46,8 @@ public class Assignment {
         return dueDate;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
     /**
-     * Returns true if both Assignments have the same fields
+     * Returns true if both Assignments have the same fields.
      */
     @Override
     public boolean equals(Object other) {
@@ -52,16 +55,15 @@ public class Assignment {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof Assignment)) {
             return false;
         }
 
         Assignment otherAssignment = (Assignment) other;
-        return label.equals(otherAssignment.getLabel())
-                && group.equals(otherAssignment.getGroup())
-                && dueDate.equals(otherAssignment.getDueDate())
-                && order.equals(otherAssignment.getOrder());
+        return assignmentId.equals(otherAssignment.assignmentId)
+                && label.equals(otherAssignment.label)
+                && group.equals(otherAssignment.group)
+                && dueDate.equals(otherAssignment.dueDate);
     }
 
     /**
@@ -79,17 +81,16 @@ public class Assignment {
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(label, group, dueDate, order);
+        return Objects.hash(assignmentId, label, group, dueDate);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .add("assignmentId", assignmentId)
                 .add("label", label)
                 .add("group", group)
-                .add("due date", dueDate)
-                .add("order", order)
+                .add("dueDate", dueDate)
                 .toString();
     }
 }

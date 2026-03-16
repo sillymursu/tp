@@ -12,7 +12,7 @@ import seedu.address.model.assignment.exceptions.DuplicateAssignmentException;
 
 /**
  * A list of assignments that enforces uniqueness between its elements and does not allow nulls.
- * An assignment is considered unique by comparing using {@code Assignment#isSameAssignment(Assignment)}.
+ * An assignment is considered unique by comparing using {@code Assignment#getAssignmentId()}.
  */
 public class UniqueAssignmentList implements Iterable<Assignment> {
 
@@ -25,7 +25,8 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
      */
     public boolean contains(Assignment toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameAssignment);
+        return internalList.stream()
+                .anyMatch(a -> a.getAssignmentId().equals(toCheck.getAssignmentId()));
     }
 
     /**
@@ -41,6 +42,31 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
     }
 
     /**
+     * Replaces the assignment {@code target} in the list with {@code editedAssignment}.
+     * {@code target} must exist in the list.
+     *
+     * The {@code editedAssignment} must not have the same AssignmentId as another existing assignment in the list.
+     */
+    public void setAssignment(Assignment target, Assignment editedAssignment) {
+        requireNonNull(target);
+        requireNonNull(editedAssignment);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new AssignmentNotFoundException();
+        }
+
+        boolean isDuplicateId = internalList.stream()
+                .anyMatch(a -> a != target && a.getAssignmentId().equals(editedAssignment.getAssignmentId()));
+
+        if (isDuplicateId) {
+            throw new DuplicateAssignmentException();
+        }
+
+        internalList.set(index, editedAssignment);
+    }
+
+    /**
      * Removes the equivalent assignment from the list.
      * The assignment must exist in the list.
      */
@@ -51,6 +77,9 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
         }
     }
 
+    /**
+     * Replaces the contents of this list with {@code assignments}.
+     */
     public void setAssignments(List<Assignment> assignments) {
         requireNonNull(assignments);
         internalList.setAll(assignments);
@@ -64,7 +93,6 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
     public Iterator<Assignment> iterator() {
         return internalList.iterator();
     }
-
 
     @Override
     public boolean equals(Object other) {

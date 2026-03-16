@@ -2,11 +2,12 @@ package seedu.address.model;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.assignment.Assignment;
-import seedu.address.model.milestone.AssignmentId;
+import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneStatus;
@@ -125,9 +126,13 @@ public interface Model {
      */
     StudentId getNextStudentId();
 
-    /** Returns true if an assignment with the same identity exists in the assignment library. */
     boolean hasAssignment(Assignment assignment);
 
-    /** Adds the given assignment to the assignment library. */
     void addAssignment(Assignment assignment);
+
+    ObservableList<Assignment> getAssignmentList();
+
+    Optional<Assignment> getAssignmentById(AssignmentId assignmentId);
+
+    AssignmentId getNextAssignmentId();
 }

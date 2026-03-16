@@ -22,7 +22,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.milestone.AssignmentId;
+import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneStatus;

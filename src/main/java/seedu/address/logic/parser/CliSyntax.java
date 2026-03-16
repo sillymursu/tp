@@ -15,5 +15,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_GROUP = new Prefix("g/");
     public static final Prefix PREFIX_DUE_DATE = new Prefix("d/");
     public static final Prefix PREFIX_ORDER = new Prefix("o/");
+    public static final Prefix PREFIX_ASSIGNMENT_ID = new Prefix("aid/");
 
 }

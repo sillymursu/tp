@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.assignment.Assignment;
 import seedu.address.model.milestone.MilestoneStore;
 import seedu.address.model.person.Person;
 
@@ -9,14 +10,12 @@ import seedu.address.model.person.Person;
  */
 public interface ReadOnlyAddressBook {
 
-    /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
-     */
     ObservableList<Person> getPersonList();
 
-    /**
-     * Returns the milestone store.
-     */
     MilestoneStore getMilestoneStore();
+
+    /**
+     * Returns an unmodifiable view of the assignments list.
+     */
+    ObservableList<Assignment> getAssignmentList();
 }

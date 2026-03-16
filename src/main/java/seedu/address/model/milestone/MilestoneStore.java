@@ -1,5 +1,7 @@
 package seedu.address.model.milestone;
 
+import seedu.address.model.assignment.AssignmentId;
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
