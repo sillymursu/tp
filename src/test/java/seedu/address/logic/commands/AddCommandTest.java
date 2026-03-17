@@ -95,6 +95,16 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
+        public boolean hasAssignment(seedu.address.model.assignment.Assignment assignment) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addAssignment(seedu.address.model.assignment.Assignment assignment) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
         }
@@ -184,8 +194,7 @@ public class AddCommandTest {
 
         @Override
         public StudentId getNextStudentId() {
-            // Provide a stub implementation as appropriate for your test
-            return new StudentId("S1");
+            return new StudentId(PersonBuilder.DEFAULT_STUDENT_ID);
         }
 
         @Override

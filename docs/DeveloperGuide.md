@@ -283,7 +283,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * Needs to identify struggling students
 * Prefers using a keyboard CLI over complex graphical interface
 
-**Value proposition**: 
+**Value proposition**:
 
 All-in-one student management system tailored for tutors and teaching assistants, relieving the need to use more than 1 application to track student information.
 
@@ -331,23 +331,23 @@ System: LeTutor
 3. System validates appropriate fields.
 4. System checks for duplicates.
 5. UI shows confirmation “Student added.”.
-   
+
     Use case ends.
 
 **Extensions**
 
 * 3a. Invalid field formats
-  
+
      * 3a1. System shows an error message
-  
+
         Use case resumes at step 3.
 
 * 4a. Duplicate detected
-  
+
     * 4a1. System shows an error message
 
       Use case resumes at step 3.
-      
+
 ---
 
 ### Use case 2: Search and View Student Profile
@@ -358,7 +358,7 @@ Actor: Tutor, TA
 
 System: LeTutor
 
-Preconditions: At least one student exists in the Tutor's directory 
+Preconditions: At least one student exists in the Tutor's directory
 
 **MSS**
 
@@ -367,21 +367,21 @@ Preconditions: At least one student exists in the Tutor's directory
 3. System displays list of matching students.
 4. Tutor selects a student from the list.
 5. System shows student profile.
-   
+
    Use case ends.
 
 **Extensions**
 
 * 3a. No match found.
-  
+
      * 3a1. System shows an empty list and message saying "No students found"
-  
+
         Use case ends.
 
 * 4a. Tutor decides not to view the student profile.
 
   Use case ends.
-  
+
 ---
 
 ### Use case 3: Edit Student Profile
@@ -403,15 +403,15 @@ Preconditions: Target student already exists in the directory.
 5. System checks for duplicates.
 6. System updates the student list.
 7. UI shows confirmation "Student updated.".
-   
+
    Use case ends.
 
 **Extensions**
 
 * 4a. Invalid fields formats
-  
+
      * 4a1. System shows an error message
-  
+
         Use case resumes at step 3.
 
 * 5a. Duplicate detected
@@ -419,7 +419,7 @@ Preconditions: Target student already exists in the directory.
     * 5a1. System shows an error message
 
       Use case resumes at step 3.
-      
+
 ---
 
 ### Use case 4: Delete Student Profile
@@ -445,12 +445,12 @@ Preconditions: Target student already exists in the directory.
 **Extensions**
 
 * 4a. Tutor cancels deletion
-  
+
      * 4a1. System aborts deletion
      * 4a2. System displays message saying "Deletion aborted"
-  
+
         Use case ends.
-       
+
 ---
 
 ### Use case 5: Star a Student
@@ -473,10 +473,10 @@ Preconditions: Target student already exists in the directory.
 
 **Extensions**
 
-* 2a. Student index out of bounds. 
-  
+* 2a. Student index out of bounds.
+
      * 2a1. System displays message saying "Invalid student"
-       
+
         Use case resumes from step 2.
 
 ---
@@ -504,11 +504,11 @@ Preconditions: Tutor is signed in, Student exists, Predefined milestone exists f
 **Extensions**
 
 * 3a. No predefined milestones exist
-  
+
      * 3a1. System shows an empty state message.
-  
+
         Use case ends.
-        
+
 ---
 
 ### Use case 7: Mark Milestone as Completed
@@ -533,9 +533,9 @@ Preconditions: Tutor is signed in as Tutor, Target student exists, A predefined 
 
 **Extensions**
 * 4a. Save error
-  
+
      * 4a1. System displays an error and keeps the previous milestone status
-  
+
         Use case ends.
 
 ---
@@ -560,9 +560,9 @@ Preconditions: A predefined milestone exists with a due date, The milestone is n
 
 **Extensions**
 * 3a. Status update error
-  
+
      * 3a1. System logs the error and retains the previous milestone status
-  
+
         Use case ends.
 
 ---
@@ -588,9 +588,9 @@ Preconditions: Tutor is signed in as Tutor, Students and predefined milestones e
 
 **Extensions**
 * 3a. No students have overdue milestones.
-  
+
      * 3a1. System shows that no overdue milestones are present.
-  
+
         Use case ends.
 ---
 
@@ -613,7 +613,7 @@ System: LeTutor
 **Extensions**
 * 3a. Invalid id
      * 3a1. System shows an error message
-        
+
         Use case resumes at step 2.
 
 ---
@@ -643,7 +643,7 @@ System: LeTutor
       Use case resumes at step 2.
 * 4a. Invalid group, dueDate or order
     * 4a1. System shows an error message
-  
+
       Use case resumes at step 2.
 
 ---
@@ -714,7 +714,7 @@ Preconditions: Target Assignment already exists in the directory.
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the 
+3.  A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster when using commands.
 4. The system shall allow an experienced user to add a student profile and record a lesson observation using no more than 8 seconds of command entry time (excluding typing speed variability), and provide command history navigation to reuse previous commands without retyping.
 5. For a dataset of up to 120 student contacts (≈ 2–3 class sizes) with notes and tags, the system shall return search/filter results within 1 second and update the UI (including progress bars) within 1 second on a typical lab laptop.
 6. The system shall ensure no loss of saved data (contacts, roles, tags, notes, progress, buddy links, submission/score records) after normal application restarts, and shall reject invalid updates (e.g., progress not in 0–100%) with a clear error message.
