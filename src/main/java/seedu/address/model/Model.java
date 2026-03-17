@@ -135,4 +135,6 @@ public interface Model {
     Optional<Assignment> getAssignmentById(AssignmentId assignmentId);
 
     AssignmentId getNextAssignmentId();
+
+    void updateFilteredIndexList(Person personToGet);
 }

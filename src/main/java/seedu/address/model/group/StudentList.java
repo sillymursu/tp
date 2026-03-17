@@ -23,4 +23,8 @@ public class StudentList {
     public ArrayList<Integer> getStudentList() {
         return this.list;
     }
+
+    public void addStudent() {
+
+    }
 }

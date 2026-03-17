@@ -19,6 +19,7 @@ public class GetCommandParser implements Parser<Command> {
     public static final String COMMAND_WORD = "get";
 
     private static final String PATH_ASSIGNMENTS = "/assignments";
+    private static final String PATH_STUDENTS = "/students";
 
     @Override
     public Command parse(String args) throws ParseException {
@@ -30,7 +31,9 @@ public class GetCommandParser implements Parser<Command> {
 
         String[] parts = trimmed.split("\\s+");
 
-        if (!parts[0].equals(PATH_ASSIGNMENTS)) {
+        if (parts[0].equals(PATH_STUDENTS)) {
+            return new GetStudentParser().parse(args);
+        } else if (!parts[0].equals(PATH_ASSIGNMENTS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetAssignmentsCommand.MESSAGE_USAGE));
         }
 
