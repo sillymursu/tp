@@ -23,6 +23,8 @@ public class AssignmentCard extends UiPart<Region> {
     private Label group;
     @FXML
     private Label dueDate;
+    @FXML
+    private Label id;
 
     /**
      * Creates a {@code AssignmentCard} with the given {@code Assignment} and index to display.
@@ -30,6 +32,7 @@ public class AssignmentCard extends UiPart<Region> {
     public AssignmentCard(Assignment assignment, int displayedIndex) {
         super(FXML);
         this.assignment = assignment;
+        id.setText(assignment.getAssignmentId().toString() + ". ");
         label.setText(assignment.getLabel().label);
         group.setText(assignment.getGroup());
         dueDate.setText(assignment.getDueDate().toString());
