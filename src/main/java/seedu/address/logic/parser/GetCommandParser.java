@@ -13,8 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses "get ..." commands.
  * Supports:
- * - get /assignments
- * - get /assignments <assignmentId>
+ * - get /students <Index>
  */
 public class GetCommandParser implements Parser<Command> {
 
@@ -28,14 +27,14 @@ public class GetCommandParser implements Parser<Command> {
 
         if (trimmed.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentsCommand.MESSAGE_USAGE));
+                    GetStudentCommand.MESSAGE_USAGE));
         }
 
         String[] parts = trimmed.split("\\s+");
 
         if (!parts[0].equals(PATH_ASSIGNMENTS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentsCommand.MESSAGE_USAGE));
+                    GetStudentCommand.MESSAGE_USAGE));
         }
         try {
             Index index = ParserUtil.parseIndex(parts[1]);

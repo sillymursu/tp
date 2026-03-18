@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.assignment.Assignment;
@@ -54,7 +55,7 @@ public class AddAssignmentCommand extends Command {
         );
 
         model.addAssignment(assignmentWithId);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, assignmentWithId));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatA(assignmentWithId)));
     }
 
     @Override
