@@ -28,21 +28,21 @@ public class GetStudentParser implements Parser<Command> {
 
         if (trimmed.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentsCommand.MESSAGE_USAGE));
+                    GetStudentCommand.MESSAGE_USAGE));
         }
 
         String[] parts = trimmed.split("\\s+");
 
         if (!parts[0].equals(PATH_ASSIGNMENTS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentsCommand.MESSAGE_USAGE));
+                    GetStudentCommand.MESSAGE_USAGE));
         }
         try {
             Index index = ParserUtil.parseIndex(parts[1]);
-            return new GetStudentCommand(index);
+            return new DeleteCommand(index);
         } catch (ParseException pe) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetStudentCommand.MESSAGE_USAGE), pe);
         }
     }
 }

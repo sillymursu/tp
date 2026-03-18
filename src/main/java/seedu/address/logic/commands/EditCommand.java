@@ -213,6 +213,7 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
+                    .add("group", group)
                     .toString();
         }
     }
