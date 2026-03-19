@@ -2,8 +2,8 @@ package seedu.address.model.milestone;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.person.StudentId;
 import seedu.address.model.assignment.AssignmentId;
+import seedu.address.model.person.StudentId;
 
 /**
  * Flat representation of one milestone entry for storage and reconstruction.

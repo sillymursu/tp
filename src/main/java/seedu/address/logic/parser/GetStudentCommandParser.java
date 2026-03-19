@@ -5,7 +5,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.GetAssignmentsCommand;
 import seedu.address.logic.commands.GetStudentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -13,10 +12,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses "get ..." commands.
  * Supports:
- * - get /assignments
- * - get /assignments <assignmentId>
+ * - get /students index
  */
-public class GetStudentParser implements Parser<Command> {
+public class GetStudentCommandParser implements Parser<Command> {
 
     public static final String COMMAND_WORD = "get";
 
@@ -28,14 +26,14 @@ public class GetStudentParser implements Parser<Command> {
 
         if (trimmed.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentsCommand.MESSAGE_USAGE));
+                    GetStudentCommand.MESSAGE_USAGE));
         }
 
         String[] parts = trimmed.split("\\s+");
 
         if (!parts[0].equals(PATH_ASSIGNMENTS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentsCommand.MESSAGE_USAGE));
+                    GetStudentCommand.MESSAGE_USAGE));
         }
         try {
             Index index = ParserUtil.parseIndex(parts[1]);

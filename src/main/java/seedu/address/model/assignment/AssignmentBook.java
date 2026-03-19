@@ -14,10 +14,15 @@ public class AssignmentBook {
 
     private final UniqueAssignmentList assignments = new UniqueAssignmentList();
 
+    /**
+     * Creates an empty {@code AssignmentBook}.
+     */
     public AssignmentBook() {}
 
     /**
-     * Creates an AssignmentBook using the data in {@code toBeCopied}.
+     * Creates an {@code AssignmentBook} using the data in {@code toBeCopied}.
+     *
+     * @param toBeCopied The assignment book whose data is to be copied.
      */
     public AssignmentBook(AssignmentBook toBeCopied) {
         this();
@@ -26,6 +31,8 @@ public class AssignmentBook {
 
     /**
      * Resets the existing data of this {@code AssignmentBook} with {@code newData}.
+     *
+     * @param newData The new assignment book data to replace the current data.
      */
     public void resetData(AssignmentBook newData) {
         requireNonNull(newData);
@@ -33,7 +40,10 @@ public class AssignmentBook {
     }
 
     /**
-     * Check if an Assignment exists.
+     * Returns true if the given assignment exists in this assignment book.
+     *
+     * @param assignment The assignment to check.
+     * @return {@code true} if the assignment exists, {@code false} otherwise.
      */
     public boolean hasAssignment(Assignment assignment) {
         requireNonNull(assignment);
@@ -41,40 +51,56 @@ public class AssignmentBook {
     }
 
     /**
-     * Add an assignment to the AssignmentBook
+     * Adds an assignment to this assignment book.
+     *
+     * @param assignment The assignment to add.
      */
     public void addAssignment(Assignment assignment) {
         assignments.add(assignment);
     }
 
     /**
-     * Remove an assignment from the AssignmentBook
+     * Removes an assignment from this assignment book.
+     *
+     * @param assignment The assignment to remove.
      */
     public void removeAssignment(Assignment assignment) {
         assignments.remove(assignment);
     }
 
     /**
-     * Set the Assignment whether it is completed
+     * Replaces the given target assignment with the edited assignment.
+     *
+     * @param target The assignment to be replaced.
+     * @param editedAssignment The replacement assignment.
      */
     public void setAssignment(Assignment target, Assignment editedAssignment) {
         assignments.setAssignment(target, editedAssignment);
     }
 
     /**
-     * Set multiple assignments at once
+     * Replaces the current list of assignments with the given list.
+     *
+     * @param assignments The list of assignments to set.
      */
     public void setAssignments(List<Assignment> assignments) {
         this.assignments.setAssignments(assignments);
     }
 
     /**
-     * Returns an unmodifiable view of assignments.
+     * Returns an unmodifiable view of the assignments in this assignment book.
+     *
+     * @return An unmodifiable observable list of assignments.
      */
     public ObservableList<Assignment> getAssignmentList() {
         return assignments.asUnmodifiableObservableList();
     }
 
+    /**
+     * Returns the underlying unique assignment list.
+     *
+     * @return The backing {@code UniqueAssignmentList}.
+     */
     public UniqueAssignmentList getUniqueAssignmentList() {
         return assignments;
     }

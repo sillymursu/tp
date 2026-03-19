@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.assignment.Assignment;
@@ -16,8 +17,8 @@ public class AddAssignmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + " /assignment: Adds an assignment to the assignment library.\n"
-            + "Format: add /assignment {<label>, <group>, <dueDate>}\n"
-            + "Example: add /assignment {A-JUnit, Sec3A, 2026-02-20}";
+            + "Format: add /assignment {<label>; <group>; <dueDate>}\n"
+            + "Example: add /assignment {A-JUnit; Sec3A; 2026-02-20}";
 
     public static final String MESSAGE_SUCCESS = "New assignment added: %1$s";
     public static final String MESSAGE_DUPLICATE_ASSIGNMENT =
@@ -25,6 +26,9 @@ public class AddAssignmentCommand extends Command {
 
     private final Assignment toAdd;
 
+    /**
+     * Creates an AddCommand to add the specified {@code Assignment}
+     */
     public AddAssignmentCommand(Assignment assignment) {
         requireNonNull(assignment);
         this.toAdd = assignment;
@@ -54,7 +58,7 @@ public class AddAssignmentCommand extends Command {
         );
 
         model.addAssignment(assignmentWithId);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, assignmentWithId));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatA(assignmentWithId)));
     }
 
     @Override

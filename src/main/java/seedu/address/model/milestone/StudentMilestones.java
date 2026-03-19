@@ -1,13 +1,13 @@
 package seedu.address.model.milestone;
 
-import seedu.address.model.assignment.AssignmentId;
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import seedu.address.model.assignment.AssignmentId;
 
 /**
  * Stores all milestone records for a single student.

@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents the due date for an Assignment
- * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
+ * Represents the due date for an Assignment.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}.
  */
 public class DueDate {
 
@@ -19,7 +19,7 @@ public class DueDate {
     /**
      * Constructs a {@code DueDate}.
      *
-     * @params date A valid date.
+     * @param date A valid date string.
      */
     public DueDate(String date) {
         checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS);
@@ -28,6 +28,10 @@ public class DueDate {
 
     /**
      * Returns true if a given string is a valid date.
+     *
+     * @param date The string to validate.
+     * @return {@code true} if {@code date} is blank or follows the format {@code yyyy-MM-dd},
+     *         {@code false} otherwise.
      */
     public static boolean isValidDate(String date) {
         if (date.trim().isEmpty()) {
@@ -43,18 +47,30 @@ public class DueDate {
     }
 
     /**
-     * Converts Date object into storage string of format "yyyy-mm-dd"
-     * @return storage string of correct format
+     * Converts this due date into a storage string in the format {@code yyyy-MM-dd}.
+     *
+     * @return The storage string in the correct format.
      */
     public String toStorageString() {
         return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
+    /**
+     * Returns the string representation of this due date for display.
+     *
+     * @return The formatted due date string.
+     */
     @Override
     public String toString() {
         return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
+    /**
+     * Returns true if both due dates have the same value.
+     *
+     * @param other The object to compare against.
+     * @return {@code true} if this due date is equal to the other object, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -70,6 +86,11 @@ public class DueDate {
         return date.equals(otherDueDate.date);
     }
 
+    /**
+     * Returns the hash code value of this due date.
+     *
+     * @return The hash code of this due date.
+     */
     @Override
     public int hashCode() {
         return date.hashCode();

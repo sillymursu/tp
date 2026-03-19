@@ -18,9 +18,9 @@ import seedu.address.model.person.StudentId;
  */
 public class AddCommandParser implements Parser<AddCommand> {
     private static final Pattern ADD_PATTERN = Pattern.compile(
-            "^\\s*/students\\s*\\{\\s*\"([^\"]*)\"\\s*,\\s*\"([^\"]*)\"\\s*,"
+            "^\\s*/students\\s*\\{\\s*(?<name>[^,{}]+?)\\s*;\\s*(?<phone>[^,{}]+?)\\s*;"
                     +
-                    "\\s*\"([^\"]*)\"\\s*,\\s*\"([^\"]*)\"\\s*\\}\\s*$"
+                    "\\s*(?<email>[^,{}]+?)\\s*;\\s*(?<group>[^,{}]+?)\\s*\\}\\s*$"
     );
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -34,10 +34,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         StudentId tempId = new StudentId("S0");
-        Name name = ParserUtil.parseName(matcher.group(1));
-        Phone phone = ParserUtil.parsePhone(matcher.group(2));
-        Email email = ParserUtil.parseEmail(matcher.group(3));
-        String group = ParserUtil.parseGroup(matcher.group(4));
+        Name name = ParserUtil.parseName(matcher.group("name"));
+        Phone phone = ParserUtil.parsePhone(matcher.group("phone"));
+        Email email = ParserUtil.parseEmail(matcher.group("email"));
+        String group = ParserUtil.parseGroup(matcher.group("group"));
         Person person = new Person(tempId, name, phone, email, group);
 
         return new AddCommand(person);

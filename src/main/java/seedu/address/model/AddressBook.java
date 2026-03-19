@@ -32,6 +32,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public AddressBook() {}
 
+    /**
+     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
         resetData(toBeCopied);
@@ -39,20 +42,33 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     // ==================== overwrite operations ====================
 
+    /**
+     * Replaces the contents of the person list with {@code persons}.
+     * {@code persons} must not contain duplicate persons.
+     */
     public void setPersons(List<Person> persons) {
         this.persons.setPersons(persons);
     }
 
+    /**
+     * Replaces the contents of the person list with {@code milestoneStores}.
+     */
     public void setMilestoneStore(MilestoneStore milestoneStore) {
         requireNonNull(milestoneStore);
         this.milestoneStore.setMilestones(milestoneStore);
     }
 
-    // NEW
+    /**
+     * Replaces the contents of the person list with {@code assignments}.
+     * {@code assignments} must not contain duplicate assignments.
+     */
     public void setAssignments(List<Assignment> assignments) {
         this.assignmentBook.setAssignments(assignments);
     }
 
+    /**
+     * Replaces all data in the address book with data from specified {@code ReadOnlyAddressBook}
+     */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
@@ -62,36 +78,61 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     // ==================== person operations ====================
-
+    /**
+     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     */
     public boolean hasPerson(Person person) {
         requireNonNull(person);
         return persons.contains(person);
     }
 
+    /**
+     * Adds a person to the address book.
+     * The person must not already exist in the address book.
+     */
     public void addPerson(Person p) {
         persons.add(p);
     }
 
+    /**
+     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * {@code target} must exist in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     */
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
         persons.setPerson(target, editedPerson);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
     public void removePerson(Person key) {
         persons.remove(key);
     }
 
     // ==================== assignment operations ====================
 
+    /**
+     * Returns current assignment book
+     */
     public AssignmentBook getAssignmentBook() {
         return assignmentBook;
     }
 
+    /**
+     * Returns true if an assignment with the same identity as {@code assignment} exists in the address book.
+     */
     public boolean hasAssignment(Assignment assignment) {
         requireNonNull(assignment);
         return assignmentBook.hasAssignment(assignment);
     }
 
+    /**
+     * Adds an assignment to the address book.
+     * The assignment must not already exist in the address book.
+     */
     public void addAssignment(Assignment assignment) {
         requireNonNull(assignment);
         assignmentBook.addAssignment(assignment);

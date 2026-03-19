@@ -4,9 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -132,7 +132,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
     //=========== Filtered Assignment List Accessors =============================================================
 
     @Override
@@ -144,12 +143,6 @@ public class ModelManager implements Model {
     public void updateFilteredAssignmentList(Predicate<Assignment> predicate) {
         requireNonNull(predicate);
         filteredAssignments.setPredicate(predicate);
-    }
-
-    @Override
-    public void updateFilteredIndexList(Person target) {
-        requireNonNull(target);
-        filteredPersons.setPredicate(p -> p.equals(target));
     }
 
     //=========== Feature 2: Milestones ======================================================================

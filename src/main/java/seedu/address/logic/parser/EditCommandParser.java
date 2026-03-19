@@ -28,8 +28,8 @@ import seedu.address.model.tag.Tag;
 public class EditCommandParser implements Parser<EditCommand> {
 
     private static final Pattern STUDENT_EDIT_ARGS_FORMAT = Pattern.compile("\\s*/students\\s+(?<studentId>\\S+)"
-            + "\\s*\\{\\s*\"(?<name>[^\"]*)\"\\s*,\\s*\"(?<phone>[^\"]*)\"\\s*,\\s*\"(?<email>[^\"]*)\""
-            + "\\s*}\\s*");
+            + "\\s*\\{\\s*(?<name>[^,{}]+?)\\s*;\\s*(?<phone>[^,{}]+?)\\s*;\\s*(?<email>[^,{}]+?)"
+            + "\\s*;\\s*(?<group>[^,{}]+?)\\s*}\\s*");
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
@@ -100,6 +100,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         editPersonDescriptor.setName(ParserUtil.parseName(matcher.group("name")));
         editPersonDescriptor.setPhone(ParserUtil.parsePhone(matcher.group("phone")));
         editPersonDescriptor.setEmail(ParserUtil.parseEmail(matcher.group("email")));
+        editPersonDescriptor.setGroup(ParserUtil.parseGroup(matcher.group("group")));
 
         return Optional.of(new EditCommand(index, editPersonDescriptor));
     }
