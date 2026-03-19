@@ -58,6 +58,6 @@ public class GetAssignmentCommand extends Command {
                 + "Group: " + a.getGroup() + "\n"
                 + "Due: " + a.getDueDate();
 
-        return new CommandResult(message);
+        return new CommandResult("Now displaying requested Assignment");
     }
 }
