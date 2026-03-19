@@ -66,7 +66,7 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
                     AddAssignmentCommand.MESSAGE_USAGE));
         }
 
-        String[] tokens = inside.split(",", -1);
+        String[] tokens = inside.split(";", -1);
         if (tokens.length != 3) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAssignmentCommand.MESSAGE_USAGE));

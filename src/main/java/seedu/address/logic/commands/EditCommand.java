@@ -14,7 +14,6 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -27,8 +26,8 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified \n"
-            + "Format: edit /students <index> {\"<name>\", \"<phone number>\", \"<email>\"}\n"
-            + "Example: edit /students 2 {\"John\", \"9878 0020\", \"johnnyjohn@gmail.com\"}";
+            + "Format: edit /students <index> {<name>; <phone number>; <email>; <group>}\n"
+            + "Example: edit /students 2 {John; 9878 0020, johnnyjohn@gmail.com; S3A}";
 
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";

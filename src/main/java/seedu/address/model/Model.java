@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
-import java.util.function.Predicate;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -145,6 +145,4 @@ public interface Model {
     Optional<Assignment> getAssignmentById(AssignmentId assignmentId);
 
     AssignmentId getNextAssignmentId();
-
-    void updateFilteredIndexList(Person personToGet);
 }

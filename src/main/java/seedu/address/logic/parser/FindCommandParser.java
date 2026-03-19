@@ -13,6 +13,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+    private static final String PATH_ASSIGNMENTS = "/students";
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns a FindCommand object for execution.
@@ -26,8 +27,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        if (!nameKeywords[0].equals(PATH_ASSIGNMENTS)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindCommand.MESSAGE_USAGE));
+        }
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(Arrays.copyOfRange(
+                nameKeywords, 1, nameKeywords.length))));
     }
-
 }
