@@ -17,8 +17,8 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the address book. \n"
-            + "Format: add /students {\"<name>\", \"<phone number>\", \"<email>\", \"<group>\"}\n"
-            + "Example: add /students {\"John\", \"9878 0020\", \"johnnyjohn@gmail.com\", \"Sec3A\"}";
+            + "Format: add /students {<name>; <phone number>; <email>; <group>}\n"
+            + "Example: add /students {John; 9878 0020; johnnyjohn@gmail.com; Sec3A}";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
