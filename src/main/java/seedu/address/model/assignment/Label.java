@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents the label for an Assignment
- * Guarantees: immutable; is valid as declared in {@link #isValidLabel(String)}
+ * Represents the label for an Assignment.
+ * Guarantees: immutable; is valid as declared in {@link #isValidLabel(String)}.
  */
 public class Label {
 
@@ -22,7 +22,7 @@ public class Label {
     /**
      * Constructs a {@code Label}.
      *
-     * @params label A valid label.
+     * @param label A valid label.
      */
     public Label(String label) {
         requireNonNull(label);
@@ -32,16 +32,30 @@ public class Label {
 
     /**
      * Returns true if a given string is a valid label.
+     *
+     * @param test The string to validate.
+     * @return {@code true} if {@code test} is a valid label, {@code false} otherwise.
      */
     public static boolean isValidLabel(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns the string representation of this label.
+     *
+     * @return The label as a string.
+     */
     @Override
     public String toString() {
         return label;
     }
 
+    /**
+     * Returns true if both labels have the same value.
+     *
+     * @param other The object to compare against.
+     * @return {@code true} if this label is equal to the other object, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -57,8 +71,14 @@ public class Label {
         return label.equals(otherLabel.label);
     }
 
+    /**
+     * Returns the hash code value of this label.
+     *
+     * @return The hash code of this label.
+     */
     @Override
     public int hashCode() {
         return label.hashCode();
     }
 }
+

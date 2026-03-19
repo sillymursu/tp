@@ -138,6 +138,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         assignmentBook.addAssignment(assignment);
     }
 
+    /**
+     * Deletes an assignment from the address book.
+     * The assignment must already exist in the address book.
+     */
+    public void deleteAssignment(Assignment assignment) {
+        requireNonNull(assignment);
+        assignmentBook.removeAssignment(assignment);
+    }
+
     // ==================== util ====================
 
 

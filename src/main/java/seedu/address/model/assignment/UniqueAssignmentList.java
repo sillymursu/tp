@@ -22,6 +22,10 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
 
     /**
      * Returns true if the list contains an equivalent assignment as the given argument.
+     *
+     * @param toCheck The assignment to check for.
+     * @return {@code true} if an assignment with the same assignment id exists in the list,
+     *         {@code false} otherwise.
      */
     public boolean contains(Assignment toCheck) {
         requireNonNull(toCheck);
@@ -32,6 +36,9 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
     /**
      * Adds an assignment to the list.
      * The assignment must not already exist in the list.
+     *
+     * @param toAdd The assignment to add.
+     * @throws DuplicateAssignmentException If the assignment already exists in the list.
      */
     public void add(Assignment toAdd) {
         requireNonNull(toAdd);
@@ -45,7 +52,14 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
      * Replaces the assignment {@code target} in the list with {@code editedAssignment}.
      * {@code target} must exist in the list.
      *
-     * The {@code editedAssignment} must not have the same AssignmentId as another existing assignment in the list.
+     * <p>The {@code editedAssignment} must not have the same AssignmentId as another existing
+     * assignment in the list.</p>
+     *
+     * @param target The assignment to replace.
+     * @param editedAssignment The replacement assignment.
+     * @throws AssignmentNotFoundException If {@code target} does not exist in the list.
+     * @throws DuplicateAssignmentException If {@code editedAssignment} conflicts with another
+     *         existing assignment's id.
      */
     public void setAssignment(Assignment target, Assignment editedAssignment) {
         requireNonNull(target);
@@ -69,6 +83,9 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
     /**
      * Removes the equivalent assignment from the list.
      * The assignment must exist in the list.
+     *
+     * @param toRemove The assignment to remove.
+     * @throws AssignmentNotFoundException If the assignment does not exist in the list.
      */
     public void remove(Assignment toRemove) {
         requireNonNull(toRemove);
@@ -79,21 +96,39 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
 
     /**
      * Replaces the contents of this list with {@code assignments}.
+     *
+     * @param assignments The list of assignments to use.
      */
     public void setAssignments(List<Assignment> assignments) {
         requireNonNull(assignments);
         internalList.setAll(assignments);
     }
 
+    /**
+     * Returns an unmodifiable view of the internal assignment list.
+     *
+     * @return An unmodifiable observable list of assignments.
+     */
     public ObservableList<Assignment> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
     }
 
+    /**
+     * Returns an iterator over the assignments in this list.
+     *
+     * @return An iterator over the assignments.
+     */
     @Override
     public Iterator<Assignment> iterator() {
         return internalList.iterator();
     }
 
+    /**
+     * Returns true if both unique assignment lists contain the same assignments in the same order.
+     *
+     * @param other The object to compare against.
+     * @return {@code true} if this list is equal to the other object, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -106,6 +141,11 @@ public class UniqueAssignmentList implements Iterable<Assignment> {
         return internalList.equals(otherList.internalList);
     }
 
+    /**
+     * Returns the hash code value of this unique assignment list.
+     *
+     * @return The hash code of this list.
+     */
     @Override
     public int hashCode() {
         return internalList.hashCode();

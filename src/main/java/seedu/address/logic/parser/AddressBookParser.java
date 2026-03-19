@@ -63,6 +63,9 @@ public class AddressBookParser {
             return new EditCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+            if (arguments.trim().startsWith("/assignment")) {
+                return new DeleteAssignmentCommandParser().parse(arguments);
+            }
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
@@ -73,9 +76,9 @@ public class AddressBookParser {
 
         case GetAssignmentCommandParser.COMMAND_WORD:
             if (arguments.trim().startsWith("/assignments")) {
-                return new AddAssignmentCommandParser().parse(arguments);
+                return new GetAssignmentCommandParser().parse(arguments);
             }
-            return new GetCommandParser().parse(arguments);
+            return new GetStudentCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();

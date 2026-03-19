@@ -132,7 +132,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
     //=========== Filtered Assignment List Accessors =============================================================
 
     @Override
@@ -144,12 +143,6 @@ public class ModelManager implements Model {
     public void updateFilteredAssignmentList(Predicate<Assignment> predicate) {
         requireNonNull(predicate);
         filteredAssignments.setPredicate(predicate);
-    }
-
-    @Override
-    public void updateFilteredIndexList(Person target) {
-        requireNonNull(target);
-        filteredPersons.setPredicate(p -> p.equals(target));
     }
 
     //=========== Feature 2: Milestones ======================================================================
@@ -284,6 +277,12 @@ public class ModelManager implements Model {
     public void addAssignment(Assignment assignment) {
         requireNonNull(assignment);
         addressBook.addAssignment(assignment);
+    }
+
+    @Override
+    public void deleteAssignment(Assignment assignment) {
+        requireNonNull(assignment);
+        addressBook.deleteAssignment(assignment);
     }
 
     @Override

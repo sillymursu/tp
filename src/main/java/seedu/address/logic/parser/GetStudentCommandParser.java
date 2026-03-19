@@ -14,7 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Supports:
  * - get /students index
  */
-public class GetCommandParser implements Parser<Command> {
+public class GetStudentCommandParser implements Parser<Command> {
 
     public static final String COMMAND_WORD = "get";
 

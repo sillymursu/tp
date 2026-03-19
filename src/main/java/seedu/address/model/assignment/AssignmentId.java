@@ -30,12 +30,20 @@ public class AssignmentId {
         this.value = trimmed;
     }
 
+    /**
+     * Returns the string value of this assignment id.
+     *
+     * @return The assignment id as a string.
+     */
     public String getValue() {
         return value;
     }
 
     /**
      * Returns true if a given string is a valid assignment id.
+     *
+     * @param test The string to validate.
+     * @return {@code true} if {@code test} is a valid assignment id, {@code false} otherwise.
      */
     public static boolean isValidAssignmentId(String test) {
         if (test == null) {
@@ -44,11 +52,22 @@ public class AssignmentId {
         return test.trim().matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns the string representation of this assignment id.
+     *
+     * @return The assignment id as a string.
+     */
     @Override
     public String toString() {
         return value;
     }
 
+    /**
+     * Returns true if both assignment ids have the same value.
+     *
+     * @param other The object to compare against.
+     * @return {@code true} if this assignment id is equal to the other object, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -61,6 +80,11 @@ public class AssignmentId {
         return value.equals(otherId.value);
     }
 
+    /**
+     * Returns the hash code value of this assignment id.
+     *
+     * @return The hash code of this assignment id.
+     */
     @Override
     public int hashCode() {
         return value.hashCode();

@@ -136,15 +136,35 @@ public interface Model {
      */
     StudentId getNextStudentId();
 
+    /**
+     * Returns true if an assignment with the same identity as {@code assignment} exists.
+     */
     boolean hasAssignment(Assignment assignment);
 
+    /**
+     * Adds the given assignment.
+     * {@code assignment} must not already exist.
+     */
     void addAssignment(Assignment assignment);
 
+    /**
+     * Deletes the given assignment.
+     * The assignment must exist.
+     */
+    void deleteAssignment(Assignment assignment);
+
+    /**
+     * Returns an unmodifiable view of the full assignment list.
+     */
     ObservableList<Assignment> getAssignmentList();
 
+    /**
+     * Returns the assignment with the given {@code assignmentId}, if present.
+     */
     Optional<Assignment> getAssignmentById(AssignmentId assignmentId);
 
+    /**
+     * Generates the next available AssignmentId in the form A1, A2, A3... based on existing assignments.
+     */
     AssignmentId getNextAssignmentId();
-
-    void updateFilteredIndexList(Person personToGet);
 }

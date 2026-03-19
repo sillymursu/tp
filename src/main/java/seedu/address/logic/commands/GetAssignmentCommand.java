@@ -10,7 +10,7 @@ import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
 
 /**
- * Finds and list the assignment corresponding to the AssignmentID supplied by user
+ * Shows the details of a single assignment identified by its assignment id.
  */
 public class GetAssignmentCommand extends Command {
 
@@ -23,14 +23,22 @@ public class GetAssignmentCommand extends Command {
     private final AssignmentId assignmentId;
 
     /**
-     * Creates a {@Link GetAssignmenntCommand} based on given assignmentId
-     * @param assignmentId of the person in the filtered person list to edit
+     * Creates a {@code GetAssignmentCommand} for the given assignment id.
+     *
+     * @param assignmentId The id of the assignment to retrieve.
      */
     public GetAssignmentCommand(AssignmentId assignmentId) {
         requireNonNull(assignmentId);
         this.assignmentId = assignmentId;
     }
 
+    /**
+     * Executes the command and returns the details of the specified assignment.
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return A {@code CommandResult} containing the assignment details.
+     * @throws CommandException If the assignment cannot be found.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

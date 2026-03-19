@@ -9,7 +9,7 @@ import seedu.address.model.Model;
 import seedu.address.model.assignment.Assignment;
 
 /**
- * Gets and lists all assignments in LeTutor
+ * Lists all assignments in the assignment book.
  */
 public class GetAssignmentsCommand extends Command {
 
@@ -20,6 +20,14 @@ public class GetAssignmentsCommand extends Command {
     private static final String MESSAGE_NO_ASSIGNMENTS = "No assignments found.";
     private static final String MESSAGE_LIST_HEADER = "Assignments:";
 
+    /**
+     * Executes the command and returns a list of all assignments.
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return A {@code CommandResult} containing the formatted list of assignments,
+     *         or a message indicating that no assignments were found.
+     * @throws CommandException If an error occurs during command execution.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

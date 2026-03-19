@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents the group for an Assignment
- * Guarantees: immutable; is valid as declared in {@link #isValidGroup(String)}
+ * Represents the group for an Assignment.
+ * Guarantees: immutable; is valid as declared in {@link #isValidGroup(String)}.
  */
 public class Group {
 
@@ -22,7 +22,7 @@ public class Group {
     /**
      * Constructs a {@code Group}.
      *
-     * @params group A valid group.
+     * @param group A valid group.
      */
     public Group(String group) {
         requireNonNull(group);
@@ -31,17 +31,31 @@ public class Group {
     }
 
     /**
-     * Returns true if a given string is a valid label.
+     * Returns true if a given string is a valid group.
+     *
+     * @param test The string to validate.
+     * @return {@code true} if {@code test} is a valid group, {@code false} otherwise.
      */
     public static boolean isValidGroup(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns the string representation of this group.
+     *
+     * @return The group as a string.
+     */
     @Override
     public String toString() {
         return group;
     }
 
+    /**
+     * Returns true if both groups have the same value.
+     *
+     * @param other The object to compare against.
+     * @return {@code true} if this group is equal to the other object, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -57,6 +71,11 @@ public class Group {
         return group.equals(otherGroup.group);
     }
 
+    /**
+     * Returns the hash code value of this group.
+     *
+     * @return The hash code of this group.
+     */
     @Override
     public int hashCode() {
         return group.hashCode();

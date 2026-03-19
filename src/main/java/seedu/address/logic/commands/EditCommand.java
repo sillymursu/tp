@@ -26,8 +26,8 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified \n"
-            + "Format: edit /students <index> {\"<name>\", \"<phone number>\", \"<email>\"}\n"
-            + "Example: edit /students 2 {\"John\", \"9878 0020\", \"johnnyjohn@gmail.com\"}";
+            + "Format: edit /students <index> {<name>; <phone number>; <email>; <group>}\n"
+            + "Example: edit /students 2 {John; 9878 0020, johnnyjohn@gmail.com; S3A}";
 
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
