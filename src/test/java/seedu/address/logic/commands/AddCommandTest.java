@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -25,10 +26,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
-import seedu.address.model.milestone.CompletedAt;
-import seedu.address.model.milestone.MilestoneRecord;
-import seedu.address.model.milestone.MilestoneStatus;
-import seedu.address.model.milestone.StudentMilestones;
+import seedu.address.model.milestone.*;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.testutil.PersonBuilder;
@@ -137,6 +135,12 @@ public class AddCommandTest {
         @Override
         public void removeAllMilestonesForAssignment(AssignmentId assignmentId) {
             // no-op for tests
+        }
+
+        @Override
+        public StudentMilestoneView getResolvedMilestones(StudentId studentId) {
+            // AddCommand does not use resolved milestones; return empty for test compilation.
+            return new StudentMilestoneView(studentId, Collections.emptyList());
         }
 
         @Override
