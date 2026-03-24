@@ -11,8 +11,8 @@ import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneStatus;
-import seedu.address.model.milestone.StudentMilestones;
 import seedu.address.model.milestone.StudentMilestoneView;
+import seedu.address.model.milestone.StudentMilestones;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 
