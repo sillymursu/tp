@@ -1,11 +1,11 @@
 package seedu.address.model.group;
 
-import seedu.address.model.group.exceptions.AlreadyInGroupException;
-import seedu.address.model.person.StudentId;
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+
+import seedu.address.model.group.exceptions.AlreadyInGroupException;
+import seedu.address.model.person.StudentId;
 
 /**
  * Manages the list of groups in the application.

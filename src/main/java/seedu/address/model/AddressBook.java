@@ -217,7 +217,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .add("persons", persons)
                 .add("milestoneStore", milestoneStore)
                 .add("assignments", assignmentBook.getAssignmentList().size())
-                .add("groups", groups)
+                .add("groups", groups.getGroups().toArray().length)
                 .toString();
     }
 

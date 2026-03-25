@@ -83,7 +83,7 @@ public class Person {
                 && name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && group.equals(otherPerson.group);
+                && group.getGroupName().equals(otherPerson.group.getGroupName());
     }
 
     @Override

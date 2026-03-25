@@ -42,7 +42,7 @@ public class JsonAdaptedAssignment {
     public JsonAdaptedAssignment(Assignment source) {
         assignmentId = source.getAssignmentId().getValue();
         label = source.getLabel().label;
-        group = source.getGroup().getGroupName();
+        group = source.getGroup().getGroupName().toString();
         dueDate = source.getDueDate().toStorageString();
     }
 

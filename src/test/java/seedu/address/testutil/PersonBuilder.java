@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -21,7 +22,7 @@ public class PersonBuilder {
     private Name name;
     private Phone phone;
     private Email email;
-    private String group;
+    private Group group;
 
 
     /**
@@ -32,7 +33,7 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        group = DEFAULT_GROUP;
+        group = new Group(DEFAULT_GROUP);
     }
 
     /**
@@ -66,7 +67,7 @@ public class PersonBuilder {
      * Sets the {@code Address} of the {@code Person} being built.
      */
     public PersonBuilder withGroup(String group) {
-        this.group = group;
+        this.group = new Group(group);
         return this;
     }
 

@@ -80,7 +80,22 @@ public class Group {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof Group)) {
+            return false;
+        }
+
+        Group otherGroup = (Group) other;
+        return name.equals(otherGroup.name);
+    }
+
+    @Override
     public String toString() {
-        return this.getGroupName();
+        return this.name.getGroupName();
     }
 }

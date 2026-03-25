@@ -24,4 +24,19 @@ public final class GroupName {
     public String getGroupName() {
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof GroupName)) {
+            return false;
+        }
+
+        GroupName otherGroup = (GroupName) other;
+        return name.equals(otherGroup.name);
+    }
 }

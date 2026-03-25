@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -60,7 +61,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Group} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withGroup(String group) {
-        descriptor.setGroup(group);
+        descriptor.setGroup(new Group(group));
         return this;
     }
 
