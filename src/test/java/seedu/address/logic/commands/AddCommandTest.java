@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
@@ -26,6 +27,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
+import seedu.address.model.assignment.DueDate;
+import seedu.address.model.assignment.Label;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneStatus;
@@ -92,6 +95,67 @@ public class AddCommandTest {
         AddCommand addCommand = new AddCommand(ALICE);
         String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
         assertEquals(expected, addCommand.toString());
+    }
+
+    @Test
+    public void addAssignmentConstructor_nullAssignment_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddAssignmentCommand(null));
+    }
+
+    @Test
+    public void execute_assignmentAcceptedByModel_addAssignmentSuccessful() throws Exception {
+        ModelStubAcceptingAssignmentAdded modelStub = new ModelStubAcceptingAssignmentAdded();
+        Assignment input = assignment("A0", "A-JUnit", "Sec3A", "2026-02-20");
+
+        CommandResult result = new AddAssignmentCommand(input).execute(modelStub);
+
+        Assignment expectedAdded = assignment("A1", "A-JUnit", "Sec3A", "2026-02-20");
+        assertEquals(String.format(AddAssignmentCommand.MESSAGE_SUCCESS, Messages.formatA(expectedAdded)),
+                result.getFeedbackToUser());
+        assertEquals(java.util.List.of(expectedAdded), modelStub.assignmentsAdded);
+    }
+
+    @Test
+    public void execute_duplicateAssignment_throwsCommandException() {
+        Assignment existing = assignment("A5", "A-JUnit", "Sec3A", "2026-02-20");
+        Assignment toAddDifferentIdSameFields = assignment("A0", "A-JUnit", "Sec3A", "2026-02-20");
+
+        AddAssignmentCommand command = new AddAssignmentCommand(toAddDifferentIdSameFields);
+        ModelStub modelStub = new ModelStubWithExistingAssignments(existing);
+
+        assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_DUPLICATE_ASSIGNMENT,
+                () -> command.execute(modelStub));
+    }
+
+    @Test
+    public void addAssignmentEquals() {
+        Assignment a1 = assignment("A0", "A-JUnit", "Sec3A", "2026-02-20");
+        Assignment a2 = assignment("A0", "A-Streams", "Sec3A", "2026-02-20");
+
+        AddAssignmentCommand addA1 = new AddAssignmentCommand(a1);
+        AddAssignmentCommand addA2 = new AddAssignmentCommand(a2);
+
+        assertTrue(addA1.equals(addA1));
+        assertTrue(addA1.equals(new AddAssignmentCommand(a1)));
+        assertFalse(addA1.equals(1));
+        assertFalse(addA1.equals(null));
+        assertFalse(addA1.equals(addA2));
+    }
+
+    @Test
+    public void addAssignmentToStringMethod() {
+        Assignment a1 = assignment("A0", "A-JUnit", "Sec3A", "2026-02-20");
+        AddAssignmentCommand command = new AddAssignmentCommand(a1);
+        assertEquals("AddAssignmentCommand{toAdd=" + a1 + "}", command.toString());
+    }
+
+    private static Assignment assignment(String id, String label, String group, String dueDate) {
+        return new Assignment(
+                new AssignmentId(id),
+                new Label(label),
+                group,
+                new DueDate(dueDate)
+        );
     }
 
     /**
@@ -246,8 +310,6 @@ public class AddCommandTest {
         public void deleteAssignment(Assignment assignment) {
             throw new AssertionError("This method should not be called.");
         }
-
-
     }
 
     /**
@@ -291,5 +353,67 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
+
+    /**
+     * A Model stub that contains pre-existing assignments.
+     */
+    private class ModelStubWithExistingAssignments extends ModelStub {
+        private final ObservableList<Assignment> assignments;
+
+        ModelStubWithExistingAssignments(Assignment... assignments) {
+            this.assignments = FXCollections.observableArrayList(assignments);
+        }
+
+        @Override
+        public boolean hasAssignment(Assignment assignment) {
+            requireNonNull(assignment);
+            return assignments.stream().anyMatch(assignment::isSameAssignment);
+        }
+
+        @Override
+        public ObservableList<Assignment> getAssignmentList() {
+            return assignments;
+        }
+
+        @Override
+        public AssignmentId getNextAssignmentId() {
+            return new AssignmentId("A999");
+        }
+    }
+
+    /**
+     * A model stub that always accepts the assignment being added.
+     */
+    private class ModelStubAcceptingAssignmentAdded extends ModelStub {
+        final ArrayList<Assignment> assignmentsAdded = new ArrayList<>();
+
+        @Override
+        public boolean hasAssignment(Assignment assignment) {
+            requireNonNull(assignment);
+            return assignmentsAdded.stream().anyMatch(assignment::isSameAssignment);
+        }
+
+        @Override
+        public ObservableList<Assignment> getAssignmentList() {
+            return FXCollections.observableArrayList(assignmentsAdded);
+        }
+
+        @Override
+        public void addAssignment(Assignment assignment) {
+            requireNonNull(assignment);
+            assignmentsAdded.add(assignment);
+        }
+
+        @Override
+        public AssignmentId getNextAssignmentId() {
+            return new AssignmentId("A1");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
 
 }
