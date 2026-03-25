@@ -50,7 +50,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setName(ParserUtil.parseName(matcher.group("name").trim()));
             editPersonDescriptor.setPhone(ParserUtil.parsePhone(matcher.group("phone").trim()));
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(matcher.group("email").trim()));
-            editPersonDescriptor.setGroup(ParserUtil.parseGroup(matcher.group("group").trim()));
+            editPersonDescriptor.setGroup(ParserUtil.parseGroupAsStr(matcher.group("group").trim()));
 
             if (!editPersonDescriptor.isAnyFieldEdited()) {
                 throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);

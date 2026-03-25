@@ -1,9 +1,12 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -11,6 +14,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.assignment.DueDate;
+import seedu.address.model.assignment.Group;
 import seedu.address.model.assignment.Label;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
@@ -146,6 +150,19 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String group} into a {@code Group}.
+     */
+    public static Group parseGroup(String group) throws ParseException {
+        requireNonNull(group);
+        String trimmed = group.trim();
+        if (!Group.isValidGroup(trimmed)) {
+            throw new ParseException(Group.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Group(trimmed);
+    }
+
+    /**
      * Parses a {@code String dueDate} into a {@code DueDate}.
      */
     public static DueDate parseDueDate(String dueDate) throws ParseException {
@@ -165,5 +182,59 @@ public class ParserUtil {
         requireNonNull(studentId);
         String trimmedStudentId = studentId.trim();
         return new StudentId(trimmedStudentId);
+    }
+
+    /**
+     * Parses a {@code String raw} into a List of 3 Strings, split by ';' and enclosed in '{}'.
+     * Allows individual elements within the tuple to be empty strings.
+     *
+     * @param raw The string to be parsed.
+     * @param errorMessage The specific command usage message to display if parsing fails.
+     * @return A list containing exactly 3 trimmed strings.
+     * @throws ParseException if the input is null, not enclosed in '{}', or does not contain exactly 3 elements.
+     */
+    public static List<String> parseTuple3AllowEmpty(String raw, String errorMessage) throws ParseException {
+        if (raw == null) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
+        }
+
+        String s = raw.trim();
+
+        if (!s.startsWith("{") || !s.endsWith("}")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
+        }
+
+        // Strip the curly braces
+        String inside = s.substring(1, s.length() - 1);
+
+        // Split by ';' keeping empty trailing tokens
+        String[] tokens = inside.split(";", -1);
+
+        if (tokens.length != 3) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
+        }
+
+        return Arrays.asList(tokens[0].trim(), tokens[1].trim(), tokens[2].trim());
+    }
+
+    /**
+     * Parses a {@code String raw} into a List of 3 Strings, split by ';' and enclosed in '{}'.
+     * Validates that the first and third elements are strictly not empty.
+     *
+     * @param raw The string to be parsed.
+     * @param errorMessage The specific command usage message to display if parsing fails.
+     * @return A list containing exactly 3 trimmed strings.
+     * @throws ParseException if the input format is invalid, or if the 1st or 3rd elements are empty.
+     */
+    public static List<String> parseTuple3(String raw, String errorMessage) throws ParseException {
+        // Delegate the initial parsing to the allowEmpty method
+        List<String> parsedList = parseTuple3AllowEmpty(raw, errorMessage);
+
+        // Perform the strict validation for the 1st and 3rd elements
+        if (parsedList.get(0).isEmpty() || parsedList.get(2).isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
+        }
+
+        return parsedList;
     }
 }

@@ -304,6 +304,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setAssignment(Assignment target, Assignment editedAssignment) {
+        requireAllNonNull(target, editedAssignment);
+        addressBook.setAssignment(target, editedAssignment);
+    }
+
+    @Override
     public ObservableList<Assignment> getAssignmentList() {
         return addressBook.getAssignmentList();
     }

@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.ParserUtil.parseTuple3;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.logic.commands.AddAssignmentCommand;
@@ -10,6 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.assignment.DueDate;
+import seedu.address.model.assignment.Group;
 import seedu.address.model.assignment.Label;
 import seedu.address.model.group.Group;
 
@@ -42,7 +43,7 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
         }
 
         String remainder = trimmed.substring(PATH_ASSIGNMENT.length()).trim();
-        List<String> parts = parseTuple3(remainder);
+        List<String> parts = parseTuple3(remainder, AddAssignmentCommand.MESSAGE_USAGE);
 
         Label label = ParserUtil.parseLabel(parts.get(0));
         Group group = ParserUtil.parseGroup(parts.get(1));
@@ -51,38 +52,5 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
         // placeholder ID, real ID assigned in AddAssignmentCommand.execute()
         Assignment assignment = new Assignment(new AssignmentId("A0"), label, group, dueDate);
         return new AddAssignmentCommand(assignment);
-    }
-
-    private List<String> parseTuple3(String raw) throws ParseException {
-        String s = raw.trim();
-
-        if (!s.startsWith("{") || !s.endsWith("}")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddAssignmentCommand.MESSAGE_USAGE));
-        }
-
-        String inside = s.substring(1, s.length() - 1).trim();
-        if (inside.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddAssignmentCommand.MESSAGE_USAGE));
-        }
-
-        String[] tokens = inside.split(";", -1);
-        if (tokens.length != 3) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddAssignmentCommand.MESSAGE_USAGE));
-        }
-
-        List<String> out = new ArrayList<>();
-        for (String t : tokens) {
-            out.add(t.trim());
-        }
-
-        if (out.get(0).isEmpty() || out.get(2).isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddAssignmentCommand.MESSAGE_USAGE));
-        }
-
-        return out;
     }
 }
