@@ -2,14 +2,18 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentBook;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupManager;
 import seedu.address.model.milestone.MilestoneStore;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.StudentId;
 import seedu.address.model.person.UniquePersonList;
 
 /**
@@ -23,11 +27,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     // NEW: assignments
     private final AssignmentBook assignmentBook;
+    private final GroupManager groups;
 
     {
         persons = new UniquePersonList();
         milestoneStore = new MilestoneStore();
         assignmentBook = new AssignmentBook();
+        groups = new GroupManager();
     }
 
     public AddressBook() {}
@@ -147,18 +153,43 @@ public class AddressBook implements ReadOnlyAddressBook {
         assignmentBook.removeAssignment(assignment);
     }
 
+    // ==================== groups ====================
+
     /**
-     * Replaces the given assignment {@code target} in the list with {@code editedAssignment}.
-     * {@code target} must exist.
-     * The assignment identity of {@code editedAssignment} must not be the same as another existing assignment.
+     * Adds a group to the group manager
+     * @param group group to be added
      */
-    public void setAssignment(Assignment target, Assignment editedAssignment) {
-        requireNonNull(editedAssignment);
-        assignmentBook.setAssignment(target, editedAssignment);
+    public void addGroup(Group group) {
+        requireNonNull(group);
+        groups.addGroup(group);
     }
 
-    // ==================== util ====================
+    /**
+     * Removes given group from group manager
+     * @param group group to be removed
+     */
+    public void removeGroup(Group group) {
+        requireNonNull(group);
+        groups.removeGroup(group);
+    }
 
+    /**
+     * Checks if there are duplicate groups
+     * @param group group to be checked
+     * @return true if exists and false otherwise
+     */
+    public boolean hasGroup(Group group) {
+        requireNonNull(group);
+        return !groups.validateAddGroup(group);
+    }
+
+    public void addStudentToGroup(Group g, StudentId id) {
+        groups.addStudentToGroup(g, id);
+    }
+
+    public void removeStudentFromGroup(Group g, StudentId id) {
+        groups.removeStudentFromGroup(g, id);
+    }
 
     @Override
     public ObservableList<Person> getPersonList() {
@@ -176,11 +207,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ArrayList<Group> getGroups() {
+        return groups.getGroups();
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("persons", persons)
                 .add("milestoneStore", milestoneStore)
                 .add("assignments", assignmentBook.getAssignmentList().size())
+                .add("groups", groups.getGroups().toArray().length)
                 .toString();
     }
 
@@ -197,13 +234,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         AddressBook otherAddressBook = (AddressBook) other;
         return persons.equals(otherAddressBook.persons)
                 && milestoneStore.equals(otherAddressBook.milestoneStore)
-                && assignmentBook.getAssignmentList().equals(otherAddressBook.assignmentBook.getAssignmentList());
+                && assignmentBook.getAssignmentList().equals(otherAddressBook.assignmentBook.getAssignmentList())
+                && groups.getGroups().equals(otherAddressBook.groups.getGroups());
     }
 
     @Override
     public int hashCode() {
         return 31 * persons.hashCode()
                 + 17 * milestoneStore.hashCode()
-                + assignmentBook.getAssignmentList().hashCode();
+                + assignmentBook.getAssignmentList().hashCode()
+                + groups.hashCode();
     }
 }

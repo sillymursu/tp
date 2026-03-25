@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -47,7 +48,7 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        group = source.getGroup();
+        group = source.getGroup().getGroupName().toString();
     }
 
     /**
@@ -92,7 +93,7 @@ class JsonAdaptedPerson {
         if (group == null) {
             throw new IllegalValueException("Group name is not a string");
         }
-        final String modelGroup = group;
+        final Group modelGroup = new Group(group);
 
         return new Person(modelStudentId, modelName, modelPhone, modelEmail, modelGroup);
     }

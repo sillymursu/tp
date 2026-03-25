@@ -6,13 +6,13 @@ import static java.util.Objects.requireNonNull;
  * Value object representing the group identifier a student belongs to.
  */
 public final class GroupId {
-    public static final String MESSAGE_CONSTRAINTS = "GroupId cannot be blank.";
+    public static final String MESSAGE_CONSTRAINTS = "GroupName cannot be blank.";
     public static final String VALIDATION_REGEX = "[^\\s].*";
 
     private final String identifier;
 
     /**
-     * Constructs a {@code GroupId}.
+     * Constructs a {@code GroupName}.
      *
      * @param identifier A valid, non-blank group identifier string.
      */

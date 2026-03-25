@@ -3,6 +3,7 @@ package seedu.address.model.assignment;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.group.Group;
 
 /**
  * Represents an Assignment in LeTutor.

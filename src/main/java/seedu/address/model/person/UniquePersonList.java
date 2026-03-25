@@ -58,7 +58,7 @@ public class UniquePersonList implements Iterable<Person> {
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new PersonNotFoundException("Person not found");
         }
 
         if (!target.isSamePerson(editedPerson) && contains(editedPerson)) {
@@ -75,7 +75,7 @@ public class UniquePersonList implements Iterable<Person> {
     public void remove(Person toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
+            throw new PersonNotFoundException("Person not found");
         }
     }
 

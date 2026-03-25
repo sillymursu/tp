@@ -1,9 +1,13 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.assignment.Assignment;
+import seedu.address.model.group.Group;
 import seedu.address.model.milestone.MilestoneStore;
 import seedu.address.model.person.Person;
+
 
 /**
  * Unmodifiable view of an address book
@@ -18,4 +22,6 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable view of the assignments list.
      */
     ObservableList<Assignment> getAssignmentList();
+
+    ArrayList<Group> getGroups();
 }
