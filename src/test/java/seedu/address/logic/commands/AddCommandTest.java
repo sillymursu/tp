@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import javafx.collections.FXCollections;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
@@ -37,6 +36,8 @@ import seedu.address.model.milestone.StudentMilestones;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.testutil.PersonBuilder;
+
+import javafx.collections.FXCollections;
 
 public class AddCommandTest {
 
@@ -123,8 +124,8 @@ public class AddCommandTest {
         AddAssignmentCommand command = new AddAssignmentCommand(toAddDifferentIdSameFields);
         ModelStub modelStub = new ModelStubWithExistingAssignments(existing);
 
-        assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_DUPLICATE_ASSIGNMENT,
-                () -> command.execute(modelStub));
+        assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_DUPLICATE_ASSIGNMENT, () ->
+                command.execute(modelStub));
     }
 
     @Test
