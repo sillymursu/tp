@@ -53,15 +53,15 @@ LeTutor is a **desktop app for managing students and assignments, optimized for 
 **Notes about the command format:**<br>
 
 * LeTutor is controlled almost entirely through commands typed into the command box and confirmed with the Enter key.
-  
+
 * Commands follow a consistent, user-friendly format so that once learned, they are easy to remember and reuse.
-  
+ 
 * Words in UPPER_CASE indicate parameters you must supply. For example, in add /students {<NAME>; <PHONE NO.>; <EMAIL>; <GROUP>}, you replace <NAME> with the student’s actual name.
-  
+
 * Items followed by ... can be repeated any number of times, each item is separated by a , For example, in the <GROUP> field for students we can have G1, G2, G3 …
-  
+
 * Parameters have to be provided in the specified order during creation of Students and Assignments.
-  
+
 * Commands that do not take parameters (such as help, list, clear, exit) ignore any extra text after them, so help 123 will be treated as help.
 
 
@@ -222,7 +222,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 ## Command summary
 
-Action     | Format, Examples                                                                                                              
+Action     | Format, Examples
 -----------|-------------------------------------------------------------------------------------------------------------------------------
 **Add Student**  | `add /students {<name>; <phone>; <email>; <group>}` <br> e.g., `add /students {John Doe; 98765432; johnd@example.com; Sec3A}`
 **Add Assignment**  | `add /assignments {<label>; <group>; <dueDate>}` <br> e.g., `add /assignments {Math; Sec3A; 2026-03-20}`
