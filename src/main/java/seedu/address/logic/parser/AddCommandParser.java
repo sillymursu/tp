@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -37,7 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(matcher.group("name"));
         Phone phone = ParserUtil.parsePhone(matcher.group("phone"));
         Email email = ParserUtil.parseEmail(matcher.group("email"));
-        String group = ParserUtil.parseGroup(matcher.group("group"));
+        Group group = ParserUtil.parseGroup(matcher.group("group"));
         Person person = new Person(tempId, name, phone, email, group);
 
         return new AddCommand(person);

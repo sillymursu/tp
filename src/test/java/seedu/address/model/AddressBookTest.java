@@ -8,6 +8,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.assignment.Assignment;
+import seedu.address.model.group.Group;
 import seedu.address.model.milestone.MilestoneStore;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -89,6 +91,7 @@ public class AddressBookTest {
         String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList()
                 + ", milestoneStore=" + addressBook.getMilestoneStore()
                 + ", assignments=" + addressBook.getAssignmentList().size()
+                + ", groups=" + addressBook.getGroups().size()
                 + "}";
         assertEquals(expected, addressBook.toString());
     }
@@ -116,6 +119,11 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<Assignment> getAssignmentList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<Group> getGroups() {
             return null;
         }
     }

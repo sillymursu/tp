@@ -3,6 +3,7 @@ package seedu.address.model.assignment;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.group.Group;
 
 /**
  * Represents an Assignment in LeTutor.
@@ -12,7 +13,7 @@ public class Assignment {
 
     private final AssignmentId assignmentId;
     private final Label label;
-    private final String group;
+    private final Group group;
     private final DueDate dueDate;
 
     /**
@@ -24,10 +25,10 @@ public class Assignment {
      * @param group Group/class tag (stored as plain String). Use "" if not applicable.
      * @param dueDate Due date of assignment (can be "" depending on DueDate rules).
      */
-    public Assignment(AssignmentId assignmentId, Label label, String group, DueDate dueDate) {
+    public Assignment(AssignmentId assignmentId, Label label, Group group, DueDate dueDate) {
         this.assignmentId = assignmentId;
         this.label = label;
-        this.group = group == null ? "" : group.trim();
+        this.group = group;
         this.dueDate = dueDate;
     }
 
@@ -54,7 +55,7 @@ public class Assignment {
      *
      * @return The group string.
      */
-    public String getGroup() {
+    public Group getGroup() {
         return group;
     }
 

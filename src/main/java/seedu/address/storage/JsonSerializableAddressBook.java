@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.assignment.Assignment;
+import seedu.address.model.group.Group;
 import seedu.address.model.milestone.FlatMilestoneEntry;
 import seedu.address.model.person.Person;
 
@@ -23,10 +24,12 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_ASSIGNMENT = "Assignments list contains duplicate assignment(s).";
+    public static final String MESSAGE_DUPLICATE_GROUP = "Group list has duplicate group(s)";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedMilestoneEntry> milestones = new ArrayList<>();
     private final List<JsonAdaptedAssignment> assignments = new ArrayList<>();
+    private final List<JsonAdaptedGroup> groups = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons and milestones.
@@ -34,7 +37,8 @@ class JsonSerializableAddressBook {
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
                                        @JsonProperty("milestones") List<JsonAdaptedMilestoneEntry> milestones,
-                                       @JsonProperty("assignments") List<JsonAdaptedAssignment> assignments) {
+                                       @JsonProperty("assignments") List<JsonAdaptedAssignment> assignments,
+                                       @JsonProperty("groups") List<JsonAdaptedGroup> groups) {
         if (persons != null) {
             this.persons.addAll(persons);
         }
@@ -44,6 +48,10 @@ class JsonSerializableAddressBook {
 
         if (assignments != null) {
             this.assignments.addAll(assignments);
+        }
+
+        if (groups != null) {
+            this.groups.addAll(groups);
         }
     }
 
@@ -63,6 +71,10 @@ class JsonSerializableAddressBook {
 
         assignments.addAll(source.getAssignmentList().stream()
                 .map(JsonAdaptedAssignment::new)
+                .collect(Collectors.toList()));
+
+        groups.addAll(source.getGroups().stream()
+                .map(JsonAdaptedGroup::new)
                 .collect(Collectors.toList()));
     }
 
@@ -96,6 +108,14 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ASSIGNMENT);
             }
             addressBook.addAssignment(assignment);
+        }
+
+        for (JsonAdaptedGroup jsonAdaptedGroup : groups) {
+            Group group = jsonAdaptedGroup.toModelType();
+            if (addressBook.hasGroup(group)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
+            }
+            addressBook.addGroup(group);
         }
         return addressBook;
     }

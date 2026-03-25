@@ -37,7 +37,6 @@ public class AddAssignmentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
         // Duplicate check by (label, group, dueDate) since AssignmentId is auto-generated
         boolean duplicate = model.getAssignmentList().stream().anyMatch(a ->
                 a.getLabel().equals(toAdd.getLabel())

@@ -51,6 +51,8 @@ public class AddCommand extends Command {
         );
 
         model.addPerson(personWithId);
+        model.addGroup(toAdd.getGroup());
+        model.addStudentToGroup(toAdd.getGroup(), newId);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personWithId)));
     }
 

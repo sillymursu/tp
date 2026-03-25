@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
+import seedu.address.model.group.Group;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneStatus;
@@ -160,6 +161,13 @@ public interface Model {
     void deleteAssignment(Assignment assignment);
 
     /**
+     * Replaces the given assignment {@code target} with {@code editedAssignment}.
+     * {@code target} must exist.
+     * The assignment identity of {@code editedAssignment} must not be the same as another existing assignment.
+     */
+    void setAssignment(Assignment target, Assignment editedAssignment);
+
+    /**
      * Returns an unmodifiable view of the full assignment list.
      */
     ObservableList<Assignment> getAssignmentList();
@@ -173,4 +181,14 @@ public interface Model {
      * Generates the next available AssignmentId in the form A1, A2, A3... based on existing assignments.
      */
     AssignmentId getNextAssignmentId();
+
+    void addStudentToGroup(Group group, StudentId id);
+
+    void addGroup(Group group);
+
+    void removeGroup(Group group);
+
+    void removeStudentFromGroup(Group group, StudentId id);
+
+
 }
