@@ -281,6 +281,16 @@
     -fx-text-fill: white;
 }
 
+.group-bubble {
+    -fx-padding: 3 8 3 8;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: #55C9F3;
+}
+
 .scroll-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
 }

@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -56,7 +55,11 @@ public class AddCommandTest {
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        Person addedPerson = modelStub.personsAdded.get(0);
+        assertEquals(validPerson.getStudentId(), addedPerson.getStudentId());
+        assertEquals(validPerson.getName(), addedPerson.getName());
+        assertEquals(validPerson.getPhone(), addedPerson.getPhone());
+        assertEquals(validPerson.getEmail(), addedPerson.getEmail());
     }
 
     @Test

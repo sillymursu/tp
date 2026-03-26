@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.GetStudentMilestonesCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.StudentId;
@@ -11,33 +12,32 @@ import seedu.address.model.person.StudentId;
  */
 public class GetStudentMilestonesCommandParser implements Parser<GetStudentMilestonesCommand> {
 
+    private static final String PREFIX = "/students";
+    private static final String SUFFIX = "/milestones";
+
     @Override
     public GetStudentMilestonesCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
 
-        String prefix = "/students ";
-        String suffix = " /milestones";
-
-        if (!trimmedArgs.startsWith(prefix) || !trimmedArgs.endsWith(suffix)) {
+        if (!trimmedArgs.startsWith(PREFIX) || !trimmedArgs.endsWith(SUFFIX)) {
             throw new ParseException(String.format(
-                    seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     GetStudentMilestonesCommand.MESSAGE_USAGE));
         }
 
-        String studentIdString = trimmedArgs.substring(
-                prefix.length(),
-                trimmedArgs.length() - suffix.length()
-        ).trim();
+        String middle = trimmedArgs.substring(
+                PREFIX.length(),
+                trimmedArgs.length() - SUFFIX.length()).trim();
 
-        if (studentIdString.isEmpty()) {
+        if (middle.isEmpty() || middle.contains(" ")) {
             throw new ParseException(String.format(
-                    seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     GetStudentMilestonesCommand.MESSAGE_USAGE));
         }
 
-        StudentId studentId = ParserUtil.parseStudentId(studentIdString);
+        StudentId studentId = ParserUtil.parseStudentId(middle);
         return new GetStudentMilestonesCommand(studentId);
     }
 }

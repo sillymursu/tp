@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.assignment.Assignment;
@@ -21,7 +22,7 @@ public class GetStudentMilestonesCommand extends Command {
 
     public static final String MESSAGE_USAGE =
             "get /students <studentId> /milestones: Shows milestone progress for a student.\n"
-                    + "Example: get /students S001 /milestones";
+                    + "Example: get /students S1 /milestones";
 
     private static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %s";
     private static final String MESSAGE_NO_ASSIGNMENTS = "There are no assignments in the system.";
@@ -31,13 +32,21 @@ public class GetStudentMilestonesCommand extends Command {
     /**
      * Creates a {@code GetStudentMilestonesCommand} for the given student id.
      *
-     * @param studentId The student id of the student to retrieve.
+     * @param studentId The student id of the student whose milestones are to be shown.
      */
     public GetStudentMilestonesCommand(StudentId studentId) {
         requireNonNull(studentId);
         this.studentId = studentId;
     }
 
+    /**
+     * Executes the command and returns the resolved milestone view for the specified student.
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return A {@code CommandResult} containing the student's milestone progress,
+     *         or a message indicating that there are no assignments in the system.
+     * @throws CommandException If the student cannot be found.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -102,5 +111,26 @@ public class GetStudentMilestonesCommand extends Command {
     private String formatCompletedAt(ResolvedMilestone resolvedMilestone) {
         String value = resolvedMilestone.getCompletedAt().getValue();
         return value.isBlank() ? "-" : value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof GetStudentMilestonesCommand)) {
+            return false;
+        }
+
+        GetStudentMilestonesCommand otherCommand = (GetStudentMilestonesCommand) other;
+        return studentId.equals(otherCommand.studentId);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("studentId", studentId)
+                .toString();
     }
 }

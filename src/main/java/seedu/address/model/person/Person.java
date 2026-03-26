@@ -6,9 +6,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 
 /**
  * Represents a Person in the address book.
@@ -21,7 +23,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Set<Group> groups = new HashSet<>();
+    private final Set<Group> groups;
 
     /**
      * Every field must be present and not null.
@@ -32,7 +34,7 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.groups.addAll(groups);
+        this.groups = new HashSet<>(groups);
     }
 
     public StudentId getStudentId() {
@@ -53,6 +55,17 @@ public class Person {
     public Set<Group> getGroups() {
         return Collections.unmodifiableSet(groups);
     }
+
+    /**
+     * Getter that find the {@Code GroupName} of all Groups
+     * @return the GroupName of all the groups
+     */
+    private Set<GroupName> getGroupNames() {
+        return groups.stream()
+                .map(Group::getGroupName)
+                .collect(Collectors.toSet());
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -75,18 +88,17 @@ public class Person {
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
         if (!(other instanceof Person)) {
             return false;
         }
-
         Person otherPerson = (Person) other;
+        Set<GroupName> thisNames = getGroupNames();
+        Set<GroupName> otherNames = otherPerson.getGroupNames();
         return studentId.equals(otherPerson.studentId)
                 && name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && groups.equals(otherPerson.groups);
+                && thisNames.equals(otherNames);
     }
 
     @Override

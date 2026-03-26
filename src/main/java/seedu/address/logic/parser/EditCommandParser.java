@@ -10,10 +10,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -43,8 +43,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         EditCommand.MESSAGE_USAGE));
             }
-
-            Index index = ParserUtil.parseIndex(matcher.group("studentId"));
+            StudentId studentId = ParserUtil.parseStudentId(matcher.group("studentId"));
 
             EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
             if (!matcher.group("name").isEmpty()) {
@@ -66,7 +65,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
             }
 
-            return new EditCommand(index, editPersonDescriptor);
+            return new EditCommand(studentId, editPersonDescriptor);
         } catch (ParseException pe) {
             throw pe;
         }

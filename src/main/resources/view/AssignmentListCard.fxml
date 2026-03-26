@@ -27,8 +27,12 @@
                 </Label>
                 <Label fx:id="label" text="\$first" styleClass="cell_big_label" />
             </HBox>
-            <Label fx:id="group" styleClass="cell_small_label" text="\$group" />
             <Label fx:id="dueDate" styleClass="cell_small_label" text="\$dueDate" />
+            <FlowPane fx:id="group" hgap="5" vgap="5">
+                <padding>
+                    <Insets top="2"/>
+                </padding>
+            </FlowPane>
         </VBox>
     </GridPane>
 </HBox>

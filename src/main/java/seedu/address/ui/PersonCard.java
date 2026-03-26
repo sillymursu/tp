@@ -1,7 +1,10 @@
 package seedu.address.ui;
 
+import java.util.Set;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.group.Group;
@@ -35,22 +38,23 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label group;
+    private FlowPane group;
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        id.setText(displayedIndex + ". ");
+        id.setText(person.getStudentId() + ". ");
         name.setText(person.getName().fullName);
         phone.setText("Phone: " + person.getPhone().value);
         email.setText("Email: " + person.getEmail().value);
-        StringBuilder sb = new StringBuilder();
-        person.getGroups().stream().forEach(
-                g -> sb.append(g.getGroupName() + ", ")
-        );
-        String groupSet = sb.toString();
-        group.setText("Group: " + groupSet.substring(0, groupSet.length() - 2));
+        Set<Group> groupSet = person.getGroups();
+        groupSet.stream()
+                .forEach(g -> {
+                    Label label = new Label(g.getGroupName().toString());
+                    label.getStyleClass().add("group-bubble");
+                    group.getChildren().add(label);
+                });
     }
 }
