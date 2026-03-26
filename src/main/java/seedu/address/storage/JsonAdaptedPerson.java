@@ -70,7 +70,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         group = null;
         groups.addAll(source.getGroups().stream()
-                .map(g -> g.getGroupName().toString())
+                .map(g -> new JsonAdaptedGroup(g.getGroupName().toString(), new ArrayList<>()))
                 .collect(Collectors.toList()));
     }
 
@@ -113,9 +113,10 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        final Set<Group> modelGroups = groups.stream()
-                .map(Group::new)
-                .collect(Collectors.toSet());
+        final Set<Group> modelGroups = new java.util.HashSet<>();
+        for (JsonAdaptedGroup jsonGroup : groups) {
+            modelGroups.add(jsonGroup.toModelType());
+        }
 
         return new Person(modelStudentId, modelName, modelPhone, modelEmail, modelGroups);
     }
