@@ -26,7 +26,7 @@ public class PersonTest {
 
         // same name, all other attributes different -> returns true
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withGroup(VALID_GROUP_BOB).build();
+                .withGroups(VALID_GROUP_BOB).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
@@ -74,7 +74,7 @@ public class PersonTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different group -> returns false
-        editedAlice = new PersonBuilder(ALICE).withGroup(VALID_GROUP_BOB).build();
+        editedAlice = new PersonBuilder(ALICE).withGroups(VALID_GROUP_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
     }
@@ -82,7 +82,7 @@ public class PersonTest {
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", group=" + ALICE.getGroup()
+                + ", email=" + ALICE.getEmail() + ", group=" + ALICE.getGroups()
                 + "}";
         assertEquals(expected, ALICE.toString());
     }

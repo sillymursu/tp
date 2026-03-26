@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 
 /**
@@ -45,6 +46,11 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText("Phone: " + person.getPhone().value);
         email.setText("Email: " + person.getEmail().value);
-        group.setText("Group: " + person.getGroup().getGroupName());
+        StringBuilder sb = new StringBuilder();
+        person.getGroups().stream().forEach(
+                g -> sb.append(g.getGroupName() + ", ")
+        );
+        String groupSet = sb.toString();
+        group.setText("Group: " + groupSet.substring(0, groupSet.length() - 2));
     }
 }

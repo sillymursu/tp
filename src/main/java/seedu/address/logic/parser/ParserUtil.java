@@ -139,7 +139,6 @@ public class ParserUtil {
         }
         return new AssignmentId(trimmed);
     }
-
     /**
      * Parses a {@code String group} into a {@code Group}.
      */
@@ -152,7 +151,17 @@ public class ParserUtil {
 
         return new Group(trimmed);
     }
-
+    /**
+     * Parses a {@code String[] group} into a {@code Set<Group>}.
+     */
+    public static Set<Group> parseGroups(String[] groups) throws ParseException {
+        requireNonNull(groups);
+        final Set<Group> groupSet = new HashSet<>();
+        for (String groupName : groups) {
+            groupSet.add(parseGroup(groupName));
+        }
+        return groupSet;
+    }
     /**
      * Parses a {@code String dueDate} into a {@code DueDate}.
      */

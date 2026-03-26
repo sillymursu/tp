@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 
 /**
@@ -12,24 +13,28 @@ public class PersonUtil {
      * Returns an add command string for adding the {@code person}.
      */
     public static String getAddCommand(Person person) {
-        return "add /students {"
-                + person.getName().fullName + "; "
-                + person.getPhone().value + "; "
-                + person.getEmail().value + "; "
-                + person.getGroup().getGroupName()
-                + "}";
+        String curr = "add /students {"
+                    + person.getName().fullName + "; "
+                    + person.getPhone().value + "; "
+                    + person.getEmail().value + "; ";
+        for (Group g : person.getGroups()) {
+            curr += g.getGroupName() + ", ";
+        }
+        return curr.substring(0, curr.length() - 2) + "}";
     }
 
     /**
      * Returns the person details in JSON format for your parser.
      */
     public static String getPersonDetails(Person person) {
-        return "{"
+        String curr = "{"
                 + person.getName().fullName + "; "
                 + person.getPhone().value + "; "
-                + person.getEmail().value + "; "
-                + person.getGroup().getGroupName()
-                + "}";
+                + person.getEmail().value + "; ";
+        for (Group g : person.getGroups()) {
+            curr += g.getGroupName() + ", ";
+        }
+        return curr.substring(0, curr.length() - 2) + "}";
     }
 
     /**
@@ -38,5 +43,4 @@ public class PersonUtil {
     public static String getEditPersonDescriptorDetails(EditPersonDescriptor descriptor) {
         return "{; ; ; }";
     }
-
 }

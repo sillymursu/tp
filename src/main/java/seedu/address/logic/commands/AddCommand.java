@@ -6,6 +6,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 
@@ -47,12 +48,14 @@ public class AddCommand extends Command {
                 toAdd.getName(),
                 toAdd.getPhone(),
                 toAdd.getEmail(),
-                toAdd.getGroup()
+                toAdd.getGroups()
         );
 
         model.addPerson(personWithId);
-        model.addGroup(toAdd.getGroup());
-        model.addStudentToGroup(toAdd.getGroup(), newId);
+        for (Group g : toAdd.getGroups()) {
+            model.addGroup(g);
+            model.addStudentToGroup(g, newId);
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personWithId)));
     }
 

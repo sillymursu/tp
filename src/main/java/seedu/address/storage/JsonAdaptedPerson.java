@@ -1,5 +1,11 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,7 +28,7 @@ class JsonAdaptedPerson {
     private final String name;
     private final String phone;
     private final String email;
-    private final String group;
+    private final List<JsonAdaptedGroup> groups = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -32,12 +38,14 @@ class JsonAdaptedPerson {
                              @JsonProperty("name") String name,
                              @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email,
-                             @JsonProperty("group") String group) {
+                             @JsonProperty("groups") List<JsonAdaptedGroup> groups) {
         this.studentId = studentId;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.group = group;
+        if (groups != null) {
+            this.groups.addAll(groups);
+        }
     }
 
     /**
@@ -48,7 +56,9 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        group = source.getGroup().getGroupName().toString();
+        groups.addAll(source.getGroups().stream()
+                .map(JsonAdaptedGroup::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -64,6 +74,11 @@ class JsonAdaptedPerson {
             modelStudentId = (studentId == null) ? new StudentId("S0") : new StudentId(studentId);
         } catch (IllegalArgumentException e) {
             throw new IllegalValueException(e.getMessage());
+        }
+
+        final List<Group> personGroups = new ArrayList<>();
+        for (JsonAdaptedGroup group : groups) {
+            personGroups.add(group.toModelType());
         }
 
         if (name == null) {
@@ -90,11 +105,8 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        if (group == null) {
-            throw new IllegalValueException("Group name is not a string");
-        }
-        final Group modelGroup = new Group(group);
+        final Set<Group> modelGroups = new HashSet<>(personGroups);
 
-        return new Person(modelStudentId, modelName, modelPhone, modelEmail, modelGroup);
+        return new Person(modelStudentId, modelName, modelPhone, modelEmail, modelGroups);
     }
 }

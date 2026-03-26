@@ -3,9 +3,12 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -67,9 +70,13 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson);
-        model.removeStudentFromGroup(personToEdit.getGroup(), personToEdit.getStudentId());
-        model.addGroup(editedPerson.getGroup());
-        model.addStudentToGroup(editedPerson.getGroup(), editedPerson.getStudentId());
+        for (Group g : personToEdit.getGroups()) {
+            model.removeStudentFromGroup(g, personToEdit.getStudentId());
+        }
+        for (Group g : editedPerson.getGroups()) {
+            model.addGroup(g);
+            model.addStudentToGroup(g, editedPerson.getStudentId());
+        }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
@@ -84,14 +91,14 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup());
+        Set<Group> updatedGroups = editPersonDescriptor.getGroups().orElse(personToEdit.getGroups());
 
         return new Person(
                 personToEdit.getStudentId(),
                 updatedName,
                 updatedPhone,
                 updatedEmail,
-                updatedGroup
+                updatedGroups
         );
     }
 
@@ -127,7 +134,7 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Group group;
+        private Set<Group> groups;
 
         public EditPersonDescriptor() {}
 
@@ -139,14 +146,14 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setGroup(toCopy.group);
+            setGroups(toCopy.groups);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, group);
+            return CollectionUtil.isAnyNonNull(name, phone, email, groups);
         }
 
         public void setName(Name name) {
@@ -173,12 +180,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setGroup(Group group) {
-            this.group = group;
+        public void setGroups(Set<Group> groups) {
+            this.groups = (groups != null) ? new HashSet<>(groups) : null;
         }
 
-        public Optional<Group> getGroup() {
-            return Optional.ofNullable(group);
+        public Optional<Set<Group>> getGroups() {
+            return (groups != null) ? Optional.of(Collections.unmodifiableSet(groups)) : Optional.empty();
         }
 
         @Override
@@ -196,7 +203,7 @@ public class EditCommand extends Command {
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(group, otherEditPersonDescriptor.group);
+                    && Objects.equals(groups, otherEditPersonDescriptor.groups);
         }
 
         @Override
@@ -205,7 +212,7 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("group", group)
+                    .add("group", groups)
                     .toString();
         }
     }

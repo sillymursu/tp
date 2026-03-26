@@ -1,5 +1,9 @@
 package seedu.address.testutil;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Email;
@@ -30,7 +34,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
-        descriptor.setGroup(person.getGroup());
+        descriptor.setGroups(person.getGroups());
     }
 
     /**
@@ -60,8 +64,9 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Group} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withGroup(String group) {
-        descriptor.setGroup(new Group(group));
+    public EditPersonDescriptorBuilder withGroup(String... groups) {
+        Set<Group> groupSet = Stream.of(groups).map(Group::new).collect(Collectors.toSet());
+        descriptor.setGroups(groupSet);
         return this;
     }
 

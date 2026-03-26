@@ -1,5 +1,9 @@
 package seedu.address.model.util;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.group.Group;
@@ -17,27 +21,27 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new StudentId("S1"),
                  new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                    new Group("Hello")),
+                    getGroupSet("friends")),
 
             new Person(new StudentId("S2"),
                  new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                    new Group("Hello")),
+                    getGroupSet("colleagues")),
 
             new Person(new StudentId("S3"),
                  new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                    new Group("Hello")),
+                    getGroupSet("Chinese")),
 
             new Person(new StudentId("S4"),
                  new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                    new Group("Hello")),
+                    getGroupSet("Math Remedial")),
 
             new Person(new StudentId("S5"),
                  new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                    new Group("Hello")),
+                    getGroupSet("English")),
 
             new Person(new StudentId("S6"),
                  new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                    new Group("Hello"))
+                    getGroupSet("GEP"))
         };
     }
 
@@ -47,5 +51,11 @@ public class SampleDataUtil {
             sampleAb.addPerson(samplePerson);
         }
         return sampleAb;
+    }
+
+    public static Set<Group> getGroupSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Group::new)
+                .collect(Collectors.toSet());
     }
 }
