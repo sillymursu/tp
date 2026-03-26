@@ -21,7 +21,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Set<Group> groups = new HashSet<>();
+    private final Set<Group> groups;
 
     /**
      * Every field must be present and not null.
@@ -32,7 +32,7 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.groups.addAll(groups);
+        this.groups = new HashSet<>(groups);
     }
 
     public StudentId getStudentId() {

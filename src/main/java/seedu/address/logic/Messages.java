@@ -43,7 +43,9 @@ public class Messages {
                 .append("; Email: ")
                 .append(person.getEmail())
                 .append("; Group: ")
-                .append(person.getGroups());
+                .append(person.getGroups().stream()
+                        .map(g -> g.getGroupName().name)
+                        .collect(Collectors.joining(", ")));
         return builder.toString();
     }
 
