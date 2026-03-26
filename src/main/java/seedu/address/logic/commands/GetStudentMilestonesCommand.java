@@ -29,11 +29,24 @@ public class GetStudentMilestonesCommand extends Command {
 
     private final StudentId studentId;
 
+    /**
+     * Creates a {@code GetStudentMilestonesCommand} for the given student id.
+     *
+     * @param studentId The student id of the student whose milestones are to be shown.
+     */
     public GetStudentMilestonesCommand(StudentId studentId) {
         requireNonNull(studentId);
         this.studentId = studentId;
     }
 
+    /**
+     * Executes the command and returns the resolved milestone view for the specified student.
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return A {@code CommandResult} containing the student's milestone progress,
+     *         or a message indicating that there are no assignments in the system.
+     * @throws CommandException If the student cannot be found.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
