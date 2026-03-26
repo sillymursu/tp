@@ -144,8 +144,8 @@ public class EditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         StudentId outOfBoundStudentID = STUDENT_ID_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(Integer.parseInt(outOfBoundStudentID.getValue()) <
-                model.getAddressBook().getPersonList().size());
+        assertTrue(Integer.parseInt(outOfBoundStudentID.getValue())
+                < model.getAddressBook().getPersonList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundStudentID,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
