@@ -42,10 +42,11 @@ public class Messages {
                 .append(person.getPhone())
                 .append("; Email: ")
                 .append(person.getEmail())
-                .append("; Groups: ");
-        person.getGroups().forEach(g -> builder.append(g.getGroupName() + ", "));
-        String personString = builder.toString();
-        return personString.substring(0, personString.length() - 2);
+                .append("; Group: ")
+                .append(person.getGroups().stream()
+                        .map(g -> g.getGroupName().name)
+                        .collect(Collectors.joining(", ")));
+        return builder.toString();
     }
 
     /**

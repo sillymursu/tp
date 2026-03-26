@@ -11,7 +11,7 @@ import seedu.address.model.assignment.AssignmentId;
  */
 public class DeleteAssignmentCommandParser implements Parser<DeleteAssignmentCommand> {
 
-    private static final String PATH_ASSIGNMENTS = "/assignment";
+    private static final String PATH_ASSIGNMENTS = "/assignments";
 
     /**
      * Parses user input and creates a {@code DeleteAssignmentCommand}.

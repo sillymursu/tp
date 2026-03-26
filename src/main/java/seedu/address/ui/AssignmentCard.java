@@ -2,9 +2,11 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.assignment.Assignment;
+import seedu.address.model.group.Group;
 
 /**
  * An UI component that displays information of a {@code Assignment}.
@@ -20,7 +22,7 @@ public class AssignmentCard extends UiPart<Region> {
     @FXML
     private Label label;
     @FXML
-    private Label group;
+    private FlowPane group;
     @FXML
     private Label dueDate;
     @FXML
@@ -34,7 +36,11 @@ public class AssignmentCard extends UiPart<Region> {
         this.assignment = assignment;
         id.setText(assignment.getAssignmentId().toString() + ". ");
         label.setText(assignment.getLabel().label);
-        group.setText("Group: " + assignment.getGroup().getGroupName());
         dueDate.setText("Due by: " + assignment.getDueDate().toString());
+        Group g = assignment.getGroup();
+        Label label = new Label(g.getGroupName().toString());
+        label.getStyleClass().add("group-bubble");
+        group.getChildren().add(label);
+
     }
 }

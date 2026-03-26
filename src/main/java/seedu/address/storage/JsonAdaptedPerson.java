@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -71,7 +70,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         group = null;
         groups.addAll(source.getGroups().stream()
-                .map(JsonAdaptedGroup::new)
+                .map(g -> g.getGroupName().toString())
                 .collect(Collectors.toList()));
     }
 
@@ -88,11 +87,6 @@ class JsonAdaptedPerson {
             modelStudentId = (studentId == null) ? new StudentId("S0") : new StudentId(studentId);
         } catch (IllegalArgumentException e) {
             throw new IllegalValueException(e.getMessage());
-        }
-
-        final List<Group> personGroups = new ArrayList<>();
-        for (JsonAdaptedGroup group : groups) {
-            personGroups.add(group.toModelType());
         }
 
         if (name == null) {
@@ -119,7 +113,9 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        final Set<Group> modelGroups = new HashSet<>(personGroups);
+        final Set<Group> modelGroups = groups.stream()
+                .map(Group::new)
+                .collect(Collectors.toSet());
 
         return new Person(modelStudentId, modelName, modelPhone, modelEmail, modelGroups);
     }

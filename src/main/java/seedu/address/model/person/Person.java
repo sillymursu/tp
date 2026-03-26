@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 
 /**
  * Represents a Person in the address book.
@@ -21,7 +22,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Set<Group> groups = new HashSet<>();
+    private final Set<Group> groups;
 
     /**
      * Every field must be present and not null.
@@ -57,6 +58,17 @@ public class Person {
                 .map(group -> new Group(group.getGroupName().name))
                 .collect(Collectors.toUnmodifiableSet());
     }
+
+    /**
+     * Getter that find the {@Code GroupName} of all Groups
+     * @return the GroupName of all the groups
+     */
+    private Set<GroupName> getGroupNames() {
+        return groups.stream()
+                .map(Group::getGroupName)
+                .collect(Collectors.toSet());
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -79,18 +91,17 @@ public class Person {
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
         if (!(other instanceof Person)) {
             return false;
         }
-
         Person otherPerson = (Person) other;
+        Set<GroupName> thisNames = getGroupNames();
+        Set<GroupName> otherNames = otherPerson.getGroupNames();
         return studentId.equals(otherPerson.studentId)
                 && name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && groups.equals(otherPerson.groups);
+                && thisNames.equals(otherNames);
     }
 
     @Override

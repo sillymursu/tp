@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StudentId;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Person objects.
@@ -37,7 +37,8 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        groups = new HashSet<>();
+        groups = new HashSet<>(Collections.singleton(new Group(
+                DEFAULT_GROUP)));
     }
 
     /**
@@ -68,10 +69,13 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} being built.
+     * Sets the {@code Group} of the {@code Person} being built.
      */
     public PersonBuilder withGroups(String ... groups) {
-        this.groups = SampleDataUtil.getGroupSet(groups);
+        this.groups = new HashSet<>();
+        for (String groupName : groups) {
+            this.groups.add(new Group(groupName));
+        }
         return this;
     }
 
