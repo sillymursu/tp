@@ -1,0 +1,28 @@
+@startuml
+!include style.puml
+
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+package "Logic" <<Rectangle>> {
+  class GetStudentMilestonesCommand
+}
+
+package "Model" <<Rectangle>> {
+  class "<<interface>>\nModel" as Model
+  class ModelManager
+  class MilestoneResolver
+  class StudentMilestoneView
+  class ResolvedMilestone
+}
+
+GetStudentMilestonesCommand --> Model : getResolvedMilestones(studentId)
+
+ModelManager .up.|> Model
+ModelManager --> MilestoneResolver : uses
+ModelManager --> StudentMilestoneView : returns
+MilestoneResolver --> StudentMilestoneView : creates
+StudentMilestoneView *--> "*" ResolvedMilestone
+
+@enduml
