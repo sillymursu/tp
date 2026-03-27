@@ -25,7 +25,7 @@ import seedu.address.model.group.Group;
  */
 public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> {
 
-    private static final String PATH_ASSIGNMENT = "/assignment";
+    private static final String PATH_ASSIGNMENT = "/assignments";
 
     @Override
     public AddAssignmentCommand parse(String args) throws ParseException {

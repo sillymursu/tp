@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static final Pattern ADD_PATTERN = Pattern.compile(
             "^\\s*/students\\s*\\{\\s*(?<name>[^,;{}]+?)\\s*;\\s*(?<phone>[^,;{}]+?)\\s*;"
                     +
-                    "\\s*(?<email>[^,;{}]+?)\\s*;\\s*(?<group>[^;{}]+?)\\s*}\\s*$"
+                "\\s*(?<email>[^,;{}]+?)\\s*;\\s*(?<group>[^;{}]*)\\s*}\\s*$"
     );
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -39,9 +40,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(matcher.group("name"));
         Phone phone = ParserUtil.parsePhone(matcher.group("phone"));
         Email email = ParserUtil.parseEmail(matcher.group("email"));
-        String[] groupParts = matcher.group("group")
-                                     .split("\\s*,\\s*");
-        Set<Group> groupList = ParserUtil.parseGroups(groupParts);
+        String rawGroups = matcher.group("group").trim();
+        Set<Group> groupList = new HashSet<>();
+        if (!rawGroups.isEmpty()) {
+            String[] groupParts = rawGroups.split("\\s*,\\s*");
+            groupList = ParserUtil.parseGroups(groupParts);
+        }
         Person person = new Person(tempId, name, phone, email, groupList);
         return new AddCommand(person);
     }

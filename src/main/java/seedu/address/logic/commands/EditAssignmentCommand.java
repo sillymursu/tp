@@ -22,9 +22,9 @@ public class EditAssignmentCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " /assignment: Edits the details of an assignment \n"
-            + "Format: edit /assignment <assignmentId> {<label>; <group>; <dueDate>} \n"
-            + "Example: edit /assignment A1 {A-Testing; Sec3A; 2026-04-30}";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " /assignments: Edits the details of an assignment \n"
+            + "Format: edit /assignments <assignmentId> {<label>; <group>; <dueDate>} \n"
+            + "Example: edit /assignments A1 {A-Testing; Sec3A; 2026-04-30}";
 
     public static final String MESSAGE_EDIT_ASSIGNMENT_SUCCESS = "Edited Assignment: %s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

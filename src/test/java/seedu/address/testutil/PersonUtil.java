@@ -17,6 +17,9 @@ public class PersonUtil {
                     + person.getName().fullName + "; "
                     + person.getPhone().value + "; "
                     + person.getEmail().value + "; ";
+        if (person.getGroups().isEmpty()) {
+            return curr + "}";
+        }
         for (Group g : person.getGroups()) {
             curr += g.getGroupName() + ", ";
         }
@@ -31,6 +34,9 @@ public class PersonUtil {
                 + person.getName().fullName + "; "
                 + person.getPhone().value + "; "
                 + person.getEmail().value + "; ";
+        if (person.getGroups().isEmpty()) {
+            return curr + "}";
+        }
         for (Group g : person.getGroups()) {
             curr += g.getGroupName() + ", ";
         }

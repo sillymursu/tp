@@ -31,8 +31,8 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified \n"
-            + "Format: edit /students <index> {<name>; <phone number>; <email>; <group>}\n"
-            + "Example: edit /students 2 {John; 9878 0020, johnnyjohn@gmail.com; S3A}";
+            + "Format: edit /students <studentId> {<name>; <phone number>; <email>; <group>}\n"
+            + "Example: edit /students S2 {John; 9878 0020, johnnyjohn@gmail.com; S3A}";
 
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
@@ -58,10 +58,6 @@ public class EditCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (Integer.parseInt(studentId.getValue().substring(1)) >= lastShownList.size()) {
-            throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
-        }
 
         Person personToEdit = null;
         for (Person person : lastShownList) {
@@ -133,7 +129,7 @@ public class EditCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("index", studentId)
+                .add("studentId", studentId)
                 .add("editPersonDescriptor", editPersonDescriptor)
                 .toString();
     }
@@ -193,10 +189,7 @@ public class EditCommand extends Command {
         }
 
         public void setGroups(Set<Group> groups) {
-            this.groups = (groups != null) ? (!groups.isEmpty())
-                        ? new HashSet<>(groups)
-                        : null
-                        : null;
+            this.groups = (groups != null) ? new HashSet<>(groups) : null;
         }
 
         public Optional<Set<Group>> getGroups() {

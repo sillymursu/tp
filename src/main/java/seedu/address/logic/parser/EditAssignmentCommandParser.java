@@ -15,7 +15,7 @@ import seedu.address.model.assignment.AssignmentId;
  */
 public class EditAssignmentCommandParser implements Parser<EditAssignmentCommand> {
 
-    private static final String PATH_ASSIGNMENT = "/assignment";
+    private static final String PATH_ASSIGNMENT = "/assignments";
 
     /**
      * Parses user input and creates a {@code EditAssignmentCommand}.
