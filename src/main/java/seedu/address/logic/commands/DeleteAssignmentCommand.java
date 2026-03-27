@@ -59,4 +59,19 @@ public class DeleteAssignmentCommand extends Command {
         model.deleteAssignment(assignmentToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_ASSIGNMENT_SUCCESS, assignmentId));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        //instanceof handles nulls
+        if  (!(other instanceof DeleteAssignmentCommand)) {
+            return false;
+        }
+
+        DeleteAssignmentCommand otherDeleteAssignmentCommand = (DeleteAssignmentCommand) other;
+        return assignmentId.equals(otherDeleteAssignmentCommand.assignmentId);
+    }
 }

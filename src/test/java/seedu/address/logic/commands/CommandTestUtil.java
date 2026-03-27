@@ -120,4 +120,13 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredPersonList().size());
     }
 
+    /**
+     * Updates {@code model}'s filtered assignment list to show no assignments.
+     */
+    public static void showNoAssignment(Model model) {
+        model.updateFilteredAssignmentList(a -> false);
+
+        assertTrue(model.getFilteredAssignmentList().isEmpty());
+    }
+
 }

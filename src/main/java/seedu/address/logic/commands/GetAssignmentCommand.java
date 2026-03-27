@@ -18,7 +18,8 @@ public class GetAssignmentCommand extends Command {
             "get /assignments <assignmentId>: Shows a single assignment.\n"
                     + "Example: get /assignments A301";
 
-    private static final String MESSAGE_NOT_FOUND = "Assignment not found: %s";
+    public static final String MESSAGE_NOT_FOUND = "Assignment not found: %s";
+    public static final String MESSAGE_GET_ASSIGNMENT_SUCCESS = "Assignment found: %s";
 
     private final AssignmentId assignmentId;
 
@@ -58,6 +59,6 @@ public class GetAssignmentCommand extends Command {
                 + "Group: " + a.getGroup() + "\n"
                 + "Due: " + a.getDueDate();
 
-        return new CommandResult("Now displaying requested Assignment");
+        return new CommandResult(String.format(MESSAGE_GET_ASSIGNMENT_SUCCESS, assignmentId));
     }
 }
