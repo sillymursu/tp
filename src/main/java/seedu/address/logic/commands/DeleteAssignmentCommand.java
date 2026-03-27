@@ -67,7 +67,7 @@ public class DeleteAssignmentCommand extends Command {
         }
 
         //instanceof handles nulls
-        if  (!(other instanceof DeleteAssignmentCommand)) {
+        if (!(other instanceof DeleteAssignmentCommand)) {
             return false;
         }
 
