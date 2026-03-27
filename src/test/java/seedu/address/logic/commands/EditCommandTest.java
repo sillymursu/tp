@@ -16,7 +16,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalStudentId.STUDENT_ID_FIRST_PERSON;
 import static seedu.address.testutil.TypicalStudentId.STUDENT_ID_SECOND_PERSON;
-import static seedu.address.testutil.TypicalStudentId.STUDENT_ID_THIRD_PERSON;
 
 import org.junit.jupiter.api.Test;
 
@@ -66,7 +65,7 @@ public class EditCommandTest {
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withGroup(VALID_GROUP_BOB).build();
-        EditCommand editCommand = new EditCommand(STUDENT_ID_THIRD_PERSON, descriptor);
+        EditCommand editCommand = new EditCommand(lastPerson.getStudentId(), descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
@@ -144,7 +143,7 @@ public class EditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         StudentId outOfBoundStudentID = STUDENT_ID_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(Integer.parseInt(outOfBoundStudentID.getValue())
+        assertTrue(Integer.parseInt(outOfBoundStudentID.getValue().substring(1))
                 < model.getAddressBook().getPersonList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundStudentID,
@@ -180,10 +179,10 @@ public class EditCommandTest {
 
     @Test
     public void toStringMethod() {
-        int index = Index.fromOneBased(1).getOneBased();
+        StudentId studentId = STUDENT_ID_FIRST_PERSON;
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        EditCommand editCommand = new EditCommand(new StudentId("S" + index), editPersonDescriptor);
-        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
+        EditCommand editCommand = new EditCommand(studentId, editPersonDescriptor);
+        String expected = EditCommand.class.getCanonicalName() + "{studentId=" + studentId + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }

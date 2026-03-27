@@ -181,6 +181,9 @@ public class ParserUtil {
     public static StudentId parseStudentId(String studentId) throws ParseException {
         requireNonNull(studentId);
         String trimmedStudentId = studentId.trim();
+        if (!trimmedStudentId.matches("S[1-9]\\d*")) {
+            throw new ParseException(MESSAGE_INVALID_INDEX);
+        }
         return new StudentId(trimmedStudentId);
     }
 

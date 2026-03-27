@@ -108,7 +108,7 @@ public class DeleteCommandTest {
     public void toStringMethod() {
         StudentId targetStudentId = STUDENT_ID_FIRST_PERSON;
         DeleteCommand deleteCommand = new DeleteCommand(targetStudentId);
-        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetStudentId + "}";
+        String expected = DeleteCommand.class.getCanonicalName() + "{studentId=" + targetStudentId + "}";
         assertEquals(expected, deleteCommand.toString());
     }
 

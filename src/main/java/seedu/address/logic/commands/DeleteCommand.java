@@ -13,16 +13,16 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a person identified by their student id from the address book.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the person identified by student id from the displayed person list.\n"
+            + "Parameters: /students STUDENT_ID\n"
+            + "Example: " + COMMAND_WORD + " /students S1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
@@ -36,10 +36,6 @@ public class DeleteCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (Integer.parseInt(studentId.getValue().substring(1)) >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
-        }
 
         Person personToDelete = null;
         for (Person person : lastShownList) {
