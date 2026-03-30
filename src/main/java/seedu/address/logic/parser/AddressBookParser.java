@@ -19,7 +19,6 @@ import seedu.address.logic.commands.GetStudentCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SetMilestoneCommand;
-import seedu.address.logic.parser.SetMilestoneCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
