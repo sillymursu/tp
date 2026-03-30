@@ -32,11 +32,6 @@ public final class MilestoneResolver {
 
     /**
      * Resolves the milestones for one student using today's date.
-     *
-     * @param studentId The student identifier.
-     * @param assignments The full assignment list in canonical display order.
-     * @param studentMilestones The student's raw sparse milestone data.
-     * @return A display-ready resolved milestone view.
      */
     public StudentMilestoneView resolveForStudent(StudentId studentId,
                                                   List<Assignment> assignments,
@@ -50,14 +45,6 @@ public final class MilestoneResolver {
 
     /**
      * Resolves the milestones for one student using a supplied date.
-     *
-     * <p>This overload is mainly useful for deterministic tests.
-     *
-     * @param studentId The student identifier.
-     * @param assignments The full assignment list in canonical display order.
-     * @param studentMilestones The student's raw sparse milestone data.
-     * @param today The date to use when computing overdue.
-     * @return A display-ready resolved milestone view.
      */
     public StudentMilestoneView resolveForStudent(StudentId studentId,
                                                   List<Assignment> assignments,
@@ -74,13 +61,7 @@ public final class MilestoneResolver {
             AssignmentId assignmentId = assignment.getAssignmentId();
             Optional<MilestoneRecord> maybeRawRecord = studentMilestones.get(assignmentId);
 
-            MilestoneRecord rawRecord;
-            if (maybeRawRecord.isPresent()) {
-                rawRecord = maybeRawRecord.get();
-            } else {
-                rawRecord = DEFAULT_MILESTONE_RECORD;
-            }
-
+            MilestoneRecord rawRecord = maybeRawRecord.orElse(DEFAULT_MILESTONE_RECORD);
             ResolvedMilestoneStatus resolvedStatus = resolveStatus(rawRecord, assignment, today);
 
             resolvedMilestones.add(new ResolvedMilestone(
@@ -100,15 +81,9 @@ public final class MilestoneResolver {
      * <p>Rules:
      * <ul>
      *   <li>COMPLETED stays COMPLETED</li>
-     *   <li>EXEMPT stays EXEMPT</li>
-     *   <li>IN_PROGRESS and NOT_STARTED become OVERDUE if due date has passed</li>
-     *   <li>otherwise the raw status is preserved</li>
+     *   <li>NOT_STARTED becomes OVERDUE if due date has passed</li>
+     *   <li>otherwise NOT_STARTED stays NOT_STARTED</li>
      * </ul>
-     *
-     * @param rawRecord The stored or default milestone record.
-     * @param assignment The assignment metadata.
-     * @param today The date used to compute overdue.
-     * @return The derived display status.
      */
     private ResolvedMilestoneStatus resolveStatus(MilestoneRecord rawRecord,
                                                   Assignment assignment,
@@ -123,16 +98,8 @@ public final class MilestoneResolver {
             return ResolvedMilestoneStatus.COMPLETED;
         }
 
-        if (rawStatus == MilestoneStatus.EXEMPT) {
-            return ResolvedMilestoneStatus.EXEMPT;
-        }
-
         if (assignment.getDueDate().date.isBefore(today)) {
             return ResolvedMilestoneStatus.OVERDUE;
-        }
-
-        if (rawStatus == MilestoneStatus.IN_PROGRESS) {
-            return ResolvedMilestoneStatus.IN_PROGRESS;
         }
 
         return ResolvedMilestoneStatus.NOT_STARTED;

@@ -43,7 +43,7 @@ public class MilestoneStoreTest {
         MilestoneStore milestoneStore = new MilestoneStore();
 
         MilestoneRecord firstRecord = new MilestoneRecord(
-                MilestoneStatus.IN_PROGRESS,
+                MilestoneStatus.NOT_STARTED,
                 new CompletedAt(""));
 
         MilestoneRecord secondRecord = new MilestoneRecord(
@@ -64,7 +64,7 @@ public class MilestoneStoreTest {
         MilestoneStore milestoneStore = new MilestoneStore();
 
         MilestoneRecord firstRecord = new MilestoneRecord(
-                MilestoneStatus.IN_PROGRESS,
+                MilestoneStatus.NOT_STARTED,
                 new CompletedAt(""));
 
         MilestoneRecord secondRecord = new MilestoneRecord(

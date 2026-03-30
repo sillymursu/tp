@@ -22,7 +22,7 @@ public class MilestoneResolverTest {
 
     @Test
     public void resolveForStudent_missingMilestone_defaultsToNotStarted() {
-        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01", "1");
+        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01");
         StudentMilestones studentMilestones = new StudentMilestones();
 
         StudentMilestoneView result = milestoneResolver.resolveForStudent(
@@ -40,7 +40,7 @@ public class MilestoneResolverTest {
 
     @Test
     public void resolveForStudent_completedMilestone_staysCompleted() {
-        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-03-01", "1");
+        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-03-01");
         StudentMilestones studentMilestones = new StudentMilestones();
         studentMilestones.set(assignment.getAssignmentId(),
                 new MilestoneRecord(MilestoneStatus.COMPLETED, new CompletedAt("2026-02-28T1200H")));
@@ -56,11 +56,11 @@ public class MilestoneResolverTest {
     }
 
     @Test
-    public void resolveForStudent_inProgressPastDue_becomesOverdue() {
-        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-03-01", "1");
+    public void resolveForStudent_notStartedPastDue_becomesOverdue() {
+        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-03-01");
         StudentMilestones studentMilestones = new StudentMilestones();
         studentMilestones.set(assignment.getAssignmentId(),
-                new MilestoneRecord(MilestoneStatus.IN_PROGRESS, new CompletedAt("")));
+                new MilestoneRecord(MilestoneStatus.NOT_STARTED, new CompletedAt("")));
 
         StudentMilestoneView result = milestoneResolver.resolveForStudent(
                 VALID_STUDENT_ID,
@@ -74,8 +74,8 @@ public class MilestoneResolverTest {
 
     @Test
     public void resolveForStudent_assignmentOrder_preserved() {
-        Assignment firstAssignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01", "1");
-        Assignment secondAssignment = createAssignment("A2", "Quiz 2", "G1", "2026-04-02", "2");
+        Assignment firstAssignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01");
+        Assignment secondAssignment = createAssignment("A2", "Quiz 2", "G1", "2026-04-02");
         StudentMilestones studentMilestones = new StudentMilestones();
 
         StudentMilestoneView result = milestoneResolver.resolveForStudent(
@@ -90,7 +90,7 @@ public class MilestoneResolverTest {
     }
 
     private Assignment createAssignment(String assignmentId, String label, String group,
-                                        String dueDate, String order) {
+                                        String dueDate) {
         return new Assignment(
                 new AssignmentId(assignmentId),
                 new Label(label),

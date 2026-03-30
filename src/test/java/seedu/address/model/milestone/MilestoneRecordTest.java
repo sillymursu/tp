@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class MilestoneRecordTest {
 
     @Test
-    public void constructor_nonCompletedStatusWithNonEmptyCompletedAt_throwsIllegalArgumentException() {
+    public void constructor_notStartedWithNonEmptyCompletedAt_throwsIllegalArgumentException() {
         CompletedAt completedAt = new CompletedAt("2026-03-24T1200H");
 
         assertThrows(IllegalArgumentException.class, () ->
@@ -17,7 +17,7 @@ public class MilestoneRecordTest {
     }
 
     @Test
-    public void constructor_completedStatusWithNonEmptyCompletedAt_success() {
+    public void constructor_completedWithNonEmptyCompletedAt_success() {
         CompletedAt completedAt = new CompletedAt("2026-03-24T1200H");
         MilestoneRecord milestoneRecord = new MilestoneRecord(MilestoneStatus.COMPLETED, completedAt);
 
@@ -26,11 +26,11 @@ public class MilestoneRecordTest {
     }
 
     @Test
-    public void constructor_nonCompletedStatusWithEmptyCompletedAt_success() {
+    public void constructor_notStartedWithEmptyCompletedAt_success() {
         CompletedAt completedAt = new CompletedAt("");
-        MilestoneRecord milestoneRecord = new MilestoneRecord(MilestoneStatus.IN_PROGRESS, completedAt);
+        MilestoneRecord milestoneRecord = new MilestoneRecord(MilestoneStatus.NOT_STARTED, completedAt);
 
-        assertEquals(MilestoneStatus.IN_PROGRESS, milestoneRecord.getStatus());
+        assertEquals(MilestoneStatus.NOT_STARTED, milestoneRecord.getStatus());
         assertEquals(completedAt, milestoneRecord.getCompletedAt());
     }
 
@@ -44,8 +44,8 @@ public class MilestoneRecordTest {
                 MilestoneStatus.COMPLETED,
                 new CompletedAt("2026-03-24T1200H"));
 
-        MilestoneRecord differentStatusRecord = new MilestoneRecord(
-                MilestoneStatus.EXEMPT,
+        MilestoneRecord differentRecord = new MilestoneRecord(
+                MilestoneStatus.NOT_STARTED,
                 new CompletedAt(""));
 
         assertEquals(firstRecord, firstRecord);
@@ -53,6 +53,6 @@ public class MilestoneRecordTest {
 
         assertNotEquals(firstRecord, null);
         assertNotEquals(firstRecord, "not a MilestoneRecord");
-        assertNotEquals(firstRecord, differentStatusRecord);
+        assertNotEquals(firstRecord, differentRecord);
     }
 }

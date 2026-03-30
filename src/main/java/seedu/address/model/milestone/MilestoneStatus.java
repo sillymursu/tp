@@ -5,7 +5,6 @@ package seedu.address.model.milestone;
  */
 public enum MilestoneStatus {
     NOT_STARTED,
-    IN_PROGRESS,
     COMPLETED,
-    EXEMPT
+    OVERDUE
 }
