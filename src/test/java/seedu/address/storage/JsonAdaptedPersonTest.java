@@ -1,3 +1,4 @@
+
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,8 +26,8 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final List<JsonAdaptedGroup> VALID_GROUPS = BENSON.getGroups().stream()
-            .map(JsonAdaptedGroup::new)
+    private static final List<String> VALID_GROUPS = BENSON.getGroups().stream()
+            .map(g -> g.getGroupName().toString())
             .collect(Collectors.toList());
 
     @Test

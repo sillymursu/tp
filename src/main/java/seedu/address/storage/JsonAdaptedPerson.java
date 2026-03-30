@@ -16,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StudentId;
 
+
 /**
  * Jackson-friendly version of {@link Person}.
  */
@@ -27,8 +28,7 @@ class JsonAdaptedPerson {
     private final String name;
     private final String phone;
     private final String email;
-    private final String group;
-    private final List<JsonAdaptedGroup> groups = new ArrayList<>();
+    private final List<String> groups = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -38,26 +38,14 @@ class JsonAdaptedPerson {
                              @JsonProperty("name") String name,
                              @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email,
-                             @JsonProperty("group") String group,
-                             @JsonProperty("groups") List<JsonAdaptedGroup> groups) {
+                             @JsonProperty("groups") List<String> groups) {
         this.studentId = studentId;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.group = group;
         if (groups != null) {
             this.groups.addAll(groups);
-        } else if (group != null && !group.trim().isEmpty()) {
-            this.groups.add(new JsonAdaptedGroup(group.trim(), new ArrayList<>()));
         }
-    }
-
-    public JsonAdaptedPerson(String studentId,
-                             String name,
-                             String phone,
-                             String email,
-                             List<JsonAdaptedGroup> groups) {
-        this(studentId, name, phone, email, null, groups);
     }
 
     /**
@@ -68,9 +56,8 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        group = null;
         groups.addAll(source.getGroups().stream()
-                .map(g -> new JsonAdaptedGroup(g.getGroupName().toString(), new ArrayList<>()))
+                .map(g -> g.getGroupName().toString())
                 .collect(Collectors.toList()));
     }
 
@@ -113,10 +100,9 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        final Set<Group> modelGroups = new java.util.HashSet<>();
-        for (JsonAdaptedGroup jsonGroup : groups) {
-            modelGroups.add(jsonGroup.toModelType());
-        }
+        final Set<Group> modelGroups = groups.stream()
+                .map(Group::new)
+                .collect(Collectors.toSet());
 
         return new Person(modelStudentId, modelName, modelPhone, modelEmail, modelGroups);
     }

@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -33,10 +34,7 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.groups = new HashSet<>();
-        for (Group group : groups) {
-            this.groups.add(new Group(group.getGroupName().name));
-        }
+        this.groups = new HashSet<>(groups);
     }
 
     public StudentId getStudentId() {
@@ -55,9 +53,7 @@ public class Person {
         return email;
     }
     public Set<Group> getGroups() {
-        return groups.stream()
-                .map(group -> new Group(group.getGroupName().name))
-                .collect(Collectors.toUnmodifiableSet());
+        return Collections.unmodifiableSet(groups);
     }
 
     /**

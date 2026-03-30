@@ -14,11 +14,19 @@ Class UserPrefs
 
 Class UniquePersonList
 Class Person
-Class Address
+Class StudentId
 Class Email
 Class Name
 Class Phone
-Class Tag
+
+' Assignment-related model classes
+Class AssignmentBook
+Class UniqueAssignmentList
+Class Assignment
+Class AssignmentId
+Class Label
+Class DueDate
+Class Group
 
 Class I #FFFFFF
 }
@@ -37,18 +45,27 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
+Person *--> "*" Group
+Person *--> StudentId
 Person *--> Name
 Person *--> Phone
 Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
+
+' Assignment containment and value objects
+AddressBook *--> "1" AssignmentBook
+AssignmentBook *--> "1" UniqueAssignmentList
+UniqueAssignmentList --> "~* all" Assignment
+Assignment *--> AssignmentId
+Assignment *--> Label
+Assignment *--> Group
+Assignment *--> DueDate
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+
 
 ModelManager --> "~* filtered" Person
+ModelManager --> "~* filtered" Assignment
 @enduml
