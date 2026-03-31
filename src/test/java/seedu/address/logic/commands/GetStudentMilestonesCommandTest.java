@@ -31,9 +31,10 @@ public class GetStudentMilestonesCommandTest {
                 .withPhone("94351253")
                 .withEmail("alice@example.com")
                 .withStudentId("S1")
+                .withGroups("G1")
                 .build();
 
-        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01", "1");
+        Assignment assignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01");
 
         addressBook.addPerson(student);
         addressBook.addAssignment(assignment);
@@ -86,14 +87,50 @@ public class GetStudentMilestonesCommandTest {
         assertEquals("There are no assignments in the system.", result.getFeedbackToUser());
     }
 
+    @Test
+    public void execute_onlySameGroupAssignmentsShown_success() throws Exception {
+        AddressBook addressBook = new AddressBook();
+
+        Person student = new PersonBuilder()
+                .withName("Alice Pauline")
+                .withPhone("94351253")
+                .withEmail("alice@example.com")
+                .withStudentId("S1")
+                .withGroups("G1")
+                .build();
+
+        Assignment matchingAssignment = createAssignment("A1", "Quiz 1", "G1", "2026-04-01");
+        Assignment nonMatchingAssignment = createAssignment("A2", "Quiz 2", "G2", "2026-04-02");
+
+        addressBook.addPerson(student);
+        addressBook.addAssignment(matchingAssignment);
+        addressBook.addAssignment(nonMatchingAssignment);
+
+        Model model = new ModelManager(addressBook, new UserPrefs());
+        GetStudentMilestonesCommand command = new GetStudentMilestonesCommand(new StudentId("S1"));
+
+        CommandResult result = command.execute(model);
+        String feedback = result.getFeedbackToUser();
+
+        assertContains(feedback, "A1");
+        assertDoesNotContain(feedback, "A2");
+    }
+
     private Assignment createAssignment(String assignmentId, String label, String group,
-                                        String dueDate, String order) {
+                                        String dueDate) {
         return new Assignment(
                 new AssignmentId(assignmentId),
                 new Label(label),
                 new Group(group),
                 new DueDate(dueDate)
         );
+    }
+
+    private void assertDoesNotContain(String actual, String unexpectedSubstring) {
+        if (actual.contains(unexpectedSubstring)) {
+            throw new AssertionError("Did not expect to find substring:\n"
+                    + unexpectedSubstring + "\ninside:\n" + actual);
+        }
     }
 
     private void assertContains(String actual, String expectedSubstring) {

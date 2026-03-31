@@ -32,6 +32,8 @@ public class SetMilestoneCommand extends Command {
 
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %1$s";
     public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment not found: %1$s";
+    public static final String MESSAGE_ASSIGNMENT_NOT_IN_STUDENT_GROUP =
+            "Assignment %1$s does not belong to student %2$s's group.";
 
     private final StudentId studentId;
     private final AssignmentId assignmentId;
@@ -58,12 +60,19 @@ public class SetMilestoneCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (!hasStudent(model, studentId)) {
+        Person student = findStudent(model, studentId);
+        if (student == null) {
             throw new CommandException(String.format(MESSAGE_STUDENT_NOT_FOUND, studentId));
         }
 
-        if (!hasAssignment(model, assignmentId)) {
+        Assignment assignment = findAssignment(model, assignmentId);
+        if (assignment == null) {
             throw new CommandException(String.format(MESSAGE_ASSIGNMENT_NOT_FOUND, assignmentId));
+        }
+
+        if (!student.getGroups().contains(assignment.getGroup())) {
+            throw new CommandException(String.format(
+                    MESSAGE_ASSIGNMENT_NOT_IN_STUDENT_GROUP, assignmentId, studentId));
         }
 
         model.setMilestone(studentId, assignmentId, status, completedAt);
@@ -74,27 +83,27 @@ public class SetMilestoneCommand extends Command {
     }
 
     /**
-     * Returns true if the student exists in the model.
+     * Returns the student with the given student ID, or null if not found.
      */
-    private boolean hasStudent(Model model, StudentId studentId) {
+    private Person findStudent(Model model, StudentId studentId) {
         for (Person person : model.getAddressBook().getPersonList()) {
             if (person.getStudentId().equals(studentId)) {
-                return true;
+                return person;
             }
         }
-        return false;
+        return null;
     }
 
     /**
-     * Returns true if the assignment exists in the model.
+     * Returns the assignment with the given assignment ID, or null if not found.
      */
-    private boolean hasAssignment(Model model, AssignmentId assignmentId) {
+    private Assignment findAssignment(Model model, AssignmentId assignmentId) {
         for (Assignment assignment : model.getAssignmentList()) {
             if (assignment.getAssignmentId().equals(assignmentId)) {
-                return true;
+                return assignment;
             }
         }
-        return false;
+        return null;
     }
 
     @Override

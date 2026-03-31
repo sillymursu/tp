@@ -165,10 +165,15 @@ public class ModelManager implements Model {
     public StudentMilestoneView getResolvedMilestones(StudentId studentId) {
         requireNonNull(studentId);
 
+        Person student = findStudentById(studentId);
         StudentMilestones studentMilestones = getMilestones(studentId);
-        List<Assignment> assignments = new ArrayList<>(getAssignmentList());
 
-        return milestoneResolver.resolveForStudent(studentId, assignments, studentMilestones);
+        if (student == null) {
+            return milestoneResolver.resolveForStudent(studentId, List.of(), studentMilestones);
+        }
+
+        List<Assignment> assignmentsForStudentGroup = getAssignmentsForStudent(student);
+        return milestoneResolver.resolveForStudent(studentId, assignmentsForStudentGroup, studentMilestones);
     }
 
     @Override
@@ -197,6 +202,43 @@ public class ModelManager implements Model {
         return addressBook.getMilestoneStore()
                 .getMilestone(studentId, assignmentId)
                 .orElse(null);
+    }
+
+    /**
+     * Finds the student with the given student ID from the address book.
+     *
+     * @param studentId The student ID to search for.
+     * @return The matching student, or null if not found.
+     */
+    private Person findStudentById(StudentId studentId) {
+        requireNonNull(studentId);
+
+        for (Person person : addressBook.getPersonList()) {
+            if (person.getStudentId().equals(studentId)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the assignments that belong to at least one of the student's groups.
+     *
+     * @param student The student whose assignments should be returned.
+     * @return A list of assignments matching the student's groups.
+     */
+    private List<Assignment> getAssignmentsForStudent(Person student) {
+        requireNonNull(student);
+
+        List<Assignment> matchingAssignments = new ArrayList<>();
+
+        for (Assignment assignment : getAssignmentList()) {
+            if (student.getGroups().contains(assignment.getGroup())) {
+                matchingAssignments.add(assignment);
+            }
+        }
+
+        return matchingAssignments;
     }
 
     @Override
