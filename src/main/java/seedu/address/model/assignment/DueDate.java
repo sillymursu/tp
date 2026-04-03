@@ -12,7 +12,7 @@ import java.time.format.DateTimeParseException;
  */
 public class DueDate {
 
-    public static final String MESSAGE_CONSTRAINTS = "DueDate can only be in the format YYYY-MM-DD, or blank";
+    public static final String MESSAGE_CONSTRAINTS = "DueDate can only be in the format YYYY-MM-DD";
 
     public final LocalDate date;
 
@@ -30,14 +30,10 @@ public class DueDate {
      * Returns true if a given string is a valid date.
      *
      * @param date The string to validate.
-     * @return {@code true} if {@code date} is blank or follows the format {@code yyyy-MM-dd},
+     * @return {@code true} if {@code date} follows the format {@code yyyy-MM-dd},
      *         {@code false} otherwise.
      */
     public static boolean isValidDate(String date) {
-        if (date.trim().isEmpty()) {
-            return true;
-        }
-
         try {
             LocalDate.parse(date.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             return true;
