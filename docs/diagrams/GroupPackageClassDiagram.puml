@@ -1,0 +1,25 @@
+@startuml GroupPackageClassDiagram
+!include style.puml
+
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+package "Model::Group" <<Rectangle>> {
+  class GroupManager
+  class Group
+  class GroupName
+  class StudentList
+}
+
+class StudentId
+
+GroupManager *--> "*" Group
+GroupManager ..> StudentId : add/remove
+
+Group *--> "1" GroupName
+Group *--> "1" StudentList
+
+StudentList --> "*" StudentId
+
+@enduml
