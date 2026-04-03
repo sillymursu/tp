@@ -24,21 +24,15 @@ public class DeleteAssignmentCommandParser implements Parser<DeleteAssignmentCom
     @Override
     public DeleteAssignmentCommand parse(String args) throws ParseException {
         String trimmed = args.trim();
+        String[] parts = trimmed.split("\\s+");
 
-        if (!trimmed.startsWith(PATH_ASSIGNMENTS)) {
+        if (parts.length != 2 || !parts[0].equals(PATH_ASSIGNMENTS)) {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, DeleteAssignmentCommand.MESSAGE_USAGE));
         }
 
-        String idText = trimmed.substring(PATH_ASSIGNMENTS.length()).trim();
-
-        if (idText.isEmpty()) {
-            throw new ParseException(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, DeleteAssignmentCommand.MESSAGE_USAGE));
-        }
-
-        AssignmentId assignmentId = ParserUtil.parseAssignmentId(idText);
-
+        AssignmentId assignmentId = ParserUtil.parseAssignmentId(parts[1]);
         return new DeleteAssignmentCommand(assignmentId);
     }
+
 }

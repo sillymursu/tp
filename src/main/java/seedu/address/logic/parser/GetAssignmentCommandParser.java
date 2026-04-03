@@ -27,7 +27,7 @@ public class GetAssignmentCommandParser implements Parser<Command> {
 
         if (trimmed.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GetAssignmentCommand.MESSAGE_USAGE));
+                    GetAssignmentsCommand.MESSAGE_USAGE));
         }
 
         String[] parts = trimmed.split("\\s+");
@@ -40,14 +40,17 @@ public class GetAssignmentCommandParser implements Parser<Command> {
 
             // get /assignments <assignmentId>
             if (parts.length == 2) {
-                return new GetAssignmentCommand(new AssignmentId(parts[1]));
+                AssignmentId assignmentId = ParserUtil.parseAssignmentId(parts[1]);
+                return new GetAssignmentCommand(assignmentId);
             }
+
+            // Too many arguments after /assignments should use the single-assignment usage.
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    GetAssignmentCommand.MESSAGE_USAGE));
 
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     GetAssignmentsCommand.MESSAGE_USAGE));
         }
-
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetAssignmentsCommand.MESSAGE_USAGE));
     }
 }

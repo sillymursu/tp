@@ -9,10 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
-import seedu.address.model.assignment.DueDate;
-import seedu.address.model.assignment.Label;
-import seedu.address.model.group.Group;
 import seedu.address.model.person.StudentId;
+import seedu.address.testutil.AssignmentBuilder;
 
 public class MilestoneResolverTest {
 
@@ -91,11 +89,11 @@ public class MilestoneResolverTest {
 
     private Assignment createAssignment(String assignmentId, String label, String group,
                                         String dueDate) {
-        return new Assignment(
-                new AssignmentId(assignmentId),
-                new Label(label),
-                new Group(group),
-                new DueDate(dueDate)
-        );
+        return new AssignmentBuilder()
+                .withAssignmentId(assignmentId)
+                .withLabel(label)
+                .withGroup(group)
+                .withDueDate(dueDate)
+                .build();
     }
 }

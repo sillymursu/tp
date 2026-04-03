@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalAssignments.getTypicalAssignmentBook;
@@ -51,5 +52,23 @@ public class GetAssignmentsCommandTest {
 
         assertCommandSuccess(command, emptyModel, GetAssignmentsCommand.MESSAGE_NO_ASSIGNMENTS, expectedEmptyModel);
         assertTrue(emptyModel.getFilteredAssignmentList().isEmpty());
+    }
+
+    @Test
+    public void equals() {
+        GetAssignmentsCommand firstCommand = new GetAssignmentsCommand();
+        GetAssignmentsCommand secondCommand = new GetAssignmentsCommand();
+
+        // same object -> returns true
+        assertTrue(firstCommand.equals(firstCommand));
+
+        // same values -> returns true
+        assertTrue(firstCommand.equals(secondCommand));
+
+        // different types -> returns false
+        assertFalse(firstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(firstCommand.equals(null));
     }
 }

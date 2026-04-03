@@ -18,6 +18,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.EditAssignmentDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -43,6 +44,12 @@ public class CommandTestUtil {
     public static final String GROUP_DESC_AMY = " " + PREFIX_GROUP + VALID_GROUP_AMY;
     public static final String GROUP_DESC_BOB = " " + PREFIX_GROUP + VALID_GROUP_BOB;
 
+    public static final String VALID_LABEL_A_TEST = "A-TEST";
+    public static final String VALID_LABEL_B_TEST = "B-TEST";
+    public static final String VALID_GROUP_A_TEST = "G1";
+    public static final String VALID_GROUP_B_TEST = "G2";
+    public static final String VALID_DUEDATE_A_TEST = "2026-04-20";
+    public static final String VALID_DUEDATE_B_TEST = "2026-04-30";
 
     public static final String INVALID_NAME_DESC = "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = "911a"; // 'a' not allowed in phones
@@ -55,6 +62,9 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final EditAssignmentCommand.EditAssignmentDescriptor DESC_A_TEST;
+    public static final EditAssignmentCommand.EditAssignmentDescriptor DESC_B_TEST;
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
@@ -62,6 +72,13 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withGroup(VALID_GROUP_BOB).build();
+    }
+
+    static {
+        DESC_A_TEST = new EditAssignmentDescriptorBuilder().withLabel(VALID_LABEL_A_TEST)
+                .withGroup(VALID_GROUP_A_TEST).withDueDate(VALID_DUEDATE_A_TEST).build();
+        DESC_B_TEST = new EditAssignmentDescriptorBuilder().withLabel(VALID_LABEL_B_TEST)
+                .withGroup(VALID_GROUP_B_TEST).withDueDate(VALID_DUEDATE_B_TEST).build();
     }
 
     /**

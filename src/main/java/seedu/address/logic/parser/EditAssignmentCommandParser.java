@@ -44,8 +44,8 @@ public class EditAssignmentCommandParser implements Parser<EditAssignmentCommand
                     MESSAGE_INVALID_COMMAND_FORMAT, EditAssignmentCommand.MESSAGE_USAGE));
         }
 
-        AssignmentId assignmentId = ParserUtil.parseAssignmentId(idAndTuple[0]);
         List<String> parts = parseTuple3AllowEmpty(idAndTuple[1], EditAssignmentCommand.MESSAGE_USAGE);
+        AssignmentId assignmentId = ParserUtil.parseAssignmentId(idAndTuple[0]);
 
         EditAssignmentCommand.EditAssignmentDescriptor descriptor =
                 new EditAssignmentCommand.EditAssignmentDescriptor();

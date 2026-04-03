@@ -25,8 +25,6 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
-import seedu.address.model.assignment.DueDate;
-import seedu.address.model.assignment.Label;
 import seedu.address.model.group.Group;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
@@ -35,6 +33,7 @@ import seedu.address.model.milestone.StudentMilestoneView;
 import seedu.address.model.milestone.StudentMilestones;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
+import seedu.address.testutil.AssignmentBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -95,12 +94,12 @@ public class AddAssignmentCommandTest {
     }
 
     private static Assignment assignment(String id, String label, String group, String dueDate) {
-        return new Assignment(
-                new AssignmentId(id),
-                new Label(label),
-                new Group(group),
-                new DueDate(dueDate)
-        );
+        return new AssignmentBuilder()
+                .withAssignmentId(id)
+                .withLabel(label)
+                .withGroup(group)
+                .withDueDate(dueDate)
+                .build();
     }
 
     /**

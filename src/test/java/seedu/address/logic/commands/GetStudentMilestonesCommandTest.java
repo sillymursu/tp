@@ -12,13 +12,11 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
-import seedu.address.model.assignment.DueDate;
-import seedu.address.model.assignment.Label;
-import seedu.address.model.group.Group;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
+import seedu.address.testutil.AssignmentBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class GetStudentMilestonesCommandTest {
@@ -118,12 +116,12 @@ public class GetStudentMilestonesCommandTest {
 
     private Assignment createAssignment(String assignmentId, String label, String group,
                                         String dueDate) {
-        return new Assignment(
-                new AssignmentId(assignmentId),
-                new Label(label),
-                new Group(group),
-                new DueDate(dueDate)
-        );
+        return new AssignmentBuilder()
+                .withAssignmentId(assignmentId)
+                .withLabel(label)
+                .withGroup(group)
+                .withDueDate(dueDate)
+                .build();
     }
 
     private void assertDoesNotContain(String actual, String unexpectedSubstring) {

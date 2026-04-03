@@ -222,19 +222,19 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String raw} into a List of 3 Strings, split by ';' and enclosed in '{}'.
-     * Validates that the first and third elements are strictly not empty.
+     * Validates that all three elements are strictly not empty.
      *
      * @param raw The string to be parsed.
      * @param errorMessage The specific command usage message to display if parsing fails.
      * @return A list containing exactly 3 trimmed strings.
-     * @throws ParseException if the input format is invalid, or if the 1st or 3rd elements are empty.
+     * @throws ParseException if the input format is invalid, or if any element is empty.
      */
     public static List<String> parseTuple3(String raw, String errorMessage) throws ParseException {
         // Delegate the initial parsing to the allowEmpty method
         List<String> parsedList = parseTuple3AllowEmpty(raw, errorMessage);
 
-        // Perform the strict validation for the 1st and 3rd elements
-        if (parsedList.get(0).isEmpty() || parsedList.get(2).isEmpty()) {
+        // Perform the strict validation for all 3 elements
+        if (parsedList.get(0).isEmpty() || parsedList.get(1).isEmpty() || parsedList.get(2).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
         }
 

@@ -61,4 +61,17 @@ public class GetAssignmentCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_GET_ASSIGNMENT_SUCCESS, assignmentId));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof GetAssignmentCommand)) {
+            return false;
+        }
+
+        GetAssignmentCommand otherCommand = (GetAssignmentCommand) other;
+        return assignmentId.equals(otherCommand.assignmentId);
+    }
 }

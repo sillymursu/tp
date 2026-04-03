@@ -42,4 +42,9 @@ public class GetAssignmentsCommand extends Command {
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this || other instanceof GetAssignmentsCommand;
+    }
 }

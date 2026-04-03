@@ -1,8 +1,12 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showNoAssignment;
+import static seedu.address.testutil.TypicalAssignmentId.ASSIGNMENT_ID_FIRST_ASSIGNMENT;
+import static seedu.address.testutil.TypicalAssignmentId.ASSIGNMENT_ID_SECOND_ASSIGNMENT;
 import static seedu.address.testutil.TypicalAssignments.A_JUNIT;
 import static seedu.address.testutil.TypicalAssignments.getTypicalAssignmentBook;
 
@@ -53,5 +57,27 @@ public class GetAssignmentCommandTest {
         String expectedMessage = String.format(GetAssignmentCommand.MESSAGE_GET_ASSIGNMENT_SUCCESS, targetAssignmentId);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         assertCommandSuccess(getAssignmentCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        GetAssignmentCommand getFirstCommand = new GetAssignmentCommand(ASSIGNMENT_ID_FIRST_ASSIGNMENT);
+        GetAssignmentCommand getSecondCommand = new GetAssignmentCommand(ASSIGNMENT_ID_SECOND_ASSIGNMENT);
+
+        // same object -> returns true
+        assertTrue(getFirstCommand.equals(getFirstCommand));
+
+        // same values -> returns true
+        GetAssignmentCommand getFirstCommandCopy = new GetAssignmentCommand(ASSIGNMENT_ID_FIRST_ASSIGNMENT);
+        assertTrue(getFirstCommand.equals(getFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(getFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(getFirstCommand.equals(null));
+
+        // different assignment id -> returns false
+        assertFalse(getFirstCommand.equals(getSecondCommand));
     }
 }
