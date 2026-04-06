@@ -39,7 +39,7 @@ public class GetStudentsCommandTest {
     @Test
     public void equals() {
         GetStudentsCommand firstCommand = new GetStudentsCommand();
-        GetStudentsCommand  secondCommand = new GetStudentsCommand ();
+        GetStudentsCommand secondCommand = new GetStudentsCommand();
 
         // same object -> returns true
         assertEquals(firstCommand, firstCommand);
