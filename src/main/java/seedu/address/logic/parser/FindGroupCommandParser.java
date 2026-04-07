@@ -1,15 +1,15 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.FindGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.GroupName;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 /**
  * Parses input arguments and creates a new FindGroupCommand object
  */
-public class FindGroupCommandParser implements Parser<FindGroupCommand>{
+public class FindGroupCommandParser implements Parser<FindGroupCommand> {
     private static final String PATH_GROUPS = "/groups";
     /**
      * Parses the given {@code String} of arguments in the context of the FindGroupCommand

@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -391,21 +393,27 @@ public class ModelManager implements Model {
     @Override
     public void setFilteredPersonsAndAssignmentsByGroups(GroupName name) {
         requireNonNull(name);
-        Optional<Group> matchingGroup = addressBook.getGroups().stream()
-                .filter(g -> g.getGroupName().equals(name))
-                .findFirst();
 
         System.out.println(name);
-        if (matchingGroup.isPresent()) {
-            Set<StudentId> studentIdSet = new HashSet<>(matchingGroup.get().getStudentIds().getStudentList());
+        Group matchingGroup = null;
+        for (Group g : this.groups) {
+            if (g.getGroupName().equals(name)) {
+                matchingGroup = g;
+                break;
+            }
+        }
 
-            filteredPersons.setPredicate(person -> studentIdSet.contains(person.getStudentId()));
+        if (matchingGroup != null) {
+            ArrayList<StudentId> studentIds =
+                    matchingGroup.getStudentIds().getStudentList();
 
-
+            filteredPersons.setPredicate(person ->
+                    studentIds.contains(person.getStudentId())
+            );
         } else {
             filteredPersons.setPredicate(person -> false);
-
         }
+
         filteredAssignments.setPredicate(assignment ->
                 assignment.getGroup().getGroupName().equals(name)
         );
