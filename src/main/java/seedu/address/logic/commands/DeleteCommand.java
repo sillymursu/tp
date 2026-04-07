@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class DeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " /students S1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %1$s";
 
     private final StudentId studentId;
 
@@ -46,7 +46,7 @@ public class DeleteCommand extends Command {
         }
 
         if (personToDelete == null) {
-            throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+            throw new CommandException(String.format(MESSAGE_STUDENT_NOT_FOUND, studentId));
         }
 
         model.deletePerson(personToDelete);
