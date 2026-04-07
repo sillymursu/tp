@@ -18,6 +18,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GetStudentCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -27,6 +28,26 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddressBookParserTest {
+    private static final String GET_MESSAGE_USAGE =
+            "get: Retrieves a student, assignment, or milestone view.\n"
+                    + "Use one of:\n"
+                    + "1. get /students STUDENT_ID\n"
+                    + "2. get /students STUDENT_ID /milestones\n"
+                    + "3. get /assignments ASSIGNMENT_ID\n"
+                    + "Examples:\n"
+                    + "get /students S1\n"
+                    + "get /students S1 /milestones\n"
+                    + "get /assignments A1";
+    private static final String SET_MESSAGE_USAGE =
+            "set: Updates one milestone for a student.\n"
+                    + "Format:\n"
+                    + "set /students STUDENT_ID /milestones ASSIGNMENT_ID STATUS [COMPLETED_AT]\n"
+                    + "Allowed statuses: NOT_STARTED, COMPLETED\n"
+                    + "If status is NOT_STARTED, do not provide COMPLETED_AT.\n"
+                    + "If status is COMPLETED, COMPLETED_AT is required.\n"
+                    + "Examples:\n"
+                    + "set /students S1 /milestones A1 NOT_STARTED\n"
+                    + "set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H";
 
     private final AddressBookParser parser = new AddressBookParser();
 
@@ -85,6 +106,26 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_getInvalidFormat_throwsParseException() {
+        assertThrows(ParseException.class,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, GET_MESSAGE_USAGE), (
+                ) -> parser.parseCommand("get /hello"));
+        assertThrows(ParseException.class,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetStudentCommand.MESSAGE_USAGE), (
+                ) -> parser.parseCommand("get /students"));
+    }
+
+    @Test
+    public void parseCommand_setInvalidFormat_throwsParseException() {
+        assertThrows(ParseException.class,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SET_MESSAGE_USAGE), (
+                ) -> parser.parseCommand("set /students S1"));
+        assertThrows(ParseException.class,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SET_MESSAGE_USAGE), (
+                ) -> parser.parseCommand("set /assignments A1"));
     }
 
     @Test
