@@ -21,7 +21,7 @@ public class GetStudentMilestonesCommand extends Command {
     public static final String COMMAND_WORD = "get";
 
     public static final String MESSAGE_USAGE =
-            "get /students <studentId> /milestones: Shows milestone progress for a student.\n"
+            "get /students STUDENT_ID /milestones: Shows milestone progress for a student.\n"
                     + "Example: get /students S1 /milestones";
 
     private static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %s";

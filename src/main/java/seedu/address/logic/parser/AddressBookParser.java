@@ -31,6 +31,26 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
+    private static final String GET_MESSAGE_USAGE =
+            "get: Retrieves a student, assignment, or milestone view.\n"
+                    + "Use one of:\n"
+                    + "1. get /students STUDENT_ID\n"
+                    + "2. get /students STUDENT_ID /milestones\n"
+                    + "3. get /assignments ASSIGNMENT_ID\n"
+                    + "Examples:\n"
+                    + "get /students S1\n"
+                    + "get /students S1 /milestones\n"
+                    + "get /assignments A1";
+    private static final String SET_MESSAGE_USAGE =
+            "set: Updates one milestone for a student.\n"
+                    + "Format:\n"
+                    + "set /students STUDENT_ID /milestones ASSIGNMENT_ID STATUS [COMPLETED_AT]\n"
+                    + "Allowed statuses: NOT_STARTED, COMPLETED\n"
+                    + "If status is NOT_STARTED, do not provide COMPLETED_AT.\n"
+                    + "If status is COMPLETED, COMPLETED_AT is required.\n"
+                    + "Examples:\n"
+                    + "set /students S1 /milestones A1 NOT_STARTED\n"
+                    + "set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H";
 
     /**
      * Parses user input into command for execution.
@@ -89,13 +109,13 @@ public class AddressBookParser {
             if (arguments.trim().startsWith("/assignments")) {
                 return new GetAssignmentCommandParser().parse(arguments);
             }
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GET_MESSAGE_USAGE));
 
         case SetMilestoneCommand.COMMAND_WORD:
             if (arguments.trim().startsWith("/students") && arguments.contains("/milestones")) {
                 return new SetMilestoneCommandParser().parse(arguments);
             }
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SET_MESSAGE_USAGE));
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();

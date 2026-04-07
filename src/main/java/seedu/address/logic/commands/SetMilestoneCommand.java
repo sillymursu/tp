@@ -19,11 +19,11 @@ public class SetMilestoneCommand extends Command {
     public static final String COMMAND_WORD = "set";
 
     public static final String MESSAGE_USAGE =
-            "set /students <studentId> /milestones <assignmentId> <status> [completedAt]: "
+            "set /students STUDENT_ID /milestones ASSIGNMENT_ID STATUS [COMPLETED_AT]: "
                     + "Sets one milestone for a student.\n"
                     + "Allowed statuses: NOT_STARTED, COMPLETED\n"
-                    + "If status is NOT_STARTED, do not provide completedAt.\n"
-                    + "If status is COMPLETED, completedAt is required.\n"
+                    + "If status is NOT_STARTED, do not provide COMPLETED_AT.\n"
+                    + "If status is COMPLETED, COMPLETED_AT is required.\n"
                     + "Example: set /students S1 /milestones A1 NOT_STARTED\n"
                     + "Example: set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H";
 

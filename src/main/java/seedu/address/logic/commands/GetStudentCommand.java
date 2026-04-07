@@ -21,7 +21,7 @@ public class GetStudentCommand extends Command {
     public static final String COMMAND_WORD = "get";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " /students <studentId>: Gets the student identified by the given student ID.\n"
+            + " /students STUDENT_ID: Gets the student identified by the given student ID.\n"
             + "Example: " + COMMAND_WORD + " /students S1";
 
     public static final String MESSAGE_GOT_PERSON_SUCCESS = "Got Person: %1$s";
