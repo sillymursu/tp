@@ -241,11 +241,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.removeAssignmentFromGroup(g, id);
     }
 
+    /**
      * Replaces the Groups in internal GroupManager to a new one
      */
     public void setGroups(List<Group> groups) {
         this.groups.setGroups(groups);
     }
+
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();

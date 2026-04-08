@@ -140,6 +140,7 @@ public class GroupManager {
                 //do nothing
             }
         }
+    }
       
     public void setGroups(List<Group> group) {
         requireNonNull(group);
