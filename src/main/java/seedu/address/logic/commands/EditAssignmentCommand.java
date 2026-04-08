@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.assignment.Assignment;
@@ -83,7 +84,7 @@ public class EditAssignmentCommand extends Command {
 
         model.setAssignment(assignmentToEdit, editedAssignment);
         model.updateFilteredAssignmentList(PREDICATE_SHOW_ALL_ASSIGNMENTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_ASSIGNMENT_SUCCESS, editedAssignment));
+        return new CommandResult(String.format(MESSAGE_EDIT_ASSIGNMENT_SUCCESS, Messages.formatA(editedAssignment)));
     }
 
     /**
