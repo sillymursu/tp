@@ -4,6 +4,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.GetStudentCommand;
+import seedu.address.logic.commands.GetStudentsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.StudentId;
 
@@ -31,12 +32,19 @@ public class GetStudentCommandParser implements Parser<Command> {
 
         String[] parts = trimmed.split("\\s+");
 
-        if (parts.length != 2 || !parts[0].equals(PATH_STUDENTS)) {
+        if (!parts[0].equals(PATH_STUDENTS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     GetStudentCommand.MESSAGE_USAGE));
         }
-
-        StudentId studentId = ParserUtil.parseStudentId(parts[1]);
-        return new GetStudentCommand(studentId);
+        if (parts.length == 1) {
+            return new GetStudentsCommand();
+        }
+        if (parts.length == 2) {
+            StudentId studentId = ParserUtil.parseStudentId(parts[1]);
+            return new GetStudentCommand(studentId);
+        }
+        // Too many arguments after /assignments should use the single-assignment usage.
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                GetStudentCommand.MESSAGE_USAGE));
     }
 }

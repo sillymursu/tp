@@ -37,20 +37,20 @@ public class TypicalPersons {
             .build();
 
     public static final Person ELLE = new PersonBuilder().withStudentId("S5").withName("Elle Meyer")
-            .withPhone("9482224").withEmail("werner@example.com").withGroups("CS").build();
+            .withPhone("94822243").withEmail("werner@example.com").withGroups("CS").build();
 
     public static final Person FIONA = new PersonBuilder().withStudentId("S6").withName("Fiona Kunz")
-            .withPhone("9482427").withEmail("lydia@example.com").withGroups("CS").build();
+            .withPhone("94824273").withEmail("lydia@example.com").withGroups("CS").build();
 
     public static final Person GEORGE = new PersonBuilder().withStudentId("S7").withName("George Best")
-            .withPhone("9482442").withEmail("anna@example.com").withGroups("CS").build();
+            .withPhone("94824423").withEmail("anna@example.com").withGroups("CS").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withStudentId("S8").withName("Hoon Meier")
-            .withPhone("8482424").withEmail("stefan@example.com").withGroups("CS").build();
+            .withPhone("84824243").withEmail("stefan@example.com").withGroups("CS").build();
 
     public static final Person IDA = new PersonBuilder().withStudentId("S9").withName("Ida Mueller")
-            .withPhone("8482131").withEmail("hans@example.com").withGroups("CS").build();
+            .withPhone("84821313").withEmail("hans@example.com").withGroups("CS").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withStudentId("S10").withName(VALID_NAME_AMY)
