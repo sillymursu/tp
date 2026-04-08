@@ -20,7 +20,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        String validJson = "/students {Bob Choo; 22222222; bob@example.com; G2}";
+        String validJson = "/students {Bob Choo; 64123456; bob@example.com; G2}";
         StudentId tempId = new StudentId("S0");
         Person expectedPerson = new PersonBuilder(BOB)
                 .withStudentId(tempId.getValue())
@@ -31,7 +31,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_repeatedNonTagValue_failure() {
-        String validJson = "/students {Bob Choo; 22222222; bob@example.com; G2}";
+        String validJson = "/students {Bob Choo; 64123456; bob@example.com; G2}";
 
         // Multiple complete JSON blocks
         assertParseFailure(parser, validJson + " " + validJson,
@@ -49,29 +49,29 @@ public class AddCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // Missing opening brace
-        assertParseFailure(parser, "/students Name; 22222222; bob@example.com; G1", expectedMessage);
+        assertParseFailure(parser, "/students Name; 64123456; bob@example.com; G1", expectedMessage);
 
         // Missing closing brace
-        assertParseFailure(parser, "/students {Bob Choo; 22222222; bob@example.com; G1", expectedMessage);
+        assertParseFailure(parser, "/students {Bob Choo; 64123456; bob@example.com; G1", expectedMessage);
 
         // Missing semicolons (only 3 fields)
-        assertParseFailure(parser, "/students {Bob Choo; 22222222; bob@example.com}", expectedMessage);
+        assertParseFailure(parser, "/students {Bob Choo; 64123456; bob@example.com}", expectedMessage);
 
         // Missing first field (name)
-        assertParseFailure(parser, "/students {; 22222222; bob@example.com; G1}", expectedMessage);
+        assertParseFailure(parser, "/students {; 64123456; bob@example.com; G1}", expectedMessage);
 
         // Wrong command prefix
-        assertParseFailure(parser, "/add {Bob Choo; 22222222; bob@example.com; G1}", expectedMessage);
+        assertParseFailure(parser, "/add {Bob Choo; 64123456; bob@example.com; G1}", expectedMessage);
 
         // All fields jumbled without braces/semicolons
-        assertParseFailure(parser, "Bob Choo 22222222 bob@example.com G1", expectedMessage);
+        assertParseFailure(parser, "Bob Choo 64123456 bob@example.com G1", expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // Invalid values in JSON positions (your ParserUtil will catch these)
         assertParseFailure(parser,
-                "/students {@#$%InvalidName; 22222222; bob@example.com; G1}",
+                "/students {@#$%InvalidName; 64123456; bob@example.com; G1}",
                 Name.MESSAGE_CONSTRAINTS);
 
         assertParseFailure(parser,
@@ -79,7 +79,7 @@ public class AddCommandParserTest {
                 Phone.MESSAGE_CONSTRAINTS);
 
         assertParseFailure(parser,
-                "/students {Bob Choo; 22222222; invalid-email; G1}",
+                "/students {Bob Choo; 64123456; invalid-email; G1}",
                 Email.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported

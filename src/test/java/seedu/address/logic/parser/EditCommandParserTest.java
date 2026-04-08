@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
@@ -36,7 +37,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidPreamble_failure() {
-        String expectedIndexMessage = ParserUtil.MESSAGE_INVALID_INDEX;
+        String expectedIndexMessage = MESSAGE_INVALID_INDEX;
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
         // negative index
@@ -55,13 +56,13 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
-        assertParseFailure(parser, "/students S1 {@#$%; 22222222; invalid; G1}", Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "/students S1 {@#$%; 98123456; invalid; G1}", Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, "/students S1 {Bob; @#$%; bob@example.com; G1}", Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
-        assertParseFailure(parser, "/students S1 {Bob; 22222222; invalid-email; G1}", Email.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "/students S1 {Bob; 98123456; invalid-email; G1}", Email.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, only first invalid value is captured
         assertParseFailure(parser, "/students S1 {@#$%; @#$%; invalid; G1}", Name.MESSAGE_CONSTRAINTS);

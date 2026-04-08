@@ -58,6 +58,22 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void add_duplicatePhone_throwsDuplicateException() {
+        uniquePersonList.add(ALICE);
+        Person editedBob = new PersonBuilder(BOB).withPhone(ALICE.getPhone().value)
+                .build();
+        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(editedBob));
+    }
+
+    @Test
+    public void add_duplicateEmail_throwsDuplicateException() {
+        uniquePersonList.add(ALICE);
+        Person editedBob = new PersonBuilder(BOB).withEmail(ALICE.getEmail().value)
+                .build();
+        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(editedBob));
+    }
+
+    @Test
     public void setPerson_nullTargetPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniquePersonList.setPerson(null, ALICE));
     }
