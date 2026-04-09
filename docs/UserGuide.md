@@ -145,7 +145,7 @@ View-only computed status:
 
 * `OVERDUE`
 
-> [!NOTE]
+> **[!NOTE]**
 > `OVERDUE` is not manually set. It appears automatically when the due date has passed and the milestone is still incomplete.
 
 ---
@@ -154,24 +154,24 @@ View-only computed status:
 
 ## Notes about the command format
 
-> [!NOTE]
+> **[!NOTE]**
 > Words in `UPPER_CASE` are values you must supply.
 > Example: in `get /students STUDENT_ID`, `STUDENT_ID` should be replaced with something like `S1`.
 
-> [!NOTE]
+> **!NOTE]**
 > Values inside `< >` are placeholders shown for explanation only. Do not type the `<` and `>` symbols literally.
 
-> [!NOTE]
+> **[!NOTE]**
 > Fields inside `{ ... }` must be entered in the stated order.
 
-> [!NOTE]
+> **[!NOTE]**
 > Multiple groups inside one field should be separated by commas.
 > Example: `Sec3A, Sec3B`
 
-> [!NOTE]
+> **[!NOTE]**
 > Commands such as `help`, `list`, `clear`, and `exit` ignore extra text after them.
 
-> [!CAUTION]
+> **[!CAUTION]**
 > If you are copying commands from a PDF or document, check that spaces were copied correctly before pasting into LeTutor.
 
 ---
@@ -243,7 +243,7 @@ Examples:
 * `add /assignments {Finish Math HW; Sec3A; 2026-04-20}`
 * `add /assignments {Science Quiz; Sec3A, Sec3B; 2026-04-01}`
 
-> [!NOTE]
+> **[!NOTE]**
 > An assignment can belong to more than one group.
 
 **Expected output:** The assignment appears in the assignment list and a confirmation message is shown.
@@ -351,7 +351,7 @@ Examples:
 * `set /students S1 /milestones A1 NOT_STARTED`
 * `set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H`
 
-> [!NOTE]
+> **[!NOTE]**
 > Use `NOT_STARTED` if you want to reset a milestone to incomplete.
 
 **Expected output:** The milestone status is updated and a confirmation message is shown.
