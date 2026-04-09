@@ -112,27 +112,47 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser`
+  (`XYZ` is a placeholder for the specific command name, e.g. `AddCommandParser`) which uses other parser
+  classes to parse the user command and create the corresponding `XYZCommand` object.
+
+* For overloaded commands that support multiple paths, `AddressBookParser` first inspects the command path
+  before choosing the parser. For example:
+    * `find /students ...` is delegated to `FindCommandParser`
+    * `find /groups ...` is delegated to `FindGroupCommandParser`
+
+* All `XYZCommandParser` classes (e.g. `AddCommandParser`, `DeleteCommandParser`, `FindGroupCommandParser`)
+  inherit from the `Parser` interface so that they can be treated similarly where possible, such as during testing.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
-
 The `Model` component,
 
-* stores the address book data i.e., all `Person` and `Assignment` objects (which are contained in a `UniquePersonList` and `UniqueAssignmentList` objects respectively).
-  * **`Person`** entities have the following value object fields: `StudentId`, `Name`, `Phone`, `Email`, and `Group` (a student can belong to multiple groups).
-  * **`Assignment`** entities have the following value object fields: `AssignmentId`, `Label`, `Group`, and `DueDate`.
-* stores the currently 'selected' `Person`/`Assignment` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>`/`ObservableList<Assignment>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
-* hidden `GroupManager` object that keeps track of the `Group` objects used by `Person` and `Assignment` objects.
-<box type="info" seamless>
+* stores the address book data i.e., all `Person` and `Assignment` objects (which are contained in a
+  `UniquePersonList` and `UniqueAssignmentList` objects respectively).
+* **`Person`** entities have the following value object fields: `StudentId`, `Name`, `Phone`, `Email`, and `Group`
+  (a student can belong to multiple groups).
+* **`Assignment`** entities have the following value object fields: `AssignmentId`, `Label`, `Set<Group>`, and `DueDate`
+  (an assignment can belong to multiple groups).
+* stores the currently 'selected' `Person`/`Assignment` objects (e.g., results of a search query) as separate
+  _filtered_ lists which are exposed to outsiders as unmodifiable `ObservableList`s that can be observed.
+  For example, the UI can be bound to these lists so that it automatically updates when the filtered data changes.
+* supports filtering both students and assignments together for commands such as `find /groups`, allowing the
+  student panel and assignment panel to stay in sync.
+* stores a `UserPref` object that represents the user's preferences. This is exposed to the outside as a
+  `ReadOnlyUserPref` object.
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain,
+  they should make sense on their own without depending on other components).
+* has a hidden `GroupManager` object that keeps track of the `Group` objects used by `Person` and `Assignment` objects.
 
-**Note:** The current model shows the core domain entities (`Person`, `Assignment`, and their value objects). Additional subsystems such as `MilestoneStore`, `GroupManager`, and the milestone model classes are managed by `AddressBook` and `ModelManager` but are intentionally simplified in this diagram for clarity. Refer to the full model code in `src/main/java/seedu/address/model` for the complete system structure.
+**Note:** The current model shows the core domain entities (`Person`, `Assignment`, and their value objects).
+Additional subsystems such as `MilestoneStore`, `GroupManager`, and the milestone model classes are managed by
+`AddressBook` and `ModelManager` but are intentionally simplified in this diagram for clarity. Refer to the full
+model code in `src/main/java/seedu/address/model` for the complete system structure.
+
 
 </box>
 
@@ -158,98 +178,45 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### Find group command
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The `find /groups` command allows the user to filter both the student list and the assignment list by a group name.
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+The command flow is as follows:
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+1. The user enters `find /groups <groupName>`.
+2. `AddressBookParser` identifies the top-level command word `find`.
+3. If the command path starts with `/groups`, `AddressBookParser` delegates parsing to `FindGroupCommandParser`.
+4. `FindGroupCommandParser` validates the input format and constructs a `FindGroupCommand` using a `GroupName`.
+5. When executed, `FindGroupCommand` calls `Model#setFilteredPersonsAndAssignmentsByGroups(GroupName)`.
+6. `ModelManager` searches for the matching `Group`, retrieves the `StudentId`s and `AssignmentId`s associated with it,
+   and updates both filtered lists:
+    * `filteredPersons` shows only students in the specified group
+    * `filteredAssignments` shows only assignments in the specified group
+7. If no matching group is found, both filtered lists are set to empty.
+8. The command returns a `CommandResult` summarising the number of students and assignments shown.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+#### Design considerations
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+**Aspect: How group filtering is performed**
 
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
+* **Current choice:** Filter both lists using the `Group` object’s stored `StudentId` and `AssignmentId` collections.
+    * Pros:
+        * Reuses the existing `GroupManager` / group bookkeeping structure.
+        * Keeps the command logic simple, because `FindGroupCommand` only needs to call a single model method.
+        * Ensures the student and assignment panels stay consistent with each other after filtering.
+    * Cons:
+        * The command currently depends on an exact `GroupName` match.
+        * If no matching group exists, the result is an empty filtered view rather than a fuzzy or partial match.
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
+* **Alternative:** Scan all students and assignments directly and match them by group membership each time.
+    * Pros:
+        * Could support more flexible matching in the future, such as case-insensitive or partial-name search.
+    * Cons:
+        * Duplicates logic that is already represented in the group-based data structure.
+        * Makes the command path less aligned with the existing model design.
 
 ### \[Proposed\] Data archiving
 
@@ -452,35 +419,7 @@ Preconditions: Target student already exists in the directory.
 
 ---
 
-### Use case 5: Star a Student
-
-Name: Star/Unstar Student
-
-Actor: Tutor, TA
-
-System: LeTutor
-
-Preconditions: Target student already exists in the directory.
-
-**MSS**
-
-1. Tutor <ins>searches for student (U2) </ins>.
-2. Tutor types in command to star the student.
-3. System updates the student's starred status
-4. UI shows starred student at the top and displays success message "Student Starred."
-   Use case ends.
-
-**Extensions**
-
-* 2a. Student index out of bounds.
-
-     * 2a1. System displays message saying "Invalid student"
-
-        Use case resumes from step 2.
-
----
-
-### Use case 6: View Assignment/Milestone Progress
+### Use case 5: View Assignment/Milestone Progress
 
 Name: View Assignment/Milestone Progress
 
@@ -510,7 +449,7 @@ Preconditions: Tutor is signed in, Student exists, Predefined milestone exists f
 
 ---
 
-### Use case 7: Mark Milestone as Completed
+### Use case 6: Mark Milestone as Completed
 
 Name: Mark Milestone as Completed
 
@@ -539,7 +478,7 @@ Preconditions: Tutor is signed in as Tutor, Target student exists, A predefined 
 
 ---
 
-### Use case 8: Automatically Mark Milestone as Overdue
+### Use case 7: Automatically Mark Milestone as Overdue
 
 Name: Automatically Mark Milestone as Overdue
 
@@ -566,7 +505,7 @@ Preconditions: A predefined milestone exists with a due date, The milestone is n
 
 ---
 
-### Use case 9: View Students with Overdue Milestones
+### Use case 8: View Students with Overdue Milestones
 
 Name: View Students with Overdue Milestones
 
@@ -593,7 +532,7 @@ Preconditions: Tutor is signed in as Tutor, Students and predefined milestones e
         Use case ends.
 ---
 
-### Use case 10: View the details of an Assignment
+### Use case 9: View the details of an Assignment
 
 Name: View Assignment details
 
@@ -617,7 +556,7 @@ System: LeTutor
 
 ---
 
-### Use case 11: Add an Assignment
+### Use case 10: Add an Assignment
 
 Name: Add Assignment
 
@@ -647,7 +586,7 @@ System: LeTutor
 
 ---
 
-### Use case 12: Edit an Assignment
+### Use case 11: Edit an Assignment
 
 Name: Edit Assignment
 
@@ -680,7 +619,7 @@ Preconditions: Target Assignment already exists in the directory.
 
 ___
 
-### Use case 13: Delete an Assignment
+### Use case 12: Delete an Assignment
 
 Name: Delete Assignment
 
@@ -709,7 +648,7 @@ Preconditions: Target Assignment already exists in the directory.
 
 ---
 
-### Use case 14: Add a Group
+### Use case 13: Add a Group
 
 Name: Add Group
 
@@ -741,8 +680,6 @@ Preconditions: Tutor or TA is adding a new student profile or editing an existin
     * 4a2. System associates the student profile with the existing group instead
 
       Use case ends.
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -806,6 +743,61 @@ testers are expected to do more *exploratory* testing.
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
+
+### Finding students and assignments by group
+
+1. Filtering by an existing group
+
+    1. Prerequisites: Reset the app with `clear`, then enter the following commands:
+        * `add /students {Alice Tan; 91234567; alice@example.com; Science}`
+        * `add /students {Bob Lim; 92345678; bob@example.com; Math}`
+        * `add /students {Cara Ong; 93456789; cara@example.com; Science}`
+        * `add /students {Dana Lee; 94567890; dana@example.com; English}`
+        * `add /assignments {Quiz 1; Science; 2026-05-01}`
+        * `add /assignments {Worksheet 1; Math; 2026-05-02}`
+
+    2. Test case: `find /groups Science`
+       Expected: Only `Alice Tan` and `Cara Ong` remain in the student list. Only `Quiz 1` remains in the assignment list. The status message shows `2 persons listed and 1 assignments listed for Group "Science"`.
+
+    3. Test case: `find /groups Math`
+       Expected: Only `Bob Lim` remains in the student list. Only `Worksheet 1` remains in the assignment list. The status message shows `1 persons listed and 1 assignments listed for Group "Math"`.
+
+    4. Test case: `find /groups English`
+       Expected: Only `Dana Lee` remains in the student list. The assignment list becomes empty. The status message shows `1 persons listed and 0 assignments listed for Group "English"`.
+
+2. Filtering by a non-existent group
+
+    1. Prerequisites: Use the same data set as above.
+
+    2. Test case: `find /groups History`
+       Expected: Both the student list and assignment list become empty. The status message shows `0 persons listed and 0 assignments listed for Group "History"`.
+
+3. Exact-match behavior
+
+    1. Prerequisites: Use the same data set as above.
+
+    2. Test case: `find /groups science`
+       Expected: Both lists become empty, because the current implementation matches the group name exactly.
+
+    3. Test case: `find /groups Sci`
+       Expected: Both lists become empty, because partial group-name matching is not supported.
+
+4. Invalid command formats
+
+    1. Prerequisites: Any non-empty data set.
+
+    2. Test case: `find`
+       Expected: No list changes. An invalid command format message is shown.
+
+    3. Test case: `find /assignments Science`
+       Expected: No list changes. An invalid command format message is shown.
+
+5. Restoring the full view after filtering
+
+    1. Prerequisites: Execute any successful `find /groups ...` command.
+
+    2. Test case: `list` followed by `get /assignments`
+       Expected: The full student list and full assignment list are shown again.
 
 ### Saving data
 
