@@ -103,7 +103,7 @@ help
 
 ## Understanding the Interface
 
-![Main interface overview](images/REPLACE-main-interface.png)
+![Main interface overview](../src/main/resources/images/main-interface.png)
 
 The LeTutor window has three main areas:
 
@@ -202,7 +202,7 @@ Format: `help`
 
 **Expected output:** A help window appears or help information is shown.
 
-![Help command result](images/REPLACE-help-message.png)
+![Help command result](../src/main/resources/images/help-message.png)
 
 ---
 
@@ -238,7 +238,7 @@ Examples:
 
 **Expected output:** The student appears in the list and a confirmation message is shown.
 
-![Add student result](images/REPLACE-add-student.png)
+![Add student result](../src/main/resources/images/add-student.png)
 
 ---
 
@@ -258,7 +258,7 @@ Format: `add /assignments {<label>; <groups>; <dueDate>}`
 
 Examples:
 
-* `add /assignments {Math Worksheet; Sec3A; 2026-03-20}`
+* `add /assignments {Finish Math HW; Sec3A; 2026-04-20}`
 * `add /assignments {Science Quiz; Sec3A, Sec3B; 2026-04-01}`
 
 > [!NOTE]
@@ -266,7 +266,7 @@ Examples:
 
 **Expected output:** The assignment appears in the assignment list and a confirmation message is shown.
 
-![Add assignment result](images/REPLACE-add-assignment.png)
+![Add assignment result](../src/main/resources/images/add-assignment.png)
 
 ---
 
@@ -308,7 +308,7 @@ Example:
 
 **Expected output:** The selected student's details are shown in the app.
 
-![Get student result](images/REPLACE-get-student.png)
+![Get student result](../src/main/resources/images/get-student.png)
 
 ---
 
@@ -341,7 +341,7 @@ Example milestone output:
 
 **Expected output:** The student's milestone progress is shown.
 
-![Milestone view result](images/REPLACE-milestone-view.png)
+![Milestone view result](../src/main/resources/images/milestone-view.png)
 
 ---
 
@@ -374,7 +374,7 @@ Examples:
 
 **Expected output:** The milestone status is updated and a confirmation message is shown.
 
-![Set milestone result](images/REPLACE-set-milestone.png)
+![Set milestone result](../src/main/resources/images/set-milestone.png)
 
 ---
 
@@ -412,7 +412,7 @@ Rules:
 
 Examples:
 
-* `find /students John`
+* `find /students Johnny`
 * `find /students alex david`
 
 > [!TIP]
@@ -420,7 +420,7 @@ Examples:
 
 **Expected output:** Only matching students remain visible in the student list.
 
-![Find students result](images/REPLACE-find-students.png)
+![Find students result](../src/main/resources/images/find-students.png)
 
 ---
 
@@ -439,13 +439,13 @@ Rules:
 
 Example:
 
-* `find /groups Science`
+* `find /groups T08`
 
 **Expected output:** The result display shows a summary such as:
 
-* `X persons listed and Y assignments listed for Group "Science"`
+* `X persons listed and Y assignments listed for Group "T08"`
 
-![Find groups result](images/REPLACE-find-groups.png)
+![Find groups result](../src/main/resources/images/find-groups.png)
 
 ---
 
@@ -463,7 +463,7 @@ Rules:
 
 Examples:
 
-* `edit /students S1 {John Doe; 98765432; johnd@mail.com; Sec3B}`
+* `edit /students S2 {John Doe; 98765432; johnd@mail.com; Sec3B}`
 * `edit /students S2 {John; ; ;}`
 
 > [!TIP]
@@ -471,7 +471,7 @@ Examples:
 
 **Expected output:** The student's details are updated and a confirmation message is shown.
 
-![Edit student result](images/REPLACE-edit-student.png)
+![Edit student result](../src/main/resources/images/edit-student.png)
 
 ---
 
@@ -489,13 +489,13 @@ Rules:
 
 Examples:
 
-* `edit /assignments A1 {A-Testing; Sec3A; 2026-04-30}`
+* `edit /assignments A1 {A-Testing; Sec3A; 2026-05-30}`
 * `edit /assignments A2 {Math Worksheet; Sec3A, Sec3B; 2026-05-01}`
 * `edit /assignments A3 {Quiz 2; ; }`
 
 **Expected output:** The assignment is updated and a confirmation message is shown.
 
-![Edit assignment result](images/REPLACE-edit-assignment.png)
+![Edit assignment result](../src/main/resources/images/edit-assignment.png)
 
 ---
 
@@ -514,7 +514,7 @@ Example:
 
 **Expected output:** The student is removed and a confirmation message is shown.
 
-![Delete student result](images/REPLACE-delete-student.png)
+![Delete student result](../src/main/resources/images/delete-student.png)
 
 ---
 
@@ -533,7 +533,7 @@ Example:
 
 **Expected output:** The assignment is removed and a confirmation message is shown.
 
-![Delete assignment result](images/REPLACE-delete-assignment.png)
+![Delete assignment result](../src/main/resources/images/delete-assignment.png)
 
 ---
 
