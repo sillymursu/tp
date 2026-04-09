@@ -21,6 +21,8 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_INVALID_INDEX = "Student ID must be in the format S "
             + "followed by 1 to 4 digits (e.g., S1, S301, S9999).";
+    public static final String MESSAGE_PERSONS_AND_ASSIGNMENTS_LISTED_OVERVIEW =
+                "%1$d persons listed and %2$d assignments listed for Group \"%3$s\"";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

@@ -17,6 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
 import seedu.address.model.milestone.MilestoneResolver;
@@ -233,25 +234,6 @@ public class ModelManager implements Model {
         return null;
     }
 
-    /**
-     * Returns the assignments that belong to at least one of the student's groups.
-     *
-     * @param student The student whose assignments should be returned.
-     * @return A list of assignments matching the student's groups.
-     */
-    private List<Assignment> getAssignmentsForStudent(Person student) {
-        requireNonNull(student);
-
-        List<Assignment> matchingAssignments = new ArrayList<>();
-
-        for (Assignment assignment : getAssignmentList()) {
-            if (student.getGroups().stream().anyMatch(assignment.getGroups()::contains)) {
-                matchingAssignments.add(assignment);
-            }
-        }
-
-        return matchingAssignments;
-    }
 
     @Override
     public StudentId getNextStudentId() {
@@ -337,7 +319,7 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
-    // Feature 3: Assignment Library
+    //======================= Assignments =============================
 
     @Override
     public boolean hasAssignment(Assignment assignment) {
@@ -376,7 +358,28 @@ public class ModelManager implements Model {
                 .findFirst();
     }
 
+    /**
+     * Returns the assignments that belong to at least one of the student's groups.
+     *
+     * @param student The student whose assignments should be returned.
+     * @return A list of assignments matching the student's groups.
+     */
+    private List<Assignment> getAssignmentsForStudent(Person student) {
+        requireNonNull(student);
+
+        List<Assignment> matchingAssignments = new ArrayList<>();
+
+        for (Assignment assignment : getAssignmentList()) {
+            if (student.getGroups().stream().anyMatch(assignment.getGroups()::contains)) {
+                matchingAssignments.add(assignment);
+            }
+        }
+
+        return matchingAssignments;
+    }
+
     //======================= Groups =============================
+
     @Override
     public void addStudentToGroup(Group g, StudentId id) {
         addressBook.addStudentToGroup(g, id);
@@ -407,5 +410,36 @@ public class ModelManager implements Model {
     @Override
     public void removeAssignmentFromGroup(Group g, AssignmentId id) {
         addressBook.removeAssignmentFromGroup(g, id);
+    }
+
+    @Override
+    public void setFilteredPersonsAndAssignmentsByGroups(GroupName name) {
+        requireNonNull(name);
+
+        Group matchingGroup = null;
+        for (Group g : this.groups) {
+            if (g.getGroupName().equals(name)) {
+                matchingGroup = g;
+                break;
+            }
+        }
+
+        if (matchingGroup != null) {
+            ArrayList<StudentId> studentIds =
+                    matchingGroup.getStudentIds().getStudentList();
+
+            ArrayList<AssignmentId> assignmentIds =
+                    matchingGroup.getAssignmentIds().getAssignmentList();
+
+            filteredPersons.setPredicate(person ->
+                    studentIds.contains(person.getStudentId())
+            );
+
+            filteredAssignments.setPredicate(assignment ->
+                    assignmentIds.contains(assignment.getAssignmentId()));
+        } else {
+            filteredPersons.setPredicate(person -> false);
+            filteredAssignments.setPredicate(assignment -> false);
+        }
     }
 }

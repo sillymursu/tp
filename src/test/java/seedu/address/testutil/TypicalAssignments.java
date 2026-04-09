@@ -54,6 +54,13 @@ public class TypicalAssignments {
             .withDueDate("2026-03-15")
             .build();
 
+    public static final Assignment A_CS = new AssignmentBuilder()
+            .withAssignmentId("A6")
+            .withLabel("A-CS")
+            .withGroups("CS")
+            .withDueDate("2026-03-16")
+            .build();
+
     public static final Assignment A_TEST = new AssignmentBuilder().withAssignmentId("A6").withLabel(VALID_LABEL_A_TEST)
             .withGroups(VALID_GROUP_A_TEST).withDueDate(VALID_DUEDATE_A_TEST).build();
 
@@ -63,7 +70,7 @@ public class TypicalAssignments {
     private TypicalAssignments() {}
 
     public static List<Assignment> getTypicalAssignments() {
-        return new ArrayList<>(Arrays.asList(A_JUNIT, A_STREAMS, A_REFACTOR, A_OOP, A_UML));
+        return new ArrayList<>(Arrays.asList(A_JUNIT, A_STREAMS, A_REFACTOR, A_OOP, A_UML, A_CS));
     }
 
     public static AddressBook getTypicalAssignmentBook() {

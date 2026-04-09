@@ -97,7 +97,10 @@ public class AddressBookParser {
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            if (arguments.trim().startsWith("/students")) {
+                return new FindCommandParser().parse(arguments);
+            }
+            return new FindGroupCommandParser().parse(arguments);
 
         case GetStudentCommand.COMMAND_WORD:
             if (arguments.trim().startsWith("/students") && arguments.trim().endsWith("/milestones")) {

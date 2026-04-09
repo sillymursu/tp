@@ -40,10 +40,10 @@ public class TypicalPersons {
             .withPhone("94822243").withEmail("werner@example.com").withGroups("CS").build();
 
     public static final Person FIONA = new PersonBuilder().withStudentId("S6").withName("Fiona Kunz")
-            .withPhone("94824273").withEmail("lydia@example.com").withGroups("CS").build();
+            .withPhone("94824273").withEmail("lydia@example.com").withGroups("Sec3A").build();
 
     public static final Person GEORGE = new PersonBuilder().withStudentId("S7").withName("George Best")
-            .withPhone("94824423").withEmail("anna@example.com").withGroups("CS").build();
+            .withPhone("94824423").withEmail("anna@example.com").withGroups("Sec3B").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withStudentId("S8").withName("Hoon Meier")
@@ -63,7 +63,7 @@ public class TypicalPersons {
 
     private TypicalPersons() {}
 
-    public static AddressBook getTypicalAddressBook() {
+    public static AddressBook getTypicalPersonBook() {
         AddressBook ab = new AddressBook();
         for (Person person : getTypicalPersons()) {
             ab.addPerson(person);

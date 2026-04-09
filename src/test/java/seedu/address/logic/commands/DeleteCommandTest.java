@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonBook;
 import static seedu.address.testutil.TypicalStudentId.STUDENT_ID_FIRST_PERSON;
 import static seedu.address.testutil.TypicalStudentId.STUDENT_ID_SECOND_PERSON;
 
@@ -27,7 +27,7 @@ import seedu.address.model.person.StudentId;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalPersonBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {

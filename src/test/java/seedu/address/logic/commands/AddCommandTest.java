@@ -26,6 +26,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.group.exceptions.AlreadyInGroupException;
 import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.milestone.MilestoneRecord;
@@ -316,6 +317,10 @@ public class AddCommandTest {
 
         @Override
         public void removeAssignmentFromGroup(Group group, AssignmentId id) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public void setFilteredPersonsAndAssignmentsByGroups(GroupName name) {
             throw new AssertionError("This method should not be called.");
         }
     }
