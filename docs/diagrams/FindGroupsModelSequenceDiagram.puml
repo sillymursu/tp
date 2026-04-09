@@ -1,0 +1,56 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Model #FF6B6B
+participant "m:ModelManager" as ModelManager #FF6B6B
+participant "ab:AddressBook" as AddressBook #FF6B6B
+participant "fp:FilteredPersons" as FilteredPersons #FF6B6B
+participant "fa:FilteredAssignments" as FilteredAssignments #FF6B6B
+end box
+
+-> ModelManager : setFilteredPersonsAndAssignmentsByGroups(name)
+activate ModelManager
+
+ModelManager -> AddressBook : getGroups()
+activate AddressBook
+AddressBook --> ModelManager : groups
+deactivate AddressBook
+
+loop search matching group
+ModelManager -> ModelManager : g.getGroupName().equals(name)
+end
+
+alt group found
+
+ModelManager -> ModelManager : getStudentIds()
+ModelManager -> ModelManager : getAssignmentIds()
+
+ModelManager -> FilteredPersons : setPredicate(...)
+activate FilteredPersons
+FilteredPersons --> ModelManager
+deactivate FilteredPersons
+
+ModelManager -> FilteredAssignments : setPredicate(...)
+activate FilteredAssignments
+FilteredAssignments --> ModelManager
+deactivate FilteredAssignments
+
+else group not found
+
+ModelManager -> FilteredPersons : setPredicate(false)
+activate FilteredPersons
+FilteredPersons --> ModelManager
+deactivate FilteredPersons
+
+ModelManager -> FilteredAssignments : setPredicate(false)
+activate FilteredAssignments
+FilteredAssignments --> ModelManager
+deactivate FilteredAssignments
+
+end
+
+<-- ModelManager
+deactivate ModelManager
+
+@enduml

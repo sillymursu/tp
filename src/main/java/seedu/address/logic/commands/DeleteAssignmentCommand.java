@@ -28,7 +28,6 @@ public class DeleteAssignmentCommand extends Command {
 
     private final AssignmentId assignmentId;
 
-
     /**
      * Creates a {@code DeleteAssignmentCommand} to delete the assignment with the given id.
      *

@@ -52,6 +52,20 @@ activate DeleteCommand
 DeleteCommand -> Model : deletePerson(S1)
 activate Model
 
+loop for each Group g in S1's group
+
+DeleteCommand -> Model : removeStudentFromGroup(g, studentId)
+activate Model
+Model --> DeleteCommand
+deactivate Model
+
+DeleteCommand -> Model : removeGroup(g)
+activate Model
+Model --> DeleteCommand
+deactivate Model
+
+end
+
 Model --> DeleteCommand
 deactivate Model
 

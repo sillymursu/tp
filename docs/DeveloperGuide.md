@@ -182,6 +182,14 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Implementation
 
+The following sequence diagram shows the overall sequence within the `Logic` component:
+
+<puml src="diagrams/FindGroupSequenceDiagram.puml" />
+
+The following sequence diagram shows how the `Model` component handles the command to find groups:
+
+<puml src="diagrams/FindGroupsModelSequenceDiagram.puml" />
+
 The `find /groups` command allows the user to filter both the student list and the assignment list by a group name.
 
 The command flow is as follows:

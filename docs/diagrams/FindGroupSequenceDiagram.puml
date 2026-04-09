@@ -1,0 +1,64 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindGroupCommandParser" as FindGroupCommandParser LOGIC_COLOR
+participant "f:FindGroupCommand" as FindGroupCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("find /groups Sec3A")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("find /groups Sec3A")
+activate AddressBookParser
+
+create FindGroupCommandParser
+AddressBookParser -> FindGroupCommandParser
+activate FindGroupCommandParser
+
+AddressBookParser -> FindGroupCommandParser : parse("Sec3A")
+
+create FindGroupCommand
+FindGroupCommandParser -> FindGroupCommand
+activate FindGroupCommand
+
+FindGroupCommand --> FindGroupCommandParser
+deactivate FindGroupCommand
+
+FindGroupCommandParser --> AddressBookParser : f
+deactivate FindGroupCommandParser
+destroy FindGroupCommandParser
+
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+
+LogicManager -> FindGroupCommand : execute(m)
+activate FindGroupCommand
+
+FindGroupCommand -> Model : setFilteredPersonsAndAssignmentsByGroups(name)
+activate Model
+Model --> FindGroupCommand
+deactivate Model
+
+create CommandResult
+FindGroupCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> FindGroupCommand
+deactivate CommandResult
+
+FindGroupCommand --> LogicManager : r
+deactivate FindGroupCommand
+
+[<-- LogicManager
+deactivate LogicManager
+
+@enduml
