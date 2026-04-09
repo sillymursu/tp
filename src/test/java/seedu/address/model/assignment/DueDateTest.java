@@ -22,19 +22,23 @@ public class DueDateTest {
     @Test
     public void isValidDate() {
         // null due date
-        assertThrows(NullPointerException.class, () -> DueDate.isValidDate(null));
+        assertThrows(NullPointerException.class, () -> DueDate.isValidDateFormat(null));
 
         // invalid due dates
-        assertFalse(DueDate.isValidDate("20-04-2026"));
-        assertFalse(DueDate.isValidDate("2026/04/20"));
-        assertFalse(DueDate.isValidDate("2026-13-20"));
-        assertFalse(DueDate.isValidDate("abcd-ef-gh"));
-        assertFalse(DueDate.isValidDate(""));
-        assertFalse(DueDate.isValidDate("   "));
+        assertFalse(DueDate.isValidDateFormat("20-04-2026"));
+        assertFalse(DueDate.isValidDateFormat("2026/04/20"));
+        assertFalse(DueDate.isValidDateFormat("2026-13-20"));
+        assertFalse(DueDate.isValidDateFormat("abcd-ef-gh"));
+        assertFalse(DueDate.isValidDateFormat(""));
+        assertFalse(DueDate.isValidDateFormat("   "));
+        assertFalse(DueDate.isValidDate("2026-02-31"));
+        assertFalse(DueDate.isValidDate("2026-04-32"));
 
         // valid due dates
-        assertTrue(DueDate.isValidDate("2026-04-20"));
-        assertTrue(DueDate.isValidDate("1999-12-31"));
+        assertTrue(DueDate.isValidDateFormat("2026-04-20"));
+        assertTrue(DueDate.isValidDateFormat("1999-12-31"));
+        // leap year
+        assertTrue(DueDate.isValidDate("2028-02-29"));
     }
 
     @Test

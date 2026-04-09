@@ -5,14 +5,17 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 /**
  * Represents the due date for an Assignment.
- * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDateFormat(String)}.
  */
 public class DueDate {
 
     public static final String MESSAGE_CONSTRAINTS = "DueDate can only be in the format YYYY-MM-DD";
+
+    public static final String MESSAGE_CONSTRAINTS_DATE = "DueDate cannot be an invalid date";
 
     public final LocalDate date;
 
@@ -22,20 +25,38 @@ public class DueDate {
      * @param date A valid date string.
      */
     public DueDate(String date) {
-        checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidDateFormat(date), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS_DATE);
         this.date = LocalDate.parse(date);
+    }
+
+    /**
+     * Returns true if a given string is of valid date format
+     *
+     * @param date The string to validate.
+     * @return {@code true} if {@code date} follows the format {@code yyyy-MM-dd},
+     *         {@code false} otherwise.
+     */
+    public static boolean isValidDateFormat(String date) {
+        try {
+            LocalDate.parse(date.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 
     /**
      * Returns true if a given string is a valid date.
      *
      * @param date The string to validate.
-     * @return {@code true} if {@code date} follows the format {@code yyyy-MM-dd},
+     * @return {@code true} if {@code date} is a valid date (29 during leap year),
      *         {@code false} otherwise.
      */
     public static boolean isValidDate(String date) {
         try {
-            LocalDate.parse(date.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate.parse(date.trim(), DateTimeFormatter.ofPattern("uuuu-MM-dd")
+                    .withResolverStyle(ResolverStyle.STRICT));
             return true;
         } catch (DateTimeParseException e) {
             return false;

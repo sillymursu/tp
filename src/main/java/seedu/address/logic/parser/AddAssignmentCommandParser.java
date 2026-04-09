@@ -31,7 +31,6 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
     @Override
     public AddAssignmentCommand parse(String args) throws ParseException {
         String trimmed = args.trim();
-
         if (trimmed.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAssignmentCommand.MESSAGE_USAGE));
@@ -51,6 +50,7 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
         String[] groupParts = groupsRaw.split("\\s*,\\s*");
         Set<Group> groups = ParserUtil.parseGroups(groupParts);
         DueDate dueDate = ParserUtil.parseDueDate(parts.get(2));
+
 
         // placeholder ID, real ID assigned in AddAssignmentCommand.execute()
         Assignment assignment = new Assignment(new AssignmentId("A0"), label, groups, dueDate);

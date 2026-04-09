@@ -40,6 +40,7 @@ public class ParserUtilTest {
     private static final String INVALID_ASSIGNMENT_ID = "1";
     private static final String INVALID_LABEL = " ";
     private static final String INVALID_DUEDATE = "20-04-2026";
+    private static final String INVALID_DUEDATE2 = "2026-02-29";
 
     private static final String WHITESPACE = " \t\r\n";
     private static final String TUPLE3_ERROR_MESSAGE = "dummy usage";
@@ -231,8 +232,13 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseDueDate_invalidValue_throwsParseException() {
+    public void parseDueDate_invalidFormat_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseDueDate(INVALID_DUEDATE));
+    }
+
+    @Test
+    public void parseDueDate_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDueDate(INVALID_DUEDATE2));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package seedu.address.model.group;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.assignment.Label.VALIDATION_REGEX;
 
 import java.util.Objects;
 
@@ -14,7 +13,15 @@ import seedu.address.model.person.StudentId;
  * Object representing the group that a student belongs to.
  */
 public class Group {
-    public static final String MESSAGE_CONSTRAINTS = "Group can take any values, and it should not be blank";
+
+    public static final String MESSAGE_CONSTRAINTS = "Group can take any ASCII values, "
+            + "and it should not be blank";
+
+    /*
+     * The first character of the label must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "^[\\x21-\\x7E][\\x20-\\x7E]*$";
 
     private final GroupName name;
     private final StudentList studentIds;

@@ -16,6 +16,7 @@ public final class GroupName {
         this.name = name;
     }
 
+
     @Override
     public String toString() {
         return name;

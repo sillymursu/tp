@@ -167,8 +167,11 @@ public class ParserUtil {
     public static DueDate parseDueDate(String dueDate) throws ParseException {
         requireNonNull(dueDate);
         String trimmed = dueDate.trim();
-        if (!DueDate.isValidDate(trimmed)) {
+        if (!DueDate.isValidDateFormat(trimmed)) {
             throw new ParseException(DueDate.MESSAGE_CONSTRAINTS);
+        }
+        if (!DueDate.isValidDate(trimmed)) {
+            throw new ParseException(DueDate.MESSAGE_CONSTRAINTS_DATE);
         }
         return new DueDate(trimmed);
     }
