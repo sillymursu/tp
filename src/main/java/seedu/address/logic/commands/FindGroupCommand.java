@@ -15,10 +15,11 @@ public class FindGroupCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons and assignments "
-            + "that are part of the group searched and displays them "
-            + "Parameters: KEYWORD \n"
-            + "Example: " + COMMAND_WORD + " /groups " + "Science";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + " /groups: Finds all persons and assignments that are part"
+            + " of the group searched (case-sensitive) and displays them\n"
+            + "Format: find /groups GROUPNAME\n"
+            + "Example: find /groups Sec3A";
 
     private final GroupName name;
 

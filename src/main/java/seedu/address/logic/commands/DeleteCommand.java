@@ -21,13 +21,9 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes a student or assignment.\n"
-            + "Use either:\n"
-            + "1. delete /students STUDENT_ID\n"
-            + "2. delete /assignments ASSIGNMENT_ID\n"
-            + "Examples:\n"
-            + "delete /students S1\n"
-            + "delete /assignments A1";
+            + " /students: Deletes a student from LeTutor using student ID\n"
+            + "Format:  delete /students STUDENT_ID\n"
+            + "Example: delete /students S1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %1$s";

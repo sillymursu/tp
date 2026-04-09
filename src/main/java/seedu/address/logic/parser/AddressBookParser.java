@@ -1,7 +1,13 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.ADD_MESSAGE_USAGE;
+import static seedu.address.logic.Messages.DELETE_MESSAGE_USAGE;
+import static seedu.address.logic.Messages.EDIT_MESSAGE_USAGE;
+import static seedu.address.logic.Messages.FIND_MESSAGE_USAGE;
+import static seedu.address.logic.Messages.GET_MESSAGE_USAGE;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.Messages.SET_MESSAGE_USAGE;
 
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -31,26 +37,6 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
-    private static final String GET_MESSAGE_USAGE =
-            "get: Retrieves a student, assignment, or milestone view.\n"
-                    + "Use one of:\n"
-                    + "1. get /students STUDENT_ID\n"
-                    + "2. get /students STUDENT_ID /milestones\n"
-                    + "3. get /assignments ASSIGNMENT_ID\n"
-                    + "Examples:\n"
-                    + "get /students S1\n"
-                    + "get /students S1 /milestones\n"
-                    + "get /assignments A1";
-    private static final String SET_MESSAGE_USAGE =
-            "set: Updates one milestone for a student.\n"
-                    + "Format:\n"
-                    + "set /students STUDENT_ID /milestones ASSIGNMENT_ID STATUS [COMPLETED_AT]\n"
-                    + "Allowed statuses: NOT_STARTED, COMPLETED\n"
-                    + "If status is NOT_STARTED, do not provide COMPLETED_AT.\n"
-                    + "If status is COMPLETED, COMPLETED_AT is required.\n"
-                    + "Examples:\n"
-                    + "set /students S1 /milestones A1 NOT_STARTED\n"
-                    + "set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H";
 
     /**
      * Parses user input into command for execution.
@@ -79,19 +65,28 @@ public class AddressBookParser {
             if (arguments.trim().startsWith("/assignments")) {
                 return new AddAssignmentCommandParser().parse(arguments);
             }
-            return new AddCommandParser().parse(arguments);
+            if (arguments.trim().startsWith("/students")) {
+                return new AddCommandParser().parse(arguments);
+            }
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ADD_MESSAGE_USAGE));
 
         case EditCommand.COMMAND_WORD:
             if (arguments.trim().startsWith("/assignments")) {
                 return new EditAssignmentCommandParser().parse(arguments);
             }
-            return new EditCommandParser().parse(arguments);
+            if (arguments.trim().startsWith("/students")) {
+                return new EditCommandParser().parse(arguments);
+            }
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EDIT_MESSAGE_USAGE));
 
         case DeleteCommand.COMMAND_WORD:
             if (arguments.trim().startsWith("/assignments")) {
                 return new DeleteAssignmentCommandParser().parse(arguments);
             }
-            return new DeleteCommandParser().parse(arguments);
+            if (arguments.trim().startsWith("/students")) {
+                return new DeleteCommandParser().parse(arguments);
+            }
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DELETE_MESSAGE_USAGE));
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -100,7 +95,10 @@ public class AddressBookParser {
             if (arguments.trim().startsWith("/students")) {
                 return new FindCommandParser().parse(arguments);
             }
-            return new FindGroupCommandParser().parse(arguments);
+            if (arguments.trim().startsWith("/groups")) {
+                return new FindGroupCommandParser().parse(arguments);
+            }
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FIND_MESSAGE_USAGE));
 
         case GetStudentCommand.COMMAND_WORD:
             if (arguments.trim().startsWith("/students") && arguments.trim().endsWith("/milestones")) {

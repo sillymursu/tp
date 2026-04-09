@@ -417,7 +417,7 @@ public class ModelManager implements Model {
         requireNonNull(name);
 
         Group matchingGroup = null;
-        for (Group g : this.groups) {
+        for (Group g : this.addressBook.getGroups()) {
             if (g.getGroupName().equals(name)) {
                 matchingGroup = g;
                 break;

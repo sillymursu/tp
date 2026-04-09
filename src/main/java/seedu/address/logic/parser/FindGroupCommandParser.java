@@ -24,7 +24,8 @@ public class FindGroupCommandParser implements Parser<FindGroupCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+", 2);
-        if (!nameKeywords[0].equals(PATH_GROUPS)) {
+        if (!nameKeywords[0].equals(PATH_GROUPS) || nameKeywords.length == 1
+                || nameKeywords[1].trim().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     FindGroupCommand.MESSAGE_USAGE));
         }
