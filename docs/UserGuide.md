@@ -101,7 +101,7 @@ find /students John                         # Searches for students whose name i
 help                                        # Opens the help information
 ```
 
-> Tip: If you ever feel lost after filtering results, use `list` to return to the full student list.
+> **Tip:** If you ever feel lost after filtering results, use `list` to return to the full student list.
 
 ---
 
@@ -150,7 +150,7 @@ View-only computed status:
 
 * `OVERDUE`
 
-> Note: `OVERDUE` is not manually set. It appears automatically when the due date has passed and the milestone is still incomplete.
+> **Note:** `OVERDUE` is not manually set. It appears automatically when the due date has passed and the milestone is still incomplete.
 
 ---
 
@@ -158,21 +158,21 @@ View-only computed status:
 
 ## Notes about the command format
 
-> Note:
+> **Note:**
 > Words in `UPPER_CASE` are values you must supply.
 > Example: in `get /students STUDENT_ID`, `STUDENT_ID` should be replaced with something like `S1`.
 
-> Note:
+> **Note:**
 > Values inside `< >` are placeholders shown for explanation only. Do not type the `<` and `>` symbols literally.
 
-> Note:
+> **Note:**
 > Fields inside `{ ... }` must be entered in the stated order.
 
-> Note:
+> **Note:**
 > Multiple groups inside one field should be separated by commas.
 > Example: `Sec3A, Sec3B`
 
-> Note:
+> **Note:**
 > Commands such as `help`, `list`, `clear`, and `exit` ignore extra text after them.
 
 > **Caution:**
@@ -219,7 +219,7 @@ Examples:
 * `add /students {John Doe; 98765432; johnd@example.com; Sec3A}`
 * `add /students {Jane Tan; 91234567; janetan@email.com; Sec3A, Math}`
 
-> Tip:
+> **Tip:**
 > Use consistent group names across students and assignments. For example, avoid mixing `Sec3A`, `sec3a`, and `SEC3A`.
 
 **Expected output:** The student appears in the list and a confirmation message is shown.
@@ -247,7 +247,7 @@ Examples:
 * `add /assignments {Finish Math HW; Sec3A; 2026-04-20}`
 * `add /assignments {Science Quiz; Sec3A, Sec3B; 2026-04-01}`
 
-> Note:
+> **Note:**
 > An assignment can belong to more than one group.
 
 **Expected output:** The assignment appears in the assignment list and a confirmation message is shown.
@@ -262,7 +262,7 @@ Shows all students and assignments currently in LeTutor.
 
 Format: `list`
 
-> Tip:
+> **Tip:**
 > Run `list` after using a find or group filter if you want to return to the full student list & full assignment list.
 
 **Expected output:** The student list resets to show all students, assignment list shows all assignments.
@@ -322,7 +322,7 @@ Example milestone output:
 * `A2 | COMPLETED | due=2026-04-03 | completedAt=2026-03-30T1200H`
 * `A3 | OVERDUE | due=2026-03-20 | completedAt=-`
 
-> Tip:
+> **Tip:**
 > This command is useful when preparing for a lesson and you want to check a student's outstanding work quickly.
 
 **Expected output:** The student's milestone progress is shown.
@@ -355,7 +355,7 @@ Examples:
 * `set /students S1 /milestones A1 NOT_STARTED`
 * `set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H`
 
-> Note:
+> **Note:**
 > Use `NOT_STARTED` if you want to reset a milestone to incomplete.
 
 **Expected output:** The milestone status is updated and a confirmation message is shown.
@@ -411,7 +411,7 @@ Examples:
 * `find /students Johnny`
 * `find /students alex david`
 
-> Tip:
+> **Tip:**
 > Use this command before editing or deleting a student if you need to narrow down the list first.
 
 **Expected output:** Only matching students remain visible in the student list.
@@ -462,7 +462,7 @@ Examples:
 * `edit /students S2 {John Doe; 98765432; johnd@mail.com; Sec3B}`
 * `edit /students S2 {John; ; ;}`
 
-> Tip:
+> **Tip:**
 > Use empty fields carefully. Keep the semicolons in place so LeTutor can tell which field you are skipping.
 
 **Expected output:** The student's details are updated and a confirmation message is shown.
@@ -505,7 +505,7 @@ Example:
 
 * `delete /students S3`
 
-> Warning:
+> **Warning:**
 > Deletion is permanent and cannot be undone within the app.
 
 **Expected output:** The student is removed and a confirmation message is shown.
@@ -524,7 +524,7 @@ Example:
 
 * `delete /assignments A2`
 
-> Warning:
+> **Warning:**
 > Deleting an assignment removes it from the system permanently.
 
 **Expected output:** The assignment is removed and a confirmation message is shown.
@@ -539,7 +539,7 @@ Clears all student and assignment entries from LeTutor.
 
 Format: `clear`
 
-> Warning:
+> **Warning:**
 > This permanently deletes all student and assignment data in the app.
 
 **Expected output:** The lists become empty and a confirmation message is shown.
@@ -573,7 +573,7 @@ Advanced users may update the data file directly.
 > **Caution:**
 > If the file is edited into an invalid format, LeTutor may discard the data and start with an empty file on the next run.
 
-> Warning:
+> **Warning:**
 > Only edit the data file if you are confident that you understand the structure.
 
 ---
