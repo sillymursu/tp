@@ -94,11 +94,11 @@ java -jar letutor.jar
 If you are opening LeTutor for the first time, try these commands in order:
 
 ```text
-list
-add /students {John Doe; 98765432; johnd@example.com; Sec3A}
-get /assignments
-find /students John
-help
+list                                        # Shows all students and assignments currently saved in LeTutor
+add /students {John Doe; 98765432; johnd@example.com; Sec3A}    # Adds a new student named John Doe
+get /assignments                            # Shows all assignments currently saved in LeTutor
+find /students John                         # Searches for students whose name includes "John"
+help                                        # Opens the help information
 ```
 
 > Tip: If you ever feel lost after filtering results, use `list` to return to the full student list.
