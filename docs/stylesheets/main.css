@@ -161,48 +161,77 @@ mark {
   }
 }
 
-h2,
-h3,
+h1,
+h2 {
+  color: #384959;
+
+}
+
+h3 {
+ color: #6A89A7;
+}
+
 h4,
 h5,
 h6 {
-   color: #3366FF;
+   color: #88BDF2;
 }
 
-// User Guide
-
 blockquote.tip {
-  border-left: 5px solid #28a745;
-  background-color: #188131;
-  padding: 12px 16px;
+  border: 1px solid #000000;
+  border-left: 5px solid #188131;
+  padding: 12px 12px;
+  margin: 12px 0;
   border-radius: 6px;
-  margin: 20px 0;
+}
+
+blockquote.tip strong:first-child {
+  color: #188131;
 }
 
 blockquote.note {
+  border: 1px solid #000000;
   border-left: 5px solid #066ad3;
-  padding: 12px 16px;
+  padding: 12px 12px;
+  margin: 12px 0;
   border-radius: 6px;
-  margin: 20px 0;
+}
+
+blockquote.note strong:first-child {
+  color: #066ad3;
 }
 
 blockquote.warning {
+  border: 1px solid #000000;
   border-left: 5px solid #2244aa;
-  padding: 12px 16px;
+  padding: 12px 12px;
+  margin: 12px 0;
   border-radius: 6px;
-  margin: 20px 0;
+}
+
+blockquote.warning strong:first-child {
+  color: #2244aa;
 }
 
 blockquote.caution {
+  border: 1px solid #000000;
   border-left: 5px solid #d1202f;
-  padding: 12px 16px;
+  padding: 12px 12px;
+  margin: 12px 0;
   border-radius: 6px;
-  margin: 20px 0;
+}
+
+blockquote.caution strong:first-child {
+  color: #d1202f;
+}
+
+blockquote p {
+  margin: 0;
+  color: #4A4A4A;
 }
 
 hr {
-  border: none;
-  height: 2px;
-  background-color: #ffffff;
-  margin: 20px 0;
+  border: 2px;
+  height: 5px;
+  background-color: #384959;
 }

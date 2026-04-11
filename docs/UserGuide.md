@@ -6,6 +6,8 @@ pageNav: 3
 
 # LeTutor User Guide
 
+---
+
 ## Who is this guide for?
 
 LeTutor is built for **tutors and educators** who need a fast way to manage **students**, **assignments**, and **milestone progress** without relying on spreadsheets or clicking through many menus.
@@ -89,9 +91,8 @@ java -jar letutor.jar
 
 8. Type a command into the command box and press <kbd>Enter</kbd> to run it.
 
-> **Tip**
-> If you ever feel lost after filtering results, use `list` to return to the full student and assignment list.
-{: .tip}
+> **Tip:** If you ever feel lost after filtering results, use `list` to return to the full student and assignment list.
+> {: .tip}
 
 ---
 
@@ -146,7 +147,7 @@ View-only computed status:
 
 ## Features
 
-## Notes about the command format
+### Notes about the command format
 
 > **Note:**
 > Words in `UPPER_CASE` are values you must supply.
@@ -224,7 +225,9 @@ Examples:
 
 ---
 
-### Adding an assignment : `add /assignments`
+### Adding an assignment 
+
+`add /assignments`
 
 Adds an assignment to LeTutor.
 
