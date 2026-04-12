@@ -61,6 +61,17 @@ public final class CompletedAt {
     }
 
     /**
+     * Returns true if the given string follows the format YYYY-MM-DDTHHMMH.
+     *
+     * @param test The string to validate.
+     * @return True if the string satisfies the completion timestamp format.
+     */
+    public static boolean isValidCompletedAtFormat(String test) {
+        return test.matches(VALIDATION_REGEX);
+    }
+
+
+    /**
      * Returns true if this completion timestamp is empty.
      *
      * @return True if no completion timestamp is recorded.

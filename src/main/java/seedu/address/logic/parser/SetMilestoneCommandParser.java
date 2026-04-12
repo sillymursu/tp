@@ -19,7 +19,7 @@ public class SetMilestoneCommandParser implements Parser<SetMilestoneCommand> {
 
     private static final String STUDENTS_PREFIX = "/students";
     private static final String MILESTONES_SEGMENT = "/milestones";
-    private static final String MESSAGE_COMPLETED_DATE_CONSTRAINTS =
+    private static final String MESSAGE_COMPLETED_DATE_FORMAT_CONSTRAINTS =
             "Completed date must be in the format YYYY-MM-DD HHMM";
 
     @Override
@@ -113,8 +113,11 @@ public class SetMilestoneCommandParser implements Parser<SetMilestoneCommand> {
                         SetMilestoneCommand.MESSAGE_USAGE));
             }
             String completedDate = rightTokens[2].trim() + "T" + rightTokens[3].trim() + "H";
+            if (!CompletedAt.isValidCompletedAtFormat(completedDate)) {
+                throw new ParseException(MESSAGE_COMPLETED_DATE_FORMAT_CONSTRAINTS);
+            }
             if (!CompletedAt.isValidCompletedAt(completedDate)) {
-                throw new ParseException(MESSAGE_COMPLETED_DATE_CONSTRAINTS);
+                throw new ParseException(MESSAGE_COMPLETED_DATE_FORMAT_CONSTRAINTS);
             }
             return new CompletedAt(completedDate);
         }
