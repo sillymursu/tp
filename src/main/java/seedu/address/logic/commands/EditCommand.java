@@ -37,7 +37,11 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PHONE = "Another person with the same phone number"
+            + " already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "Another person with the same email"
+            + " already exists in the address book";
 
     private final StudentId studentId;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -76,6 +80,12 @@ public class EditCommand extends Command {
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
+        if (hasDuplicatePhone(model, personToEdit, editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        }
+        if (hasDuplicateEmail(model, personToEdit, editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        }
 
         model.setPerson(personToEdit, editedPerson);
         for (Group g : personToEdit.getGroups()) {
@@ -87,6 +97,24 @@ public class EditCommand extends Command {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    /**
+     * Returns true if another person (excluding the one being edited) already has the edited phone.
+     */
+    private boolean hasDuplicatePhone(Model model, Person personToEdit, Person editedPerson) {
+        return model.getAddressBook().getPersonList().stream()
+                .anyMatch(person -> !person.getStudentId().equals(personToEdit.getStudentId())
+                        && person.hasSamePhone(editedPerson));
+    }
+
+    /**
+     * Returns true if another person (excluding the one being edited) already has the edited email.
+     */
+    private boolean hasDuplicateEmail(Model model, Person personToEdit, Person editedPerson) {
+        return model.getAddressBook().getPersonList().stream()
+                .anyMatch(person -> !person.getStudentId().equals(personToEdit.getStudentId())
+                        && person.hasSameEmail(editedPerson));
     }
 
     /**
