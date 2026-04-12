@@ -17,6 +17,7 @@ import seedu.address.model.assignment.AssignmentId;
 import seedu.address.model.assignment.DueDate;
 import seedu.address.model.assignment.Label;
 import seedu.address.model.group.Group;
+import seedu.address.model.milestone.CompletedAt;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -174,6 +175,18 @@ public class ParserUtil {
             throw new ParseException(DueDate.MESSAGE_CONSTRAINTS_DATE);
         }
         return new DueDate(trimmed);
+    }
+
+    /**
+     * Parses a {@code String completedAt} into a {@code CompletedAt}.
+     */
+    public static CompletedAt parseCompletedAt(String completedAt) throws ParseException {
+        requireNonNull(completedAt);
+        String trimmed = completedAt.trim();
+        if (!CompletedAt.isValidCompletedAt(trimmed)) {
+            throw new ParseException(CompletedAt.MESSAGE_CONSTRAINTS);
+        }
+        return new CompletedAt(trimmed);
     }
 
     /**

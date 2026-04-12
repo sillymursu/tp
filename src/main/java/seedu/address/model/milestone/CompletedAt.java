@@ -2,6 +2,11 @@ package seedu.address.model.milestone;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+
 /**
  * Value object representing a completion timestamp.
  * Valid values are either an empty string or a timestamp in the format YYYY-MM-DDTHHMMH.
@@ -9,7 +14,9 @@ import static java.util.Objects.requireNonNull;
 public final class CompletedAt {
     public static final String VALIDATION_REGEX = "^$|^\\d{4}-\\d{2}-\\d{2}T\\d{4}H$";
     public static final String MESSAGE_CONSTRAINTS =
-            "CompletedAt must be empty or in the format YYYY-MM-DDTHHMMH.";
+            "CompletedAt must be empty or a valid timestamp in the format YYYY-MM-DDTHHMMH.";
+    private static final DateTimeFormatter COMPLETED_AT_FORMATTER = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HHmm'H'")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     private final String value;
 
@@ -37,7 +44,20 @@ public final class CompletedAt {
      * @return True if the string satisfies the completion timestamp format.
      */
     public static boolean isValidCompletedAt(String test) {
-        return test != null && test.matches(VALIDATION_REGEX);
+        if (test == null || !test.matches(VALIDATION_REGEX)) {
+            return false;
+        }
+
+        if (test.isEmpty()) {
+            return true;
+        }
+
+        try {
+            LocalDateTime.parse(test, COMPLETED_AT_FORMATTER);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 
     /**

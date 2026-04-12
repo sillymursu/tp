@@ -110,7 +110,7 @@ public class SetMilestoneCommandParser implements Parser<SetMilestoneCommand> {
                         Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                         SetMilestoneCommand.MESSAGE_USAGE));
             }
-            return new CompletedAt(rightTokens[2]);
+            return ParserUtil.parseCompletedAt(rightTokens[2]);
         }
 
         throw new ParseException(String.format(

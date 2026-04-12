@@ -122,6 +122,9 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SET_MESSAGE_USAGE), (
                 ) -> parser.parseCommand("set /assignments A1"));
+        assertThrows(ParseException.class,
+                "CompletedAt must be empty or a valid timestamp in the format YYYY-MM-DDTHHMMH.", (
+                ) -> parser.parseCommand("set /students S8 /milestones A1 COMPLETED 2026-05-32T0900H"));
     }
 
     @Test
