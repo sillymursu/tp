@@ -473,7 +473,7 @@ Name: Automatically Mark Milestone as Overdue
 
 Actor: Tutor
 
-System: Legoat
+System: LeTutor
 
 Preconditions: A predefined milestone exists with a due date, The milestone is not completed, The due date has passed.
 
@@ -500,7 +500,7 @@ Name: View Students with Overdue Milestones
 
 Actor: Tutor
 
-System: Legoat
+System: LeTutor
 
 Preconditions: Tutor is signed in as Tutor, Students and predefined milestones exist, At least one student has milestone records
 
