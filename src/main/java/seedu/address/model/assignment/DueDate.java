@@ -38,12 +38,7 @@ public class DueDate {
      *         {@code false} otherwise.
      */
     public static boolean isValidDateFormat(String date) {
-        try {
-            LocalDate.parse(date.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            return true;
-        } catch (DateTimeParseException e) {
-            return false;
-        }
+        return date.matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
     /**
