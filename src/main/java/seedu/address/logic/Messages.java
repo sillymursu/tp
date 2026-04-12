@@ -74,7 +74,7 @@ public class Messages {
                     + "If status is COMPLETED, COMPLETED_AT is required.\n"
                     + "Examples:\n"
                     + "set /students S1 /milestones A1 NOT_STARTED\n"
-                    + "set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H";
+                    + "set /students S1 /milestones A1 COMPLETED 2026-03-30 1200";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

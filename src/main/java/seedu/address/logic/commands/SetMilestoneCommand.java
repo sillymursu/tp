@@ -27,7 +27,7 @@ public class SetMilestoneCommand extends Command {
                     + "If status is NOT_STARTED, do not provide COMPLETED_AT.\n"
                     + "If status is COMPLETED, COMPLETED_AT is required.\n"
                     + "Example: set /students S1 /milestones A1 NOT_STARTED\n"
-                    + "Example: set /students S1 /milestones A1 COMPLETED 2026-03-30T1200H";
+                    + "Example: set /students S1 /milestones A1 COMPLETED 2026-03-30 1200";
 
     public static final String MESSAGE_SUCCESS =
             "Set milestone for student %1$s and assignment %2$s: %3$s, completedAt=%4$s";
