@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalAssignments.getTypicalAssignmentBook
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -32,7 +33,8 @@ public class GetAssignmentCommandTest {
         AssignmentId targetAssignmentId = assignmentToGet.getAssignmentId();
         GetAssignmentCommand getAssignmentCommand = new GetAssignmentCommand(targetAssignmentId);
 
-        String expectedMessage = String.format(GetAssignmentCommand.MESSAGE_GET_ASSIGNMENT_SUCCESS, targetAssignmentId);
+        String expectedMessage = String.format(GetAssignmentCommand.MESSAGE_GET_ASSIGNMENT_SUCCESS,
+                Messages.formatA(assignmentToGet));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         assertCommandSuccess(getAssignmentCommand, model, expectedMessage, expectedModel);
     }
@@ -54,7 +56,8 @@ public class GetAssignmentCommandTest {
         AssignmentId targetAssignmentId = assignmentToGet.getAssignmentId();
         GetAssignmentCommand getAssignmentCommand = new GetAssignmentCommand(targetAssignmentId);
 
-        String expectedMessage = String.format(GetAssignmentCommand.MESSAGE_GET_ASSIGNMENT_SUCCESS, targetAssignmentId);
+        String expectedMessage = String.format(GetAssignmentCommand.MESSAGE_GET_ASSIGNMENT_SUCCESS,
+                Messages.formatA(assignmentToGet));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         assertCommandSuccess(getAssignmentCommand, model, expectedMessage, expectedModel);
     }

@@ -25,7 +25,7 @@ public class DeleteCommand extends Command {
             + "Format:  delete /students STUDENT_ID\n"
             + "Example: delete /students S1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Student: %1$s";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %1$s";
 
     private final StudentId studentId;
@@ -37,6 +37,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         List<Person> lastShownList = model.getFilteredPersonList();
 
         Person personToDelete = null;

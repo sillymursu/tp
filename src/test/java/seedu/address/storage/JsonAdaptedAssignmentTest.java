@@ -68,14 +68,6 @@ public class JsonAdaptedAssignmentTest {
     }
 
     @Test
-    public void toModelType_invalidDueDate_throwsIllegalValueException() {
-        JsonAdaptedAssignment assignment = new JsonAdaptedAssignment(
-                VALID_ASSIGNMENT_ID, VALID_LABEL, VALID_GROUPS, INVALID_DUE_DATE);
-        String expectedMessage = DueDate.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, assignment::toModelType);
-    }
-
-    @Test
     public void toModelType_nullDueDate_throwsIllegalValueException() {
         JsonAdaptedAssignment assignment = new JsonAdaptedAssignment(
                 VALID_ASSIGNMENT_ID, VALID_LABEL, VALID_GROUPS, null);

@@ -52,6 +52,7 @@ public class DeleteAssignmentCommand extends Command {
         Optional<Assignment> maybe = model.getAssignmentById(assignmentId);
 
         if (maybe.isEmpty()) {
+            model.updateFilteredAssignmentList(Model.PREDICATE_SHOW_ALL_ASSIGNMENTS);
             throw new CommandException(String.format(MESSAGE_NOT_FOUND, assignmentId));
         }
 

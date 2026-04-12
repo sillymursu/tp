@@ -177,6 +177,10 @@ h6 {
    color: #88BDF2;
 }
 
+h3 code {
+  color: #e83e8c !important;
+}
+
 blockquote.tip {
   border: 1px solid #000000;
   border-left: 5px solid #188131;
@@ -203,14 +207,14 @@ blockquote.note strong:first-child {
 
 blockquote.warning {
   border: 1px solid #000000;
-  border-left: 5px solid #2244aa;
+  border-left: 5px solid #654a1c;
   padding: 12px 12px;
   margin: 12px 0;
   border-radius: 6px;
 }
 
 blockquote.warning strong:first-child {
-  color: #2244aa;
+  color: #654a1c;
 }
 
 blockquote.caution {
@@ -234,4 +238,21 @@ hr {
   border: 2px;
   height: 5px;
   background-color: #384959;
+}
+
+.format {
+  border: 1px solid #000000;
+  background-color: #ebf5fe;
+  color: #000000;
+  padding: 12px 12px;
+  margin: 12px 0;
+  border-radius: 6px;
+}
+
+.format code {
+  background-color: #ebf5fe !important;
+}
+
+code {
+  color: #C05800 !important;
 }

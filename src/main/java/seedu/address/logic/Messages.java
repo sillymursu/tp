@@ -27,7 +27,7 @@ public class Messages {
             "add: Adds a student or assignment to LeTutor.\n"
                     + "Use either: \n"
                     + "1. add /students {NAME; PHONE; EMAIL; GROUPS}\n"
-                    + "2. add /assignments {LABEL; GROUPS; DUEDATE}\n"
+                    + "2. add /assignments {LABEL; GROUPS; DUE_DATE}\n"
                     + "Examples:\n"
                     + "add /students {John; 9878 0020; johnnyjohn@gmail.com; Sec3A, Sec3B}\n"
                     + "add /assignments {A-JUnit; Sec3A, Sec3B; 2026-02-20}";
@@ -98,7 +98,7 @@ public class Messages {
                 .append(person.getPhone())
                 .append("; Email: ")
                 .append(person.getEmail())
-                .append("; Group: ")
+                .append("; Group(s): ")
                 .append(person.getGroups().stream()
                         .map(g -> g.getGroupName().name)
                         .collect(Collectors.joining(", ")));
@@ -114,7 +114,7 @@ public class Messages {
                 .append(assignment.getAssignmentId())
                 .append("; Label: ")
                 .append(assignment.getLabel())
-                .append("; Group: ")
+                .append("; Group(s): ")
                 .append(assignment.getGroups().stream()
                         .map(g -> g.getGroupName().name)
                         .collect(Collectors.joining(", ")))

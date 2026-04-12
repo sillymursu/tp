@@ -18,7 +18,7 @@ public class AddAssignmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + " /assignments: Adds an assignment to the assignment library.\n"
-            + "Format: add /assignments {LABEL; GROUPS; DUEDATE}\n"
+            + "Format: add /assignments {LABEL; GROUPS; DUE_DATE}\n"
             + "Example: add /assignments {A-JUnit; Sec3A, Sec3B; 2026-02-20}";
 
     public static final String MESSAGE_SUCCESS = "New assignment added: %1$s";

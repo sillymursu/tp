@@ -31,13 +31,13 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " /students: Edits the details of a person\n"
+            + " /students: Edits the details of a student\n"
             + "Format: edit /students STUDENT_ID {NAME; PHONE; EMAIL; GROUP}\n"
             + "Example: edit /students S2 {John; 98780020; johnnyjohn@gmail.com; S3A}";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
 
     private final StudentId studentId;
     private final EditPersonDescriptor editPersonDescriptor;

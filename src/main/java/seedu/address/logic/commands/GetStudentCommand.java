@@ -24,7 +24,7 @@ public class GetStudentCommand extends Command {
             + " /students STUDENT_ID: Gets the student identified by the given student ID.\n"
             + "Example: " + COMMAND_WORD + " /students S1";
 
-    public static final String MESSAGE_GOT_PERSON_SUCCESS = "Got Person: %1$s";
+    public static final String MESSAGE_GOT_PERSON_SUCCESS = "Student Found: %1$s";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found: %1$s";
 
     private final StudentId studentId;

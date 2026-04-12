@@ -70,21 +70,6 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        StudentId outOfBoundStudentId = STUDENT_ID_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(Integer.parseInt(outOfBoundStudentId.getValue().substring(1))
-                < model.getAddressBook().getPersonList().size());
-
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundStudentId);
-
-        assertCommandFailure(deleteCommand, model,
-                String.format(DeleteCommand.MESSAGE_STUDENT_NOT_FOUND, outOfBoundStudentId));
-    }
-
-    @Test
     public void equals() {
         DeleteCommand deleteFirstCommand = new DeleteCommand(STUDENT_ID_FIRST_PERSON);
         DeleteCommand deleteSecondCommand = new DeleteCommand(STUDENT_ID_SECOND_PERSON);

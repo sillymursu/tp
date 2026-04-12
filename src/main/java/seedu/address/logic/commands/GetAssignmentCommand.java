@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Optional;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.assignment.Assignment;
@@ -53,13 +54,12 @@ public class GetAssignmentCommand extends Command {
         model.updateFilteredAssignmentList(a -> a.getAssignmentId().equals(assignmentId));
 
         Assignment a = maybe.get();
-        String message = "Assignment details:\n"
-                + "ID: " + a.getAssignmentId() + "\n"
-                + "Label: " + a.getLabel() + "\n"
-                + "Group: " + a.getGroups() + "\n"
+        String message = "ID: " + a.getAssignmentId()
+                + "Label: " + a.getLabel()
+                + "Group: " + a.getGroups()
                 + "Due: " + a.getDueDate();
 
-        return new CommandResult(String.format(MESSAGE_GET_ASSIGNMENT_SUCCESS, assignmentId));
+        return new CommandResult(String.format(MESSAGE_GET_ASSIGNMENT_SUCCESS, Messages.formatA(a)));
     }
 
     @Override
