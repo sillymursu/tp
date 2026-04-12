@@ -22,11 +22,11 @@ public class AddCommand extends Command {
             + "Format: add /students {NAME; PHONE; EMAIL; GROUPS}\n"
             + "Example: add /students {John; 9878 0020; johnnyjohn@gmail.com; Sec3A, Sec3B}";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_PHONE = "Another person with the same phone number"
+    public static final String MESSAGE_SUCCESS = "New student added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PHONE = "Another student with the same phone number"
             + " already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_EMAIL = "Another person with the same email"
+    public static final String MESSAGE_DUPLICATE_EMAIL = "Another student with the same email"
             + " already exists in the address book";
 
     private final Person toAdd;

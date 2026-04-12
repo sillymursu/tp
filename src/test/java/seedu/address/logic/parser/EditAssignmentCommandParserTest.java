@@ -82,7 +82,7 @@ public class EditAssignmentCommandParserTest {
         assertParseFailure(parser, "/assignments invalid {Label; G1; 2026-04-20}", AssignmentId.MESSAGE_CONSTRAINTS);
 
         // Invalid dueDate
-        assertParseFailure(parser, "/assignments A1 {Label; G1; 2026-99-99}", DueDate.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "/assignments A1 {Label; G1; 2026-99-99}", DueDate.MESSAGE_CONSTRAINTS_DATE);
     }
 
 }

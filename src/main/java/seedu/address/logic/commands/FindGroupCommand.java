@@ -16,7 +16,7 @@ public class FindGroupCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + " /groups: Finds all persons and assignments that are part"
+            + " /groups: Finds all students and assignments that are part"
             + " of the group searched (case-sensitive) and displays them\n"
             + "Format: find /groups GROUP_NAME\n"
             + "Example: find /groups Sec3A";
