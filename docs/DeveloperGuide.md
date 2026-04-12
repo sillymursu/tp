@@ -673,8 +673,8 @@ Preconditions: Tutor or TA is adding a new student profile or editing an existin
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster when using commands.
+2.  The system shall support up to 1000 persons while keeping command execution and UI updates for common operations (e.g., add, edit, delete, and search) within 2 seconds on a typical lab laptop.
+3.  For frequent tasks such as adding, editing, searching, and deleting records, an experienced user shall be able to complete the task using commands in fewer steps than using the equivalent GUI interactions.
 4. The system shall allow an experienced user to add a student profile and record a lesson observation using no more than 8 seconds of command entry time (excluding typing speed variability), and provide command history navigation to reuse previous commands without retyping.
 5. For a dataset of up to 120 student contacts (≈ 2–3 class sizes) with notes and tags, the system shall return search/filter results within 1 second and update the UI (including progress bars) within 1 second on a typical lab laptop.
 6. The system shall ensure no loss of saved data (contacts, roles, tags, notes, progress, buddy links, submission/score records) after normal application restarts, and shall reject invalid updates (e.g., progress not in 0–100%) with a clear error message.
