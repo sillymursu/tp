@@ -29,9 +29,17 @@ public class NameTest {
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName(".Jean-Luc")); // first char must not be alphanumeric
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
+        assertTrue(Name.isValidName("Jack O'Connor")); // alphabets and apostrophe
+        assertTrue(Name.isValidName("Jean-Luc")); //alphabets and hyphen
+        assertTrue(new Name("   brotato  'chip    ..  ").fullName.equals("brotato 'chip .."));
+        // name with extra spaces and period and apostrophe
+        assertTrue(Name.isValidName("Subramaniam s/o K.V. Sathasivam")); // name with slash and periods
+        assertTrue(new Name("peter  jack").fullName.equals("peter jack")); // extra spaces collapsed
+        assertTrue(new Name("     peter jack    ").fullName.equals("peter jack")); // leading/trailing spaces trimmed
         assertTrue(Name.isValidName("12345")); // numbers only
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
