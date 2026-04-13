@@ -58,7 +58,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void add(Person toAdd) {
         requireNonNull(toAdd);
-        if (contains(toAdd) || containsPhone(toAdd) || containsEmail(toAdd)) {
+        if (containsPhone(toAdd) || containsEmail(toAdd)) {
             throw new DuplicatePersonException();
         }
         internalList.add(toAdd);

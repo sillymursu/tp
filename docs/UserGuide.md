@@ -520,7 +520,7 @@ Rules:
 * If the status is `NOT_STARTED`, do **not** provide `COMPLETED_AT`.
 * If the status is `COMPLETED`, you **must** provide `COMPLETED_AT`.
 * The `COMPLETED_AT` field takes in a value with the format `<YYYY-MM-DD> <HHMM>` (with **no arrows**). Replace the `YYYY-MM-DD` and `HHMM` parameters with the actual date and time values respectively with a space between.
-* A space **must** be included between the 2 parameters (date and time) mentioned. 
+* A space **must** be included between the 2 parameters (date and time) mentioned.
 * Do not include square brackets `[]` for the `COMPLETED_AT` field.
 * `OVERDUE` cannot be set manually.
 * The student and assignment must share **at least one group**.

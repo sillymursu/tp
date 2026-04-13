@@ -220,6 +220,125 @@ The command flow is as follows:
         * Duplicates logic that is already represented in the group-based data structure.
         * Makes the command path less aligned with the existing model design.
 
+### Edit student command
+
+#### Implementation
+
+The following sequence diagram shows the overall sequence within the `Logic` component for the `edit /students` command.
+
+The `edit /students` command allows the user to modify one or more fields of an existing student while leaving the remaining fields unchanged.
+
+The command flow is as follows:
+1. The user enters `edit /students <studentId> {<name>; <phone>; <email>; <groups>}`.
+2. `AddressBookParser` identifies the top-level command word `edit`.
+3. If the command path starts with `/students`, `AddressBookParser` delegates parsing to `EditCommandParser`.
+4. `EditCommandParser` validates the input format using a regular expression, parses the `StudentId`, and constructs an `EditCommand` using an `EditPersonDescriptor`.
+5. Only non-empty fields are written into the descriptor. Empty fields are treated as “leave unchanged”.
+6. If no fields are edited, parsing fails with `MESSAGE_NOT_EDITED`.
+7. When executed, `EditCommand` searches the current filtered student list for the student with the given `StudentId`.
+8. `EditCommand` creates a new edited `Person` object by combining the existing student data with the edited fields from the descriptor.
+9. Before saving, `EditCommand` checks for duplicate person identity, duplicate phone number, and duplicate email address.
+10. If validation passes, `EditCommand` updates the student in the model using `Model#setPerson(Person, Person)`.
+11. The command then removes the student from the old groups and adds the student to the edited groups.
+12. The filtered student list is reset to show all students.
+13. The command returns a `CommandResult` summarising the edited student.
+
+#### Design considerations
+
+**Aspect: How partial student edits are represented**
+
+* **Current choice:** Use an `EditPersonDescriptor` containing optional edited fields, then build a new `Person` with `createEditedPerson(...)`.
+    * Pros:
+        * Supports partial edits naturally.
+        * Preserves the immutability-style design of `Person`.
+        * Keeps parsing and command execution responsibilities cleanly separated.
+    * Cons:
+        * Requires an additional descriptor class and merging logic.
+
+* **Alternative:** Mutate the existing `Person` object directly during parsing or command execution.
+    * Pros:
+        * Reduces the number of temporary objects created.
+    * Cons:
+        * Makes validation and rollback harder.
+        * Couples parsing more tightly with model updates.
+        * Conflicts with the current value-object style used in the model.
+
+**Aspect: How the target student is resolved**
+
+* **Current choice:** Search the currently filtered student list using `StudentId`.
+    * Pros:
+        * Keeps the command aligned with what the user currently sees in the UI.
+        * Reuses the filtered-list workflow already used by other student commands.
+    * Cons:
+        * A student that exists but is not currently shown in the filtered list cannot be edited through this path.
+
+* **Alternative:** Look up the student directly from the full address book by `StudentId`.
+    * Pros:
+        * Makes editing independent of the current filtered view.
+    * Cons:
+        * Reduces consistency with the visible UI state.
+        * Introduces a different access pattern from the existing student edit implementation.
+
+### Edit assignment command
+
+#### Implementation
+
+The following sequence diagram shows the overall sequence within the `Logic` component for the `edit /assignments` command.
+
+The `edit /assignments` command allows the user to modify one or more fields of an existing assignment while leaving the remaining fields unchanged.
+
+The command flow is as follows:
+1. The user enters `edit /assignments <assignmentId> {<label>; <groups>; <dueDate>}`.
+2. `AddressBookParser` identifies the top-level command word `edit`.
+3. If the command path starts with `/assignments`, `AddressBookParser` delegates parsing to `EditAssignmentCommandParser`.
+4. `EditAssignmentCommandParser` validates the command path, parses the `AssignmentId`, and parses the 3-field tuple using `parseTuple3AllowEmpty(...)`.
+5. Only non-empty fields are written into the descriptor. Empty fields are treated as “leave unchanged”.
+6. If the groups field is provided, it is split by commas and parsed into a `Set<Group>`.
+7. If no fields are edited, parsing fails with `MESSAGE_NOT_EDITED`.
+8. When executed, `EditAssignmentCommand` retrieves the target assignment from the model using `AssignmentId`.
+9. `EditAssignmentCommand` creates a new edited `Assignment` object by combining the existing assignment data with the edited fields from the descriptor.
+10. Before saving, `EditAssignmentCommand` checks whether the edited assignment would duplicate an existing assignment.
+11. If validation passes, `EditAssignmentCommand` updates the assignment in the model using `Model#setAssignment(Assignment, Assignment)`.
+12. The command then removes the assignment from the old groups, removes any now-empty groups where applicable, and adds the assignment to the edited groups.
+13. The filtered assignment list is reset to show all assignments.
+14. The command returns a `CommandResult` summarising the edited assignment.
+
+#### Design considerations
+
+**Aspect: How partial assignment edits are represented**
+
+* **Current choice:** Use an `EditAssignmentDescriptor` containing optional edited fields, then build a new `Assignment` with `createEditedAssignment(...)`.
+    * Pros:
+        * Supports partial edits without introducing many parser branches.
+        * Keeps the command logic consistent with the student edit flow.
+        * Preserves the existing value-object style of `Assignment`.
+    * Cons:
+        * Requires descriptor-copying and field-merging logic.
+
+* **Alternative:** Replace the tuple-based edit flow with a fully prefixed syntax for each editable field.
+    * Pros:
+        * Makes optional fields more explicit in the command format.
+    * Cons:
+        * Would require a larger parser redesign.
+        * Makes the edit command family less consistent with the current tuple-based syntax.
+
+**Aspect: How edited assignment-group relationships are updated**
+
+* **Current choice:** Update the assignment first, then remove old group links and add new group links.
+    * Pros:
+        * Keeps group membership data consistent with the edited assignment.
+        * Allows empty groups to be cleaned up immediately.
+        * Reuses the existing group bookkeeping structure already present in the model.
+    * Cons:
+        * Requires multiple model operations after the main assignment replacement.
+
+* **Alternative:** Recompute group-to-assignment relationships lazily only when group views are requested.
+    * Pros:
+        * Reduces the amount of work done inside the edit command itself.
+    * Cons:
+        * Risks stale or inconsistent group data between commands.
+        * Pushes additional complexity into later read operations.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -357,7 +476,7 @@ Preconditions: Target student already exists in the directory.
 4. System validates updated fields.
 5. System checks for duplicates.
 6. System updates the student list.
-7. UI shows confirmation "Student updated.".
+7. UI shows confirmation "Student updated."
 
    Use case ends.
 
@@ -391,20 +510,10 @@ Preconditions: Target student already exists in the directory.
 
 1. Tutor <ins>searches for student (U2) </ins>.
 2. Tutor deletes student profile.
-3. System asks for confirmation.
-4. Tutor confirms deletion.
-5. Systems deletes the student and all related fields from this account.
-6. UI shows confirmation message "Student deleted.".
+3. Systems deletes the student and all related fields from this account.
+4. UI shows confirmation message "Student deleted."
+
    Use case ends.
-
-**Extensions**
-
-* 4a. Tutor cancels deletion
-
-     * 4a1. System aborts deletion
-     * 4a2. System displays message saying "Deletion aborted"
-
-        Use case ends.
 
 ---
 
@@ -426,6 +535,7 @@ Preconditions: Tutor is signed in, Student exists, Predefined milestone exists f
 3.  System displays all predefined assignments/milestones as status bubbles.
 4.  System shows the current status of each bubble (e.g., completed, pending, overdue).
 5.  Tutor reviews the student’s progress across all milestones.
+
     Use case ends.
 
 **Extensions**
@@ -456,6 +566,7 @@ Preconditions: Tutor is signed in as Tutor, Target student exists, A predefined 
 3. Tutor marks the milestone as completed.
 4. System saves the updated milestone status.
 5. UI updates the bubble to show completed status.
+
    Use case ends.
 
 **Extensions**
@@ -483,6 +594,7 @@ Preconditions: A predefined milestone exists with a due date, The milestone is n
 2. System identifies milestones whose due dates have passed and are still incomplete.
 3. System changes the milestone status to overdue.
 4. UI updates the milestone bubble to show overdue status.
+
    Use case ends.
 
 **Extensions**
@@ -511,6 +623,7 @@ Preconditions: Tutor is signed in as Tutor, Students and predefined milestones e
 2. Tutor views milestone statuses across multiple students.
 3. Tutor sees students with overdue milestone status.
 4. Tutor identifies which students are falling behind.
+
    Use case ends.
 
 **Extensions**
@@ -555,9 +668,9 @@ System: LeTutor
 
 **MSS**
 1. Tutor or TA chooses to add an Assignment
-2. Tutor or TA enters the label, group, dueDate and order of the Assignment
+2. Tutor or TA enters the label, group and dueDate of the Assignment
 3. System checks if the label is valid and not a duplicate
-4. System checks if the group, dueDate and order are valid
+4. System checks if the group and dueDate are valid
 5. System adds the Assignment to the list of Assignments
 6. UI shows confirmation message "Assignment added."
 
@@ -568,7 +681,7 @@ System: LeTutor
     * 3a1. System shows an error message
 
       Use case resumes at step 2.
-* 4a. Invalid group, dueDate or order
+* 4a. Invalid group or dueDate
     * 4a1. System shows an error message
 
       Use case resumes at step 2.
@@ -588,9 +701,9 @@ Preconditions: Target Assignment already exists in the directory.
 **MSS**
 1. Tutor <u>searches for Assignment (U10)</u>.
 2. Tutor or TA chooses to edit the Assignment
-4. Tutor or TA enters the new label, group, dueDate and order of the Assignment
+4. Tutor or TA enters the new label, group and dueDate of the Assignment
 5. System checks if the new label is valid and not a duplicate
-6. System checks if the new group, dueDate and order are valid
+6. System checks if the new group and dueDate are valid
 7. System updates the Assignment with the new details
 8. UI shows confirmation message "Assignment updated."
 
@@ -601,7 +714,7 @@ Preconditions: Target Assignment already exists in the directory.
     * 4a1. System shows an error message
 
       Use case resumes at step 4.
-* 5a. Invalid group, dueDate or order
+* 5a. Invalid group or dueDate
     * 5a1. System shows an error message
 
       Use case resumes at step 4.
@@ -621,19 +734,10 @@ Preconditions: Target Assignment already exists in the directory.
 **MSS**
 1. Tutor <u>searches for Assignment (U10)</u>.
 2. Tutor or TA chooses to delete the Assignment
-3. System asks for confirmation.
-4. Tutor or TA confirms deletion.
-5. Systems deletes the Assignment from the list of Assignments
-6. UI shows confirmation message "Assignment deleted."
+3. Systems deletes the Assignment from the list of Assignments
+4. UI shows confirmation message "Assignment deleted."
 
     Use case ends.
-
-**Extensions**
-* 4a. Tutor or TA cancels deletion
-    * 4a1. System aborts deletion
-    * 4a2. System displays message saying "Deletion aborted"
-
-      Use case ends.
 
 ---
 

@@ -1,0 +1,104 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":EditAssignmentCommandParser" as EditAssignmentCommandParser LOGIC_COLOR
+participant "e:EditAssignmentCommand" as EditAssignmentCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("edit /assignments A1 {Quiz 2; Sec3A, Sec3B; 2026-04-30}")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("edit /assignments A1 {Quiz 2; Sec3A, Sec3B; 2026-04-30}")
+activate AddressBookParser
+
+create EditAssignmentCommandParser
+AddressBookParser -> EditAssignmentCommandParser
+activate EditAssignmentCommandParser
+
+EditAssignmentCommandParser --> AddressBookParser
+deactivate EditAssignmentCommandParser
+
+AddressBookParser -> EditAssignmentCommandParser : parse("/assignments A1 {Quiz 2; Sec3A, Sec3B; 2026-04-30}")
+activate EditAssignmentCommandParser
+
+create EditAssignmentCommand
+EditAssignmentCommandParser -> EditAssignmentCommand
+activate EditAssignmentCommand
+
+EditAssignmentCommand --> EditAssignmentCommandParser :
+deactivate EditAssignmentCommand
+
+EditAssignmentCommandParser --> AddressBookParser : e
+deactivate EditAssignmentCommandParser
+
+EditAssignmentCommandParser -[hidden]-> AddressBookParser
+destroy EditAssignmentCommandParser
+
+AddressBookParser --> LogicManager : e
+deactivate AddressBookParser
+
+LogicManager -> EditAssignmentCommand : execute(m)
+activate EditAssignmentCommand
+
+EditAssignmentCommand -> Model : getAssignmentById(assignmentId)
+activate Model
+Model --> EditAssignmentCommand : maybeAssignment
+deactivate Model
+
+EditAssignmentCommand -> EditAssignmentCommand : createEditedAssignment(...)
+
+EditAssignmentCommand -> Model : setAssignment(assignmentToEdit, editedAssignment)
+activate Model
+Model --> EditAssignmentCommand
+deactivate Model
+
+loop for each Group g in old groups
+    EditAssignmentCommand -> Model : removeAssignmentFromGroup(g, assignmentId)
+    activate Model
+    Model --> EditAssignmentCommand
+    deactivate Model
+
+    EditAssignmentCommand -> Model : removeGroup(g)
+    activate Model
+    Model --> EditAssignmentCommand
+    deactivate Model
+end
+
+loop for each Group g in new groups
+    EditAssignmentCommand -> Model : addGroup(g)
+    activate Model
+    Model --> EditAssignmentCommand
+    deactivate Model
+
+    EditAssignmentCommand -> Model : addAssignmentToGroup(g, assignmentId)
+    activate Model
+    Model --> EditAssignmentCommand
+    deactivate Model
+end
+
+EditAssignmentCommand -> Model : updateFilteredAssignmentList(PREDICATE_SHOW_ALL_ASSIGNMENTS)
+activate Model
+Model --> EditAssignmentCommand
+deactivate Model
+
+create CommandResult
+EditAssignmentCommand -> CommandResult
+activate CommandResult
+CommandResult --> EditAssignmentCommand
+deactivate CommandResult
+
+EditAssignmentCommand --> LogicManager : r
+deactivate EditAssignmentCommand
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml
