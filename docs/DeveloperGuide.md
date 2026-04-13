@@ -224,7 +224,9 @@ The command flow is as follows:
 
 #### Implementation
 
-The following sequence diagram shows the overall sequence within the `Logic` component for the `edit /students` command.
+The following sequence diagram shows the overall sequence within the `Logic` component for the `edit /students` command:
+
+<puml src="diagrams/EditStudentSequenceDiagram.puml" />
 
 The `edit /students` command allows the user to modify one or more fields of an existing student while leaving the remaining fields unchanged.
 
@@ -283,7 +285,9 @@ The command flow is as follows:
 
 #### Implementation
 
-The following sequence diagram shows the overall sequence within the `Logic` component for the `edit /assignments` command.
+The following sequence diagram shows the overall sequence within the `Logic` component for the `edit /assignments` command:
+
+<puml src="diagrams/EditAssignmentSequenceDiagram.puml" />
 
 The `edit /assignments` command allows the user to modify one or more fields of an existing assignment while leaving the remaining fields unchanged.
 
