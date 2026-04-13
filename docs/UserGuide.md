@@ -213,6 +213,8 @@ Rules:
 * The phone number must be within 3-15 digits.
 * The email should contain `@`.
 * The name, phone, email, and group fields must not contain `;`.
+* The name must start with an alphanumeric character and may include whitespace, `.`,
+      `/`, `'`, and `-`.
 * The groups field supports multiple groups separated by commas.
 
 Examples:
