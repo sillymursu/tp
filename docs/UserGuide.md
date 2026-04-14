@@ -287,6 +287,8 @@ Rules:
 * The name, phone, email, and group fields must not contain `;`.
 * The name must start with an alphanumeric character and may include whitespace, `.`,
       `/`, `'`, and `-`.
+* The name is autoformatted to remove leading & trailing whitespaces, any consecutive whitespaces
+      are also formatted to a singular whitespace.
 * The groups field supports multiple groups separated by commas.
 
 Examples:
@@ -331,6 +333,10 @@ Examples:
 > **Tip:**
 > Use empty fields carefully. Keep the semicolons in place so LeTutor can tell which field you are skipping.
 {: .tip}
+
+> **Caution:**
+> Editing is permanent and cannot be undone within the app. There will be no confirmation step before the edit.
+{: .caution}
 
 **Expected output:** The student's details are updated and a confirmation message is shown.
 
@@ -421,6 +427,10 @@ Examples:
 **Expected output:** The assignment is updated and a confirmation message is shown.
 
 ![Edit assignment result](images/edit-assignment.png)
+
+> **Caution:**
+> Editing is permanent and cannot be undone within the app. There will be no confirmation step before the edit.
+{: .caution}
 
 ---
 
@@ -637,14 +647,17 @@ Examples:
 * `find /students Johnny`
 * `find /students alex david`
 
+**Expected output:** Only matching students remain visible in the student list.
+
+![Find students result](images/find-students.png)
+
 > **Tip:**
 > Use this command before editing or deleting a student if you need to narrow down the list first.
 {: .tip}
 
-
-**Expected output:** Only matching students remain visible in the student list.
-
-![Find students result](images/find-students.png)
+> **Tip:**
+> After using `find /students`, run `list` to reset the display and show all students and assignments again.
+{: .tip}
 
 ---
 
@@ -671,6 +684,13 @@ Example:
 * `X persons listed and Y assignments listed for Group "T08"`
 
 ![Find groups result](images/find-groups.png)
+
+> **Note:** The find command for groups is case-sensitive!
+{: .note}
+
+> **Tip:**
+> Use this command before editing or deleting a student if you need to narrow down the list first.
+{: .tip}
 
 ---
 
