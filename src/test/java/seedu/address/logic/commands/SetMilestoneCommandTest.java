@@ -52,7 +52,7 @@ public class SetMilestoneCommandTest {
         MilestoneRecord storedRecord = model.getMilestone(new StudentId("S1"), new AssignmentId("A1"));
         assertEquals(MilestoneStatus.COMPLETED, storedRecord.getStatus());
         assertEquals("2026-03-30T1200H", storedRecord.getCompletedAt().getValue());
-        assertEquals("Set milestone for student S1 and assignment A1: COMPLETED, completedAt=2026-03-30T1200H",
+        assertEquals("Set milestone for student S1 and assignment A1: COMPLETED, completedAt=Mar 30 2026 1200",
                 result.getFeedbackToUser());
     }
 
