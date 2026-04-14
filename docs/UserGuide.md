@@ -482,9 +482,9 @@ Example:
 
 Example milestone output:
 
-* `A1 | NOT_STARTED | due=2026-04-01 | completedAt=-`
-* `A2 | COMPLETED | due=2026-04-03 | completedAt=2026-03-30T1200H`
-* `A3 | OVERDUE | due=2026-03-20 | completedAt=-`
+* `A1 | NOT_STARTED | due=Apr 1 2026 | completedAt=-`
+* `A2 | COMPLETED | due=Apr 4 2026 | completedAt=Mar 30 2026 1200`
+* `A3 | OVERDUE | due=Mar 20 2026 | completedAt=-`
 
 > **Tip:**
 > This command is useful when preparing for a lesson and you want to check a student's outstanding work quickly.
@@ -492,7 +492,7 @@ Example milestone output:
 
 **Expected output:** The student's milestone progress is shown.
 
-![Milestone view result](images/milestone-view.png)
+![Milestone view result](images/get-milestone.png)
 
 ---
 
